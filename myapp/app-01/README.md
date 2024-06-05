@@ -65,7 +65,7 @@ Select test framework:
   2: TestNG
   3: Spock
   4: JUnit Jupiter
-Enter selection (default: JUnit Jupiter) [1..4] 그냥 엔트
+Enter selection (default: JUnit Jupiter) [1..4] 그냥 엔터
 
 Generate build using new APIs and behavior (some features may change in the next minor release)? (default: no) [yes, no]  그냥 엔터
 
