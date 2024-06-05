@@ -93,5 +93,10 @@ BUILD SUCCESSFUL in 2s
 ## 변경한 파일
 
 - build.gradle
+```
+application {
+    mainClass = 'bitcamp.myapp.App'
+}
+```
 - App.java
 

@@ -48,5 +48,10 @@
 ## 소스 파일
 
 - build.gradle
+```
+run {
+    standardInput = System.in // 기본 값은 empty stream 이다.
+}
+```
 - App.java
 
