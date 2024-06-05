@@ -58,5 +58,9 @@ public class App {
 
         } while (menuNo != 6);
 
+        // 사용을 완료한 자원은 반환해야 다른 프로세스(프로그램)이 사용할 수 있다.
+        // 단, JVM을 종료하면 JVM이 사용한 모든 자원은 강제 회수된다.
+        // OS가 강제 회수한다.
+        keyboardScanner.close();
     }
 }
