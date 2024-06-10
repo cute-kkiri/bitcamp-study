@@ -37,6 +37,7 @@ public class App {
 
         int menuNo;
         while (true) {
+            try {
                 System.out.print("> ");
                 menuNo = keyboardScanner.nextInt();
 
@@ -48,6 +49,10 @@ public class App {
                 } else {
                     System.out.println("유효한 메뉴 번호가 아닙니다.");
                 }
+            } catch (InputMismatchException ex) {
+                System.out.println("숫자로 메뉴 번호를 입력하세요.");
+                keyboardScanner.next();
+            }
         }
 
         System.out.println("종료합니다.");
