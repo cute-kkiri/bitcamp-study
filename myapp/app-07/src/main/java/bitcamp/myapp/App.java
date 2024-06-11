@@ -26,7 +26,7 @@ public class App {
         System.out.println(boldAnsi + appTitle + resetAnsi);
 
         for (int i = 0; i < menus.length; i++) {
-            if (menus[i] == "종료") {
+            if (menus[i].equals("종료")) {
                 System.out.printf("%s%d. %s%s\n", (boldAnsi + redAnsi), (i + 1), menus[i], resetAnsi);
             } else {
                 System.out.printf("%d. %s\n", (i + 1), menus[i]);
@@ -57,7 +57,7 @@ public class App {
                 } else {
                     int menuNo = Integer.parseInt(command);
                     if (menuNo >= 1 && menuNo <= menus.length) {
-                        if (menus[menuNo - 1] == "종료") {
+                        if (menus[menuNo - 1].equals("종료")) {
                             break;
                         }
                         System.out.println(menus[menuNo - 1]);
