@@ -162,7 +162,14 @@
 ## 13일차(2024-06-12,수)
 
 - 자바 기초 프로그래밍
-  - 
+  - 메서드 사용법
+    - 메서드 정의와 호출
+    - 스레드 개념과 'main' 스레드
+    - single thread와 multiple thread
+    - 파라미터와 아규먼트
+    - 메서드 로컬 변수와 JVM Stack, Frame 메모리
+    - 재귀호출
+    - call by value 와 call by reference
 - 실습 프로젝트
   - 
 
