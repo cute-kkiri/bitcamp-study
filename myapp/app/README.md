@@ -1,7 +1,8 @@
-# 10. CRUD(create, retrieve/read, update, delete) 구현하기
+# 10. CRUD 구현하기
 
 ## 학습목표
 
+- 데이터의 CRUD(create, retrieve/read, update, delete)를 구현할 수 있다.
 - 클래스 문법을 이용하여 데이터 타입을 정의할 수 있다.
 - 배열을 이용하여 인스턴스 목록을 다룰 수 있다.
 
@@ -40,8 +41,8 @@
 [조회]
 회원번호? 1
 이름: 홍길동
-이메일? hong@test.com
-연락처? 010-1111-2222
+이메일: hong@test.com
+연락처: 010-1111-2222
 메인/회원> 3
 [조회]
 회원번호? 7
@@ -70,7 +71,13 @@
 
 ## 작업
 
-- 1) 
+- 1) 회원 서브 메뉴를 다룰 메서드를 정의한다.
+  - executeUserCommand()
+- 2) processMenu()에서 회원의 서브 메뉴 처리는 executeUserCommand() 통해 수행한다.
+  - processMenu() 변경
+- 3) 회원 등록 기능을 구현한다.
+  - executeUserCommand() 변경
+  - prompt() 변경 : '>' 문자 출력을 제거한다. 이에 맞춰 관련 코드를 변경한다.
 
 ## 소스 파일
 
