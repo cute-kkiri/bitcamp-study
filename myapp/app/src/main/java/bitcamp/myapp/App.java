@@ -1,11 +1,8 @@
 package bitcamp.myapp;
 
-import java.util.Scanner;
-
 public class App {
 
 
-  static Scanner keyboardScanner = new Scanner(System.in);
   static String[] mainMenus = new String[]{"회원", "팀", "프로젝트", "게시판", "도움말", "종료"};
   static String[][] subMenus = {
       {"등록", "목록", "조회", "변경", "삭제"},
@@ -22,7 +19,7 @@ public class App {
     String command;
     while (true) {
       try {
-        command = prompt("메인>");
+        command = Prompt.input("메인>");
 
         if (command.equals("menu")) {
           printMenu();
@@ -49,7 +46,7 @@ public class App {
 
     System.out.println("종료합니다.");
 
-    keyboardScanner.close();
+    Prompt.close();
   }
 
   static void printMenu() {
@@ -82,11 +79,6 @@ public class App {
     System.out.println("9. 이전");
   }
 
-  static String prompt(String title) {
-    System.out.printf("%s ", title);
-    return keyboardScanner.nextLine();
-  }
-
   static boolean isValidateMenu(int menuNo, String[] menus) {
     return menuNo >= 1 && menuNo <= menus.length;
   }
@@ -98,7 +90,7 @@ public class App {
   static void processMenu(String menuTitle, String[] menus) {
     printSubMenu(menuTitle, menus);
     while (true) {
-      String command = prompt(String.format("메인/%s>", menuTitle));
+      String command = Prompt.input(String.format("메인/%s>", menuTitle));
       if (command.equals("menu")) {
         printSubMenu(menuTitle, menus);
         continue;
