@@ -2,9 +2,9 @@ package bitcamp.myapp;
 
 import java.util.Scanner;
 
-public class App {
+public class App01 {
 
-
+  static final int MAX_SIZE = 100;
   static Scanner keyboardScanner = new Scanner(System.in);
   static String[] mainMenus = new String[]{"회원", "팀", "프로젝트", "게시판", "도움말", "종료"};
   static String[][] subMenus = {
@@ -13,7 +13,11 @@ public class App {
       {"등록", "목록", "조회", "변경", "삭제"},
       {"등록", "목록", "조회", "변경", "삭제"}
   };
-
+  static String[] name = new String[MAX_SIZE];
+  static String[] email = new String[MAX_SIZE];
+  static String[] password = new String[MAX_SIZE];
+  static String[] tel = new String[MAX_SIZE];
+  static int memberLength = 0;
 
   public static void main(String[] args) {
 
@@ -114,7 +118,7 @@ public class App {
         } else {
           switch (menuTitle) {
             case "회원":
-              UserCommand.executeUserCommand(subMenuTitle);
+              executeUserCommand(subMenuTitle);
               break;
             case "팀":
               executeTeamCommand(subMenuTitle);
@@ -135,6 +139,35 @@ public class App {
     }
   }
 
+  static void executeUserCommand(String command) {
+    System.out.printf("[%s]\n", command);
+
+    switch (command) {
+      case "등록":
+        name[memberLength] = prompt("이름?");
+        email[memberLength] = prompt("이메일?");
+        password[memberLength] = prompt("암호?");
+        tel[memberLength] = prompt("연락처?");
+        memberLength++;
+        break;
+      case "조회":
+        int userNo = Integer.parseInt(prompt("회원번호?"));
+        if (userNo < 1 || userNo > memberLength) {
+          System.out.println("없는 회원입니다.");
+          return;
+        }
+        System.out.printf("이름: %s\n", name[userNo - 1]);
+        System.out.printf("이메일: %s\n", email[userNo - 1]);
+        System.out.printf("연락처: %s\n", tel[userNo - 1]);
+        break;
+      case "목록":
+        System.out.println("번호 이름 이메일");
+        for (int i = 0; i < memberLength; i++) {
+          System.out.printf("%d %s %s\n", (i + 1), name[i], email[i]);
+        }
+        break;
+    }
+  }
 
   static void executeTeamCommand(String command) {
     System.out.printf("팀 %s\n", command);
