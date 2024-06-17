@@ -195,5 +195,10 @@
   - 클래스 사용법(계속)
     - 사용자 데이터 타입 정의
     - 메서드 분류
+    - static 필드와 non-static 필드
+    - static 메서드와 non-static 메서드
+    - 인스턴스와 레퍼런스
+    - private, public modifier
+    - getter/setter 메서드
+    - 생성자
 - 실습 프로젝트
- - 10. CRUD 구현하기(계속)
