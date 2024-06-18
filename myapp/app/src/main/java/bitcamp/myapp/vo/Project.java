@@ -42,8 +42,8 @@ public class Project {
   }
 
   public boolean containsMember(User user) {
-    for (int i = 0; i < memberSize; i++) {
-      User member = members[i];
+    for (int i = 0; i < this.memberSize; i++) {
+      User member = this.members[i];
       if (member.getName().equals(user.getName())) {
         return true;
       }
@@ -52,7 +52,7 @@ public class Project {
   }
 
   public void addMember(User user) {
-    members[memberSize++] = user;
+    this.members[this.memberSize++] = user;
   }
 
   public int countMembers() {
@@ -60,13 +60,13 @@ public class Project {
   }
 
   public User getMember(int index) {
-    return members[index];
+    return this.members[index];
   }
 
   public void deleteMember(int index) {
-    for (int i = index + 1; i < memberSize; i++) {
-      members[i - 1] = members[i];
+    for (int i = index + 1; i < this.memberSize; i++) {
+      this.members[i - 1] = this.members[i];
     }
-    members[--memberSize] = null;
+    this.members[--this.memberSize] = null;
   }
 }
