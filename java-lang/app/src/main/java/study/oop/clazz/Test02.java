@@ -1,5 +1,7 @@
 package study.oop.clazz;
 
+import study.oop.clazz.domain.Score;
+
 // 연습: 클래스 문법을 데이터 타입을 정의하는 용도로 사용
 //1) 클래스 사용전:
 //2) 데이터 타입 정의: 성적 데이터를 저장할 메모리를 새로 정의 - Score 클래스
@@ -15,41 +17,24 @@ package study.oop.clazz;
 //12) 코딩의 일관성을 위해 다른 필드도 getter/setter로 접근하게 만든다.
 //
 public class Test02 {
+  static Score[] scores = {
+      new Score("홍길동", 100, 90, 85),
+      new Score("임꺽정", 90, 80, 75),
+      new Score("유관순", 80, 70, 65)
+  };
+
   public static void main(String[] args) {
-    String name;
-    int kor;
-    int eng;
-    int math;
-    int sum;
-    float aver;
-
-    name = "홍길동";
-    kor = 100;
-    eng = 90;
-    math = 85;
-    sum = kor + eng + math;
-    aver = (float) sum / 3;
-
-    System.out.printf("%s: %d, %d, %d, %d, %.1f\n", name, kor, eng, math, sum, aver);
-
-    name = "임꺽정";
-    kor = 90;
-    eng = 80;
-    math = 75;
-    sum = kor + eng + math;
-    aver = (float) sum / 3;
-
-    System.out.printf("%s: %d, %d, %d, %d, %.1f\n", name, kor, eng, math, sum, aver);
-
-    name = "유관순";
-    kor = 80;
-    eng = 70;
-    math = 65;
-    sum = kor + eng + math;
-    aver = (float) sum / 3;
-
-    System.out.printf("%s: %d, %d, %d, %d, %.1f\n", name, kor, eng, math, sum, aver);
+    printScore();
   }
+
+  static void printScore() {
+    for (Score score : scores) {
+      System.out.printf("%s: %d, %d, %d, %d, %.1f\n",
+          score.getName(), score.getKor(), score.getEng(), score.getMath(),
+          score.getSum(), score.getAver());
+    }
+  }
+
 }
 
 
