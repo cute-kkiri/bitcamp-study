@@ -195,9 +195,15 @@
   - Prompt 클래스 리팩토링
     - inputInt() 메서드 추가
     - input() 메서드 변경: format 기능 추가
+  - UserCommand.findByNo() 추가
+  - Project.addMember() 추가
+  - Project.containsMember() 추가
 - 프로젝트 조회할 때 팀원을 출력하는 기능을 구현한다.
   - viewProject() 변경
-
+  - Project.countMembers() 추가
+  - Project.getMember() 추가
+- 프로젝트 변경할 때 팀원을 삭제, 등록하는 기능을 구현한다.
+  - viewProject() 변경
   
 ## 소스 파일
 
