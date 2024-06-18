@@ -87,11 +87,10 @@ public class UserCommand {
     System.out.println("삭제 했습니다.");
   }
 
-  public User findByNo(int userNo) {
+  public static User findByNo(int userNo) {
     if (userNo < 1 || userNo > userLength) {
       return null;
     }
     return users[userNo - 1];
   }
-
 }

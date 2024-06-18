@@ -40,4 +40,26 @@ public class Project {
   public void setEndDate(String endDate) {
     this.endDate = endDate;
   }
+
+  public boolean containsMember(User user) {
+    for (int i = 0; i < memberSize; i++) {
+      User member = members[i];
+      if (member.getName().equals(user.getName())) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  public void addMember(User user) {
+    members[memberSize++] = user;
+  }
+
+  public int countMembers() {
+    return this.memberSize;
+  }
+
+  public User getMember(int index) {
+    return members[index];
+  }
 }

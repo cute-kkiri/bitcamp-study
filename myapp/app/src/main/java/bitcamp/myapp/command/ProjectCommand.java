@@ -2,6 +2,7 @@ package bitcamp.myapp.command;
 
 import bitcamp.myapp.util.Prompt;
 import bitcamp.myapp.vo.Project;
+import bitcamp.myapp.vo.User;
 
 public class ProjectCommand {
 
@@ -37,7 +38,26 @@ public class ProjectCommand {
     project.setStartDate(Prompt.input("시작일?"));
     project.setEndDate(Prompt.input("종료일?"));
     System.out.println("팀원:");
-    int userNo = Prompt.inputInt("추가할 팀원 번호?(종료: 0)");
+    while (true) {
+      int userNo = Prompt.inputInt("추가할 팀원 번호?(종료: 0)");
+      if (userNo == 0) {
+        break;
+      }
+
+      User user = UserCommand.findByNo(userNo);
+      if (user == null) {
+        System.out.println("없는 팀원입니다.");
+        continue;
+      }
+
+      if (project.containsMember(user)) {
+        System.out.printf("'%s'은 현재 팀원입니다.\n", user.getName());
+        continue;
+      }
+
+      project.addMember(user);
+      System.out.printf("'%s'을 추가했습니다.\n", user.getName());
+    }
     projects[projectLength++] = project;
     System.out.println("등록했습니다.");
   }
@@ -61,6 +81,11 @@ public class ProjectCommand {
     System.out.printf("프로젝트명: %s\n", project.getTitle());
     System.out.printf("설명: %s\n", project.getDescription());
     System.out.printf("기간: %s ~ %s\n", project.getStartDate(), project.getEndDate());
+    System.out.println("팀원:");
+    for (int i = 0; i < project.countMembers(); i++) {
+      User user = project.getMember(i);
+      System.out.printf("- %s\n", user.getName());
+    }
   }
 
   private static void updateProject() {
