@@ -48,7 +48,7 @@ public class UserCommand {
   }
 
   private static void viewUser() {
-    int userNo = Integer.parseInt(Prompt.input("회원번호?"));
+    int userNo = Prompt.inputInt("회원번호?");
     if (userNo < 1 || userNo > userLength) {
       System.out.println("없는 회원입니다.");
       return;
@@ -60,21 +60,21 @@ public class UserCommand {
   }
 
   private static void updateUser() {
-    int userNo = Integer.parseInt(Prompt.input("회원번호?"));
+    int userNo = Prompt.inputInt("회원번호?");
     if (userNo < 1 || userNo > userLength) {
       System.out.println("없는 회원입니다.");
       return;
     }
     User user = users[userNo - 1];
-    user.setName(Prompt.input(String.format("이름(%s)?", user.getName())));
-    user.setEmail(Prompt.input(String.format("이메일(%s)?", user.getEmail())));
+    user.setName(Prompt.input("이름(%s)?", user.getName()));
+    user.setEmail(Prompt.input("이메일(%s)?", user.getEmail()));
     user.setPassword(Prompt.input("암호?"));
-    user.setTel(Prompt.input(String.format("연락처(%s)?", user.getTel())));
+    user.setTel(Prompt.input("연락처(%s)?", user.getTel()));
     System.out.println("변경 했습니다.");
   }
 
   private static void deleteUser() {
-    int userNo = Integer.parseInt(Prompt.input("회원번호?"));
+    int userNo = Prompt.inputInt("회원번호?");
     if (userNo < 1 || userNo > userLength) {
       System.out.println("없는 회원입니다.");
       return;
@@ -85,6 +85,13 @@ public class UserCommand {
     userLength--;
     users[userLength] = null;
     System.out.println("삭제 했습니다.");
+  }
+
+  public User findByNo(int userNo) {
+    if (userNo < 1 || userNo > userLength) {
+      return null;
+    }
+    return users[userNo - 1];
   }
 
 }
