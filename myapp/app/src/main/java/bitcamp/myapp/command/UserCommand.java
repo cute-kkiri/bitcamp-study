@@ -82,8 +82,7 @@ public class UserCommand {
     for (int i = userNo; i < userLength; i++) {
       users[i - 1] = users[i];
     }
-    userLength--;
-    users[userLength] = null;
+    users[--userLength] = null;
     System.out.println("삭제 했습니다.");
   }
 

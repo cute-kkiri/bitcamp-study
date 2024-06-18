@@ -37,27 +37,10 @@ public class ProjectCommand {
     project.setDescription(Prompt.input("설명?"));
     project.setStartDate(Prompt.input("시작일?"));
     project.setEndDate(Prompt.input("종료일?"));
+
     System.out.println("팀원:");
-    while (true) {
-      int userNo = Prompt.inputInt("추가할 팀원 번호?(종료: 0)");
-      if (userNo == 0) {
-        break;
-      }
+    addMembers(project);
 
-      User user = UserCommand.findByNo(userNo);
-      if (user == null) {
-        System.out.println("없는 팀원입니다.");
-        continue;
-      }
-
-      if (project.containsMember(user)) {
-        System.out.printf("'%s'은 현재 팀원입니다.\n", user.getName());
-        continue;
-      }
-
-      project.addMember(user);
-      System.out.printf("'%s'을 추가했습니다.\n", user.getName());
-    }
     projects[projectLength++] = project;
     System.out.println("등록했습니다.");
   }
@@ -99,6 +82,11 @@ public class ProjectCommand {
     project.setDescription(Prompt.input("설명(%s)?", project.getDescription()));
     project.setStartDate(Prompt.input("시작일(%s)?", project.getStartDate()));
     project.setEndDate(Prompt.input("종료일(%s)?", project.getEndDate()));
+
+    System.out.println("팀원:");
+    deleteMembers(project);
+    addMembers(project);
+
     System.out.println("변경 했습니다.");
   }
 
@@ -113,6 +101,42 @@ public class ProjectCommand {
     }
     projects[--projectLength] = null;
     System.out.println("삭제 했습니다.");
+  }
+
+  private static void addMembers(Project project) {
+    while (true) {
+      int userNo = Prompt.inputInt("추가할 팀원 번호?(종료: 0)");
+      if (userNo == 0) {
+        break;
+      }
+
+      User user = UserCommand.findByNo(userNo);
+      if (user == null) {
+        System.out.println("없는 팀원입니다.");
+        continue;
+      }
+
+      if (project.containsMember(user)) {
+        System.out.printf("'%s'은 현재 팀원입니다.\n", user.getName());
+        continue;
+      }
+
+      project.addMember(user);
+      System.out.printf("'%s'을 추가했습니다.\n", user.getName());
+    }
+  }
+
+  private static void deleteMembers(Project project) {
+    for (int i = project.countMembers() - 1; i >= 0; i--) {
+      User user = project.getMember(i);
+      String str = Prompt.input("팀원(%s) 삭제?", user.getName());
+      if (str.equalsIgnoreCase("y")) {
+        project.deleteMember(i);
+        System.out.printf("'%s' 팀원을 삭제합니다.\n", user.getName());
+      } else {
+        System.out.printf("'%s' 팀원을 유지합니다.\n", user.getName());
+      }
+    }
   }
 
 }

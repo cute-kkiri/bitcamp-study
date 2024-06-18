@@ -144,34 +144,87 @@
 없는 프로젝트입니다.
 ```
 
+- 게시판
+
+```
+메인> 3
+[게시판]
+1. 등록
+2. 목록
+3. 조회
+4. 변경
+5. 삭제
+9. 이전 
+메인/게시판> 1
+[등록]
+제목? 제목입니다.
+내용? 내용입니다.
+메인/게시판> 2
+[목록]
+번호 제목 작성일 조회수
+1 제목입니다. 2024-6-18 1
+2 제목입니다. 2024-6-19 2
+3 제목입니다. 2024-6-20 6
+4 제목입니다. 2024-6-18 2
+메인/게시판> 3
+[조회]
+게시글 번호? 1
+제목: 제목입니다.
+내용: 내용입니다.
+작성일: 2024-6-18
+조회수: 1
+메인/게시판> 3
+[조회]
+게시글 번호? 7
+없는 게시글입니다.
+메인/게시판> 4
+[변경]
+게시글 번호? 1
+제목(제목입니다.)? 제목이래요...
+내용(내용입니다.)? 내용이래요...
+변경하였습니다.
+메인/회원> 4
+[변경]
+게시글 번호? 7
+없는 게시글입니다.
+메인/회원> 5
+[삭제]
+게시글 번호? 1
+삭제하였습니다.
+메인/회원> 5
+[삭제]
+게시글 번호? 7
+없는 게시글입니다.
+```
+
 ## 작업
 
 ### 회원 CRUD
-- 1) 회원 서브 메뉴를 다룰 메서드를 정의한다.
+- 회원 서브 메뉴를 다룰 메서드를 정의한다.
   - executeUserCommand()
-- 2) 회원의 서브 메뉴를 선택하면 executeUserCommand()를 호출한다. 
+- 회원의 서브 메뉴를 선택하면 executeUserCommand()를 호출한다. 
   - processMenu() 변경
-- 3) 회원 등록 기능을 구현한다.
+- 회원 등록 기능을 구현한다.
   - executeUserCommand() 변경: 한 명의 회원 정보를 입력 받는다.
   - prompt() 변경 : '>' 문자 출력을 제거한다. 이에 맞춰 관련 코드를 변경한다.
-- 4) 회원 조회 기능을 구현한다.
+- 회원 조회 기능을 구현한다.
   - executeUserCommand() 변경: 한 명의 회원 정보를 출력한다.
-- 5) 여러 명의 회원 정보를 입력하도록 변경한다.
+- 여러 명의 회원 정보를 입력하도록 변경한다.
   - 회원 정보를 배열로 받는다.
   - executeUserCommand() 변경
-- 6) 회원 목록, 조회, 변경, 삭제를 처리한다.
+- 회원 목록, 조회, 변경, 삭제를 처리한다.
   - executeUserCommand() 변경
-- 7) 회원 등록, 목록, 조회, 변경, 삭제 코드를 별도의 메서드로 분리한다.
+- 회원 등록, 목록, 조회, 변경, 삭제 코드를 별도의 메서드로 분리한다.
   - addUser(), listUser(), viewUser(), updateUser(), deleteUser() 메서드 정의
   - executeUserCommand() 변경
-- 8) 회원 메뉴 처리 메서드를 별도의 클래스로 분리한다.
+- 회원 메뉴 처리 메서드를 별도의 클래스로 분리한다.
   - UserCommand 클래스를 정의한다.
   - executeUserCommand(), addUser(), listUser(), viewUser(), updateUser(), deleteUser() 메서드를 UserCommand로 옮긴다.
   - 회원 데이터를 저장하는 배열 및 관련 변수를 UserCommand로 옮긴다.
-- 9) prompt() 메서드를 별도의 클래스로 분리한다.
+- prompt() 메서드를 별도의 클래스로 분리한다.
   - Prompt 클래스 정의
   - prompt() 메서드를 Prompt 클래스로 옮기고 이름을 input()으로 변경한다.
-- 10) 회원 정보를 클래스로 다룬다.
+- 회원 정보를 클래스로 다룬다.
   - User 클래스를 정의하여 회원 정보를 User 클래스로 다룬다.
 
 ### 프로젝트 CRUD
@@ -191,7 +244,7 @@
 - 프로젝트 삭제를 구현한다.
   - deleteProject() 변경
 - 프로젝트 등록할 때 팀원을 등록하는 기능을 구현한다.
-  - addProject() 변경
+  - ProjectCommand.addProject() 변경
   - Prompt 클래스 리팩토링
     - inputInt() 메서드 추가
     - input() 메서드 변경: format 기능 추가
@@ -199,11 +252,14 @@
   - Project.addMember() 추가
   - Project.containsMember() 추가
 - 프로젝트 조회할 때 팀원을 출력하는 기능을 구현한다.
-  - viewProject() 변경
+  - ProjectCommand.viewProject() 변경
   - Project.countMembers() 추가
   - Project.getMember() 추가
 - 프로젝트 변경할 때 팀원을 삭제, 등록하는 기능을 구현한다.
-  - viewProject() 변경
+  - ProjectCommand.updateProject() 변경
+  - ProjectCommand.addMembers() 추가
+  - ProjectCommand.deleteMembers() 추가
+  - Project.deleteMember() 추가
   
 ## 소스 파일
 

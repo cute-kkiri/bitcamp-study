@@ -62,4 +62,11 @@ public class Project {
   public User getMember(int index) {
     return members[index];
   }
+
+  public void deleteMember(int index) {
+    for (int i = index + 1; i < memberSize; i++) {
+      members[i - 1] = members[i];
+    }
+    members[--memberSize] = null;
+  }
 }
