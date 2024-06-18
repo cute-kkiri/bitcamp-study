@@ -5,9 +5,9 @@ import bitcamp.myapp.vo.User;
 
 public class UserCommand {
 
-  static final int MAX_SIZE = 100;
-  static User[] users = new User[MAX_SIZE];
-  static int userLength = 0;
+  private static final int MAX_SIZE = 100;
+  private static User[] users = new User[MAX_SIZE];
+  private static int userLength = 0;
 
   public static void executeUserCommand(String command) {
     System.out.printf("[%s]\n", command);
