@@ -11,7 +11,6 @@
 ## 요구사항
 
 - 회원 CRUD 구현
-- 팀 CRUD 구현
 - 프로젝트 CRUD 구현
 - 게시판 CRUD 구현
 
@@ -269,14 +268,14 @@
 - 게시글 등록을 구현한다.
   - 정보를 저장할 새 데이터 타입을 정의: Board 클래스 생성
   - addBoard() 변경
-- 프로젝트 목록을 구현한다.
+- 게시글 목록을 구현한다.
   - listBoard() 변경
-- 프로젝트 조회를 구현한다.
-  - viewProject() 변경
-- 프로젝트 변경을 구현한다.
-  - updateProject() 변경
-- 프로젝트 삭제를 구현한다.
-  - deleteProject() 변경
+- 게시글 조회를 구현한다.
+  - viewBoard() 변경
+- 게시글 변경을 구현한다.
+  - updateBoard() 변경
+- 게시글 삭제를 구현한다.
+  - deleteBoard() 변경
 
 ## 소스 파일
 
@@ -284,5 +283,8 @@
 - User.java
 - UserCommand.java
 - Prompt.java
-- 
+- Project.java
+- ProjectCommand.java
+- Board.java
+- BoardCommand.java
   
