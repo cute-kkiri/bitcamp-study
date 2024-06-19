@@ -260,7 +260,24 @@
   - ProjectCommand.addMembers() 추가
   - ProjectCommand.deleteMembers() 추가
   - Project.deleteMember() 추가
-  
+
+### 게사판 CRUD
+
+- 게시글 CRUD 명령을 처리할 클래스를 정의한다.
+  - BoardCommand 클래스 생성
+  - App 클래스 변경
+- 게시글 등록을 구현한다.
+  - 정보를 저장할 새 데이터 타입을 정의: Board 클래스 생성
+  - addBoard() 변경
+- 프로젝트 목록을 구현한다.
+  - listBoard() 변경
+- 프로젝트 조회를 구현한다.
+  - viewProject() 변경
+- 프로젝트 변경을 구현한다.
+  - updateProject() 변경
+- 프로젝트 삭제를 구현한다.
+  - deleteProject() 변경
+
 ## 소스 파일
 
 - App.java
