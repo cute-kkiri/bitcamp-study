@@ -3,10 +3,25 @@ package bitcamp.myapp.vo;
 // 메모리 설계도
 public class User {
 
+  private static int seqNo;
+
+  private int no;
   private String name;
   private String email;
   private String password;
   private String tel;
+
+  public static int getNextSeqNo() {
+    return ++seqNo;
+  }
+
+  public int getNo() {
+    return no;
+  }
+
+  public void setNo(int no) {
+    this.no = no;
+  }
 
   public String getName() {
     return name;

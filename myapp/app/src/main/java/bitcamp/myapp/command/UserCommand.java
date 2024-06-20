@@ -36,6 +36,7 @@ public class UserCommand {
     user.setEmail(Prompt.input("이메일?"));
     user.setPassword(Prompt.input("암호?"));
     user.setTel(Prompt.input("연락처?"));
+    user.setNo(User.getNextSeqNo());
     users[userLength++] = user;
   }
 
@@ -43,17 +44,18 @@ public class UserCommand {
     System.out.println("번호 이름 이메일");
     for (int i = 0; i < userLength; i++) {
       User user = users[i];
-      System.out.printf("%d %s %s\n", (i + 1), user.getName(), user.getEmail());
+      System.out.printf("%d %s %s\n", user.getNo(), user.getName(), user.getEmail());
     }
   }
 
   private static void viewUser() {
     int userNo = Prompt.inputInt("회원번호?");
-    if (userNo < 1 || userNo > userLength) {
+    User user = findByNo(userNo);
+    if (user == null) {
       System.out.println("없는 회원입니다.");
       return;
     }
-    User user = users[userNo - 1];
+
     System.out.printf("이름: %s\n", user.getName());
     System.out.printf("이메일: %s\n", user.getEmail());
     System.out.printf("연락처: %s\n", user.getTel());
@@ -61,11 +63,12 @@ public class UserCommand {
 
   private static void updateUser() {
     int userNo = Prompt.inputInt("회원번호?");
-    if (userNo < 1 || userNo > userLength) {
+    User user = findByNo(userNo);
+    if (user == null) {
       System.out.println("없는 회원입니다.");
       return;
     }
-    User user = users[userNo - 1];
+
     user.setName(Prompt.input("이름(%s)?", user.getName()));
     user.setEmail(Prompt.input("이메일(%s)?", user.getEmail()));
     user.setPassword(Prompt.input("암호?"));
@@ -75,11 +78,13 @@ public class UserCommand {
 
   private static void deleteUser() {
     int userNo = Prompt.inputInt("회원번호?");
-    if (userNo < 1 || userNo > userLength) {
+    User user = findByNo(userNo);
+    if (user == null) {
       System.out.println("없는 회원입니다.");
       return;
     }
-    for (int i = userNo; i < userLength; i++) {
+    int index = indexOf(user);
+    for (int i = index + 1; i < userLength; i++) {
       users[i - 1] = users[i];
     }
     users[--userLength] = null;
@@ -87,9 +92,21 @@ public class UserCommand {
   }
 
   public static User findByNo(int userNo) {
-    if (userNo < 1 || userNo > userLength) {
-      return null;
+    for (int i = 0; i < userLength; i++) {
+      User user = users[i];
+      if (user.getNo() == userNo) {
+        return user;
+      }
     }
-    return users[userNo - 1];
+    return null;
+  }
+
+  public static int indexOf(User user) {
+    for (int i = 0; i < userLength; i++) {
+      if (users[i] == user) {
+        return i;
+      }
+    }
+    return -1;
   }
 }
