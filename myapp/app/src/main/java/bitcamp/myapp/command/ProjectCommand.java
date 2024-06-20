@@ -135,7 +135,7 @@ public class ProjectCommand {
         break;
       }
 
-      User user = UserCommand.findByNo(userNo);
+      User user = UserList.findByNo(userNo);
       if (user == null) {
         System.out.println("없는 팀원입니다.");
         continue;

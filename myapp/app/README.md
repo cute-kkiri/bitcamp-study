@@ -3,6 +3,7 @@
 ## 학습목표
 
 - GRASP 방법론의 High Cohesion 설계 패턴을 적용할 수 있다.
+- 캡슐화(encapsulation)를 이해하고 설명할 수 있다.
 
 ## 요구사항
 
