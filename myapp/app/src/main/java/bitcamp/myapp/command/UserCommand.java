@@ -5,10 +5,6 @@ import bitcamp.myapp.vo.User;
 
 public class UserCommand {
 
-  private static final int MAX_SIZE = 100;
-  private static User[] users = new User[MAX_SIZE];
-  private static int userLength = 0;
-
   public static void executeUserCommand(String command) {
     System.out.printf("[%s]\n", command);
     switch (command) {
@@ -37,7 +33,7 @@ public class UserCommand {
     user.setPassword(Prompt.input("암호?"));
     user.setTel(Prompt.input("연락처?"));
     user.setNo(User.getNextSeqNo());
-    users[userLength++] = user;
+    UserList.add(user);
   }
 
   private static void listUser() {
