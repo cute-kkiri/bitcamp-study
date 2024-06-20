@@ -13,11 +13,11 @@ public class UserList {
   }
 
   public static User delete(int userNo) {
-    User deletedUser = UserList.findByNo(userNo);
+    User deletedUser = findByNo(userNo);
     if (deletedUser == null) {
       return null;
     }
-    int index = UserList.indexOf(deletedUser);
+    int index = indexOf(deletedUser);
     for (int i = index + 1; i < userLength; i++) {
       users[i - 1] = users[i];
     }
