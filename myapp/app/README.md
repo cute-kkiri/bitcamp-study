@@ -60,10 +60,11 @@
 
 ### 회원 데이터에 식별 번호 부여
 
-- 식별 번호 필드 추가 및 자동 부여
+- 식별 번호 필드 추가
   - User 클래스 변경
     - seqNo 필드 추가
     - getNextSeqNo() 메서드 추가
+- 식별 번호 자동 부여 및 식별 번호로 찾기
   - UserCommand 클래스 변경
     - addUser() 변경
     - listUser() 변경
@@ -73,6 +74,22 @@
     - deleteUser() 변경
     - indexOf() 추가
 
+### 게시글 데이터에 식별 번호 부여
+
+- 식별 번호 필드 추가
+  - User 클래스 변경
+    - seqNo 필드 추가
+    - getNextSeqNo() 메서드 추가
+- 식별 번호 자동 부여 및 식별 번호로 찾기
+  - UserCommand 클래스 변경
+    - addUser() 변경
+    - listUser() 변경
+    - viewUser() 변경
+    - findByNo() 변경
+    - updateUser() 변경
+    - deleteUser() 변경
+    - indexOf() 추가
+    - 
 ## 소스 파일
 
 - App.java
