@@ -41,6 +41,8 @@ public class ProjectCommand {
     System.out.println("팀원:");
     addMembers(project);
 
+    project.setNo(Project.getNextSeqNo());
+
     projects[projectLength++] = project;
     System.out.println("등록했습니다.");
   }
@@ -50,17 +52,18 @@ public class ProjectCommand {
     for (int i = 0; i < projectLength; i++) {
       Project project = projects[i];
       System.out.printf("%d %s %s ~ %s\n",
-          (i + 1), project.getTitle(), project.getStartDate(), project.getEndDate());
+          project.getNo(), project.getTitle(), project.getStartDate(), project.getEndDate());
     }
   }
 
   private static void viewProject() {
     int projectNo = Prompt.inputInt("프로젝트 번호?");
-    if (projectNo < 1 || projectNo > projectLength) {
+    Project project = findByNo(projectNo);
+    if (project == null) {
       System.out.println("없는 프로젝트입니다.");
       return;
     }
-    Project project = projects[projectNo - 1];
+
     System.out.printf("프로젝트명: %s\n", project.getTitle());
     System.out.printf("설명: %s\n", project.getDescription());
     System.out.printf("기간: %s ~ %s\n", project.getStartDate(), project.getEndDate());
@@ -73,11 +76,12 @@ public class ProjectCommand {
 
   private static void updateProject() {
     int projectNo = Prompt.inputInt("프로젝트 번호?");
-    if (projectNo < 1 || projectNo > projectLength) {
+    Project project = findByNo(projectNo);
+    if (project == null) {
       System.out.println("없는 프로젝트입니다.");
       return;
     }
-    Project project = projects[projectNo - 1];
+
     project.setTitle(Prompt.input("프로젝트명(%s)?", project.getTitle()));
     project.setDescription(Prompt.input("설명(%s)?", project.getDescription()));
     project.setStartDate(Prompt.input("시작일(%s)?", project.getStartDate()));
@@ -92,15 +96,36 @@ public class ProjectCommand {
 
   private static void deleteProject() {
     int projectNo = Prompt.inputInt("프로젝트 번호?");
-    if (projectNo < 1 || projectNo > projectLength) {
+    Project project = findByNo(projectNo);
+    if (project == null) {
       System.out.println("없는 프로젝트입니다.");
       return;
     }
-    for (int i = projectNo; i < projectLength; i++) {
+    int index = indexOf(project);
+    for (int i = index + 1; i < projectLength; i++) {
       projects[i - 1] = projects[i];
     }
     projects[--projectLength] = null;
     System.out.println("삭제 했습니다.");
+  }
+
+  private static Project findByNo(int projectNo) {
+    for (int i = 0; i < projectLength; i++) {
+      Project project = projects[i];
+      if (project.getNo() == projectNo) {
+        return project;
+      }
+    }
+    return null;
+  }
+
+  private static int indexOf(Project project) {
+    for (int i = 0; i < projectLength; i++) {
+      if (projects[i] == project) {
+        return i;
+      }
+    }
+    return -1;
   }
 
   private static void addMembers(Project project) {

@@ -36,6 +36,7 @@ public class BoardCommand {
     board.setTitle(Prompt.input("제목?"));
     board.setContent(Prompt.input("내용?"));
     board.setCreatedDate(new Date());
+    board.setNo(Board.getNextSeqNo());
     boards[boardLength++] = board;
   }
 
@@ -44,17 +45,18 @@ public class BoardCommand {
     for (int i = 0; i < boardLength; i++) {
       Board board = boards[i];
       System.out.printf("%d %s %tY-%3$tm-%3$td %d\n",
-          (i + 1), board.getTitle(), board.getCreatedDate(), board.getViewCount());
+          board.getNo(), board.getTitle(), board.getCreatedDate(), board.getViewCount());
     }
   }
 
   private static void viewBoard() {
     int boardNo = Prompt.inputInt("게시글 번호?");
-    if (boardNo < 1 || boardNo > boardLength) {
+    Board board = findByNo(boardNo);
+    if (board == null) {
       System.out.println("없는 게시글입니다.");
       return;
     }
-    Board board = boards[boardNo - 1];
+
     board.setViewCount(board.getViewCount() + 1);
     System.out.printf("제목: %s\n", board.getTitle());
     System.out.printf("내용: %s\n", board.getContent());
@@ -64,11 +66,12 @@ public class BoardCommand {
 
   private static void updateBoard() {
     int boardNo = Prompt.inputInt("게시글 번호?");
-    if (boardNo < 1 || boardNo > boardLength) {
+    Board board = findByNo(boardNo);
+    if (board == null) {
       System.out.println("없는 게시글입니다.");
       return;
     }
-    Board board = boards[boardNo - 1];
+
     board.setViewCount(board.getViewCount() + 1);
     board.setTitle(Prompt.input("제목(%s)?", board.getTitle()));
     board.setContent(Prompt.input("내용(%s)?", board.getContent()));
@@ -77,15 +80,36 @@ public class BoardCommand {
 
   private static void deleteBoard() {
     int boardNo = Prompt.inputInt("게시글 번호?");
-    if (boardNo < 1 || boardNo > boardLength) {
+    Board board = findByNo(boardNo);
+    if (board == null) {
       System.out.println("없는 게시글입니다.");
       return;
     }
-    for (int i = boardNo; i < boardLength; i++) {
+    int index = indexOf(board);
+    for (int i = index + 1; i < boardLength; i++) {
       boards[i - 1] = boards[i];
     }
     boards[--boardLength] = null;
     System.out.println("삭제 했습니다.");
+  }
+
+  private static Board findByNo(int boardNo) {
+    for (int i = 0; i < boardLength; i++) {
+      Board board = boards[i];
+      if (board.getNo() == boardNo) {
+        return board;
+      }
+    }
+    return null;
+  }
+
+  private static int indexOf(Board board) {
+    for (int i = 0; i < boardLength; i++) {
+      if (boards[i] == board) {
+        return i;
+      }
+    }
+    return -1;
   }
 
 }

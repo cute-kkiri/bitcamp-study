@@ -77,25 +77,41 @@
 ### 게시글 데이터에 식별 번호 부여
 
 - 식별 번호 필드 추가
-  - User 클래스 변경
+  - Board 클래스 변경
     - seqNo 필드 추가
     - getNextSeqNo() 메서드 추가
 - 식별 번호 자동 부여 및 식별 번호로 찾기
-  - UserCommand 클래스 변경
-    - addUser() 변경
-    - listUser() 변경
-    - viewUser() 변경
-    - findByNo() 변경
-    - updateUser() 변경
-    - deleteUser() 변경
+  - BoardCommand 클래스 변경
+    - addBoard() 변경
+    - listBoard() 변경
+    - viewBoard() 변경
+    - findByNo() 추가
+    - updateBoard() 변경
+    - deleteBoard() 변경
     - indexOf() 추가
-    - 
+
+### 프로젝트 데이터에 식별 번호 부여
+
+- 식별 번호 필드 추가
+  - Project 클래스 변경
+    - seqNo 필드 추가
+    - getNextSeqNo() 메서드 추가
+    - containsMember() 메서드 변경
+- 식별 번호 자동 부여 및 식별 번호로 찾기
+  - ProjectCommand 클래스 변경
+    - addBoard() 변경
+    - listBoard() 변경
+    - viewBoard() 변경
+    - findByNo() 추가
+    - updateBoard() 변경
+    - deleteBoard() 변경
+    - indexOf() 추가
+    
 ## 소스 파일
 
 - App.java
 - User.java
 - UserCommand.java
-- Prompt.java
 - Project.java
 - ProjectCommand.java
 - Board.java
