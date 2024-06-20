@@ -9,8 +9,7 @@
 
 - GRASP 방법론의 High Cohesion 설계 패턴에 따라 UserCommand 클래스의 역할을 쪼갠다.
   - UserCommand 클래스는 UI를 처리하는 역할에 집중한다.
-- ProjectCommand, BoardCommand 클래스도 UserCommand와 같게 처리한다. 
-  
+- ProjectCommand, BoardCommand 클래스도 UserCommand와 같게 처리한다.
 
 ## 실행 결과
 

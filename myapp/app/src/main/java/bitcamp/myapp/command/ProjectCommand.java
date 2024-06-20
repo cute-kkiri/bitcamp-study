@@ -6,10 +6,6 @@ import bitcamp.myapp.vo.User;
 
 public class ProjectCommand {
 
-  private static final int MAX_SIZE = 100;
-  private static Project[] projects = new Project[MAX_SIZE];
-  private static int projectLength = 0;
-
   public static void executeProjectCommand(String command) {
     System.out.printf("[%s]\n", command);
     switch (command) {
@@ -43,14 +39,14 @@ public class ProjectCommand {
 
     project.setNo(Project.getNextSeqNo());
 
-    projects[projectLength++] = project;
+    ProjectList.add(project);
+
     System.out.println("등록했습니다.");
   }
 
   private static void listProject() {
     System.out.println("번호 프로젝트 기간");
-    for (int i = 0; i < projectLength; i++) {
-      Project project = projects[i];
+    for (Project project : ProjectList.toArray()) {
       System.out.printf("%d %s %s ~ %s\n",
           project.getNo(), project.getTitle(), project.getStartDate(), project.getEndDate());
     }
@@ -58,7 +54,7 @@ public class ProjectCommand {
 
   private static void viewProject() {
     int projectNo = Prompt.inputInt("프로젝트 번호?");
-    Project project = findByNo(projectNo);
+    Project project = ProjectList.findByNo(projectNo);
     if (project == null) {
       System.out.println("없는 프로젝트입니다.");
       return;
@@ -76,7 +72,7 @@ public class ProjectCommand {
 
   private static void updateProject() {
     int projectNo = Prompt.inputInt("프로젝트 번호?");
-    Project project = findByNo(projectNo);
+    Project project = ProjectList.findByNo(projectNo);
     if (project == null) {
       System.out.println("없는 프로젝트입니다.");
       return;
@@ -96,36 +92,12 @@ public class ProjectCommand {
 
   private static void deleteProject() {
     int projectNo = Prompt.inputInt("프로젝트 번호?");
-    Project project = findByNo(projectNo);
-    if (project == null) {
+    Project deletedProject = ProjectList.delete(projectNo);
+    if (deletedProject != null) {
+      System.out.printf("%d번 프로젝트를 삭제 했습니다.\n", deletedProject.getNo());
+    } else {
       System.out.println("없는 프로젝트입니다.");
-      return;
     }
-    int index = indexOf(project);
-    for (int i = index + 1; i < projectLength; i++) {
-      projects[i - 1] = projects[i];
-    }
-    projects[--projectLength] = null;
-    System.out.println("삭제 했습니다.");
-  }
-
-  private static Project findByNo(int projectNo) {
-    for (int i = 0; i < projectLength; i++) {
-      Project project = projects[i];
-      if (project.getNo() == projectNo) {
-        return project;
-      }
-    }
-    return null;
-  }
-
-  private static int indexOf(Project project) {
-    for (int i = 0; i < projectLength; i++) {
-      if (projects[i] == project) {
-        return i;
-      }
-    }
-    return -1;
   }
 
   private static void addMembers(Project project) {
