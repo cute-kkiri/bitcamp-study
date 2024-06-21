@@ -5,37 +5,38 @@ import bitcamp.myapp.vo.Project;
 public class ProjectList {
 
   private static final int MAX_SIZE = 100;
-  private static Project[] projects = new Project[MAX_SIZE];
-  private static int projectLength = 0;
 
-  public static void add(Project project) {
-    projects[projectLength++] = project;
+  private Project[] projects = new Project[MAX_SIZE];
+  private int projectLength = 0;
+
+  public void add(Project project) {
+    this.projects[this.projectLength++] = project;
   }
 
-  public static Project delete(int userNo) {
+  public Project delete(int userNo) {
     Project deletedProject = findByNo(userNo);
     if (deletedProject == null) {
       return null;
     }
     int index = indexOf(deletedProject);
-    for (int i = index + 1; i < projectLength; i++) {
-      projects[i - 1] = projects[i];
+    for (int i = index + 1; i < this.projectLength; i++) {
+      this.projects[i - 1] = this.projects[i];
     }
-    projects[--projectLength] = null;
+    this.projects[--this.projectLength] = null;
     return deletedProject;
   }
 
-  public static Project[] toArray() {
-    Project[] arr = new Project[projectLength];
+  public Project[] toArray() {
+    Project[] arr = new Project[this.projectLength];
     for (int i = 0; i < arr.length; i++) {
-      arr[i] = projects[i];
+      arr[i] = this.projects[i];
     }
     return arr;
   }
 
-  public static Project findByNo(int userNo) {
-    for (int i = 0; i < projectLength; i++) {
-      Project project = projects[i];
+  public Project findByNo(int userNo) {
+    for (int i = 0; i < this.projectLength; i++) {
+      Project project = this.projects[i];
       if (project.getNo() == userNo) {
         return project;
       }
@@ -43,9 +44,9 @@ public class ProjectList {
     return null;
   }
 
-  public static int indexOf(Project project) {
-    for (int i = 0; i < projectLength; i++) {
-      if (projects[i] == project) {
+  public int indexOf(Project project) {
+    for (int i = 0; i < this.projectLength; i++) {
+      if (this.projects[i] == project) {
         return i;
       }
     }

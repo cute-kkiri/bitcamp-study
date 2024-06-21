@@ -8,13 +8,18 @@ import bitcamp.myapp.util.Prompt;
 public class App {
 
 
-  static String[] mainMenus = new String[]{"회원", "프로젝트", "게시판", "도움말", "종료"};
+  static String[] mainMenus = new String[]{"회원", "프로젝트", "게시판", "공지사항", "도움말", "종료"};
   static String[][] subMenus = {
       {"등록", "목록", "조회", "변경", "삭제"},
       {"등록", "목록", "조회", "변경", "삭제"},
       {"등록", "목록", "조회", "변경", "삭제"},
       {"등록", "목록", "조회", "변경", "삭제"}
   };
+
+  static UserCommand userCommand = new UserCommand();
+  static BoardCommand boardCommand = new BoardCommand();
+  static BoardCommand noticeCommand = new BoardCommand();
+  static ProjectCommand projectCommand = new ProjectCommand(userCommand.getUserList());
 
 
   public static void main(String[] args) {
@@ -37,11 +42,7 @@ public class App {
           } else if (menuTitle.equals("종료")) {
             break;
           } else {
-            if (menuNo >= 1 && menuNo <= 3) {
-              processMenu(menuTitle, subMenus[menuNo - 1]);
-            } else {
-              System.out.println(menuTitle);
-            }
+            processMenu(menuTitle, subMenus[menuNo - 1]);
           }
         }
       } catch (NumberFormatException ex) {
@@ -93,6 +94,10 @@ public class App {
   }
 
   static void processMenu(String menuTitle, String[] menus) {
+    if (menuTitle.equals("도움말")) {
+      System.out.println("도움말입니다.");
+      return;
+    }
     printSubMenu(menuTitle, menus);
     while (true) {
       String command = Prompt.input(String.format("메인/%s>", menuTitle));
@@ -111,13 +116,16 @@ public class App {
         } else {
           switch (menuTitle) {
             case "회원":
-              UserCommand.executeUserCommand(subMenuTitle);
+              userCommand.executeUserCommand(subMenuTitle);
               break;
             case "프로젝트":
-              ProjectCommand.executeProjectCommand(subMenuTitle);
+              projectCommand.executeProjectCommand(subMenuTitle);
               break;
             case "게시판":
-              BoardCommand.executeBoardCommand(subMenuTitle);
+              boardCommand.executeBoardCommand(subMenuTitle);
+              break;
+            case "공지사항":
+              noticeCommand.executeBoardCommand(subMenuTitle);
               break;
             default:
               System.out.printf("%s 메뉴의 명령을 처리할 수 없습니다.\n", menuTitle);

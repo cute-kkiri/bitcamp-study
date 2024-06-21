@@ -5,37 +5,38 @@ import bitcamp.myapp.vo.User;
 public class UserList {
 
   private static final int MAX_SIZE = 100;
-  private static User[] users = new User[MAX_SIZE];
-  private static int userLength = 0;
+  
+  private User[] users = new User[MAX_SIZE];
+  private int userLength = 0;
 
-  public static void add(User user) {
-    users[userLength++] = user;
+  public void add(User user) {
+    this.users[this.userLength++] = user;
   }
 
-  public static User delete(int userNo) {
+  public User delete(int userNo) {
     User deletedUser = findByNo(userNo);
     if (deletedUser == null) {
       return null;
     }
     int index = indexOf(deletedUser);
-    for (int i = index + 1; i < userLength; i++) {
-      users[i - 1] = users[i];
+    for (int i = index + 1; i < this.userLength; i++) {
+      this.users[i - 1] = this.users[i];
     }
-    users[--userLength] = null;
+    this.users[--this.userLength] = null;
     return deletedUser;
   }
 
-  public static User[] toArray() {
-    User[] arr = new User[userLength];
+  public User[] toArray() {
+    User[] arr = new User[this.userLength];
     for (int i = 0; i < arr.length; i++) {
-      arr[i] = users[i];
+      arr[i] = this.users[i];
     }
     return arr;
   }
 
-  public static User findByNo(int userNo) {
-    for (int i = 0; i < userLength; i++) {
-      User user = users[i];
+  public User findByNo(int userNo) {
+    for (int i = 0; i < this.userLength; i++) {
+      User user = this.users[i];
       if (user.getNo() == userNo) {
         return user;
       }
@@ -43,9 +44,9 @@ public class UserList {
     return null;
   }
 
-  public static int indexOf(User user) {
-    for (int i = 0; i < userLength; i++) {
-      if (users[i] == user) {
+  public int indexOf(User user) {
+    for (int i = 0; i < this.userLength; i++) {
+      if (this.users[i] == user) {
         return i;
       }
     }
