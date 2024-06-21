@@ -23,14 +23,16 @@
   - ProjectCommand 클래스 변경
   - BoardList 클래스 변경
   - BoardCommand 클래스 변경
-  - 
+  - Project 클래스 변경
 
 ## 소스 파일
 
 - App.java
+- ArrayList.java
+- UserList.java
+- BoardList.java
+- ProjectList.java
 - UserCommand.java
 - ProjectCommand.java
 - BoardCommand.java
-- UserList.java
-- ProjectList.java
-- BoardList.java
+- Project.java
