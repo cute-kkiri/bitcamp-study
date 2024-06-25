@@ -1,14 +1,38 @@
 package bitcamp.myapp.command;
 
+import java.util.Arrays;
+
 public class ArrayList {
 
-  private static final int MAX_SIZE = 100;
+  private static final int MAX_SIZE = 3;
 
   private Object[] list = new Object[MAX_SIZE];
   private int size = 0;
 
   public void add(Object obj) {
+    if (size == list.length) {
+      // 1) 우리가 만든 메서드를 사용하여 배열 크기 증가
+      //grow();
+
+      // 2) 자바에서 제공하는 클래스를 사용하여 배열 크기 증가
+      int oldSize = list.length;
+      int newSize = oldSize + (oldSize >> 1);
+      list = Arrays.copyOf(list, newSize);
+    }
     list[size++] = obj;
+  }
+
+  private void grow() {
+    int oldSize = list.length;
+    int newSize = oldSize + (oldSize >> 1); // 50% 증가
+
+    Object[] arr = new Object[newSize]; // 새 배열을 만든다.
+
+    for (int i = 0; i < list.length; i++) { // 기존 배열의 값을 복사해온다.
+      arr[i] = list[i];
+    }
+
+    list = arr; // 기존 배열의 주소를 버리고 새 배열의 주소를 담는다.
   }
 
   public Object remove(int index) {

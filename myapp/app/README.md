@@ -1,12 +1,13 @@
-# 14. 공통 코드 분리와 사용하기: 상속의 일반화(generalization) 기법
+# 15. 배열 크기 자동 증가시키기: 배열 복제와 문제점
 
 ## 학습목표
 
-- 상속의 기법 중 일반화(generalization)를 수행할 수 있다.
+- 배열의 크기를 증가시킬 수 있다.
+- 배열로 데이터를 저장하는 방식의 장점과 단점을 설명할 수 있다.
 
 ## 요구사항
 
-- 공통 코드를 분리하여 재사용 하기 쉽도록 리팩토링 하기
+- 데이터의 저장 개수를 무제한으로 만들기
 
 ## 실행 결과
 
@@ -15,24 +16,10 @@
 
 ## 작업
 
-- UserList, ProjectList, BoardList 클래스에서 공통 코드를 분리하여 별도의 클래스로 정의한다.
-  - ArrayList 클래스 추가
-  - UserList 클래스 변경
-  - UserCommand 클래스 변경
-  - ProjectList 클래스 변경
-  - ProjectCommand 클래스 변경
-  - BoardList 클래스 변경
-  - BoardCommand 클래스 변경
-  - Project 클래스 변경
+- ArrayList 클래스 변경
+  - add() 메서드 변경
+  - grow() 메서드 추가
 
 ## 소스 파일
 
-- App.java
 - ArrayList.java
-- UserList.java
-- BoardList.java
-- ProjectList.java
-- UserCommand.java
-- ProjectCommand.java
-- BoardCommand.java
-- Project.java
