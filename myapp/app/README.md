@@ -18,8 +18,14 @@
 
 - 값을 보관한 노드 역할을 할 클래스를 정의한다.
   - Node 클래스 추가
-- 
+- Linked List 자료구조를 구현한다.
+  - LinkedList 클래스 추가
+- UserList 클래스의 수퍼 클래스를 ArrayList 대신 LinkedList로 교체한다.
+  - UserList 클래스 변경
+- UserList 클래스 변경에 따라 UserCommand 클래스를 변경한다.
+  - UserCommand 클래스 변경
 
 ## 소스 파일
 
-- ArrayList.java
+- Node.java
+- LinkedList.java

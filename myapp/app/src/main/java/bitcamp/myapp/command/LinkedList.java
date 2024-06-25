@@ -11,11 +11,22 @@ public class LinkedList {
     list.append("홍길동");
     list.append("임꺽정");
     list.append("유관순");
+    list.append("안중근");
+    list.append("윤봉길");
+    list.append("김구");
 
-    //list.printAll();
-    for (int i = 0; i < list.size(); i++) {
-      System.out.println(list.getValue(i));
-    }
+    list.delete(2);
+    list.printAll();
+
+    list.delete(2);
+    list.printAll();
+
+    list.delete(2);
+    list.printAll();
+
+    list.delete(2);
+    list.printAll();
+
   }
 
   public void append(Object value) {
@@ -48,38 +59,68 @@ public class LinkedList {
     return null;
   }
 
-  public void delete(int index) {
+  public Object delete(int index) {
     if (index < 0 || index >= size) {
-      throw null;
+      return null;
     }
 
+    Node deletedNode = null;
     size--;
 
     if (index == 0) {
+      deletedNode = first;
       first = first.next;
       if (first == null) {
         last = null;
       }
-      return;
+      return deletedNode.value;
     }
 
     Node cursor = first;
     int currentIndex = 0;
 
-    while (current != null && currentIndex < index - 1) {
-      current = current.next;
+    while (cursor != null) {
+      if (currentIndex == (index - 1)) {
+        break;
+      }
+      cursor = cursor.next;
       currentIndex++;
     }
 
-    if (current == null || current.next == null) {
-      throw new IndexOutOfBoundsException("Index: " + index);
+    deletedNode = cursor.next;
+    cursor.next = cursor.next.next;
+
+    if (cursor.next == null) {
+      last = cursor;
     }
 
-    if (current.next == tail) {
-      tail = current;
+    return deletedNode.value;
+  }
+
+  public int index(Object value) {
+    Node cursor = first;
+    int currentIndex = 0;
+
+    while (cursor != null) {
+      if (cursor.value == value) {
+        return currentIndex;
+      }
+      cursor = cursor.next;
+      currentIndex++;
+    }
+    return -1;
+  }
+
+  public Object[] getArray() {
+    Object[] arr = new Object[size];
+
+    Node cursor = first;
+    for (int i = 0; i < size; i++) {
+      arr[i] = cursor.value;
+      cursor = cursor.next;
     }
 
-    current.next = current.next.next;
+    return arr;
   }
 
   public int size() {
@@ -89,8 +130,9 @@ public class LinkedList {
   public void printAll() {
     Node cursor = first;
     while (cursor != null) {
-      System.out.println(cursor.value);
+      System.out.print(cursor.value + ",");
       cursor = cursor.next;
     }
+    System.out.println();
   }
 }
