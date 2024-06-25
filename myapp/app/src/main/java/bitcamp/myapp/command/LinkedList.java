@@ -48,6 +48,40 @@ public class LinkedList {
     return null;
   }
 
+  public void delete(int index) {
+    if (index < 0 || index >= size) {
+      throw null;
+    }
+
+    size--;
+
+    if (index == 0) {
+      first = first.next;
+      if (first == null) {
+        last = null;
+      }
+      return;
+    }
+
+    Node cursor = first;
+    int currentIndex = 0;
+
+    while (current != null && currentIndex < index - 1) {
+      current = current.next;
+      currentIndex++;
+    }
+
+    if (current == null || current.next == null) {
+      throw new IndexOutOfBoundsException("Index: " + index);
+    }
+
+    if (current.next == tail) {
+      tail = current;
+    }
+
+    current.next = current.next.next;
+  }
+
   public int size() {
     return size;
   }
