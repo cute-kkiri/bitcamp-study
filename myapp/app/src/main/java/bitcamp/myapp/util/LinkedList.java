@@ -21,7 +21,7 @@ public class LinkedList extends AbstractList {
   @Override
   public Object get(int index) {
     if (index < 0 || index >= size) {
-      throw null;
+      return null;
     }
 
     Node cursor = first;

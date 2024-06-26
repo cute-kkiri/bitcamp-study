@@ -71,7 +71,6 @@ public class ArrayList extends AbstractList {
     if (index < 0 || index >= size) {
       return null;
     }
-    java.util.ArrayList l;
     return list[index];
   }
 
