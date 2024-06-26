@@ -1,4 +1,4 @@
-package bitcamp.myapp.command;
+package bitcamp.myapp.util;
 
 public class Node {
 

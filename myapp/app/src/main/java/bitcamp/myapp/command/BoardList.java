@@ -1,5 +1,6 @@
 package bitcamp.myapp.command;
 
+import bitcamp.myapp.util.ArrayList;
 import bitcamp.myapp.vo.Board;
 
 public class BoardList extends ArrayList {

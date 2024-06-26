@@ -1,14 +1,15 @@
-package bitcamp.myapp.command;
+package bitcamp.myapp.util;
 
 import java.util.Arrays;
 
-public class ArrayList {
+public class ArrayList implements List {
 
   private static final int MAX_SIZE = 3;
 
   private Object[] list = new Object[MAX_SIZE];
   private int size = 0;
 
+  @Override // 재정의 또는 추상메서드 구현을 의미
   public void add(Object obj) {
     if (size == list.length) {
       // 1) 우리가 만든 메서드를 사용하여 배열 크기 증가
@@ -35,6 +36,7 @@ public class ArrayList {
     list = arr; // 기존 배열의 주소를 버리고 새 배열의 주소를 담는다.
   }
 
+  @Override
   public Object remove(int index) {
     if (index < 0 || index >= size) {
       return null;
@@ -47,6 +49,7 @@ public class ArrayList {
     return deletedObj;
   }
 
+  @Override
   public Object[] toArray() {
     Object[] arr = new Object[size];
     for (int i = 0; i < arr.length; i++) {
@@ -55,19 +58,22 @@ public class ArrayList {
     return arr;
   }
 
+  @Override
   public int indexOf(Object obj) {
     for (int i = 0; i < size; i++) {
-      if (list[i] == obj) {
+      if (list[i].equals(obj)) {
         return i;
       }
     }
     return -1;
   }
 
+  @Override
   public int size() {
     return size;
   }
 
+  @Override
   public Object get(int index) {
     if (index < 0 || index >= size) {
       return null;

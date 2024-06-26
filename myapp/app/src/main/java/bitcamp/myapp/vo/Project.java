@@ -1,6 +1,6 @@
 package bitcamp.myapp.vo;
 
-import bitcamp.myapp.command.ArrayList;
+import bitcamp.myapp.util.ArrayList;
 
 public class Project {
 

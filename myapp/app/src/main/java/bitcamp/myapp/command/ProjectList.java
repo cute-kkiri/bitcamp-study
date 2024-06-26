@@ -1,5 +1,6 @@
 package bitcamp.myapp.command;
 
+import bitcamp.myapp.util.ArrayList;
 import bitcamp.myapp.vo.Project;
 
 public class ProjectList extends ArrayList {
