@@ -83,7 +83,7 @@ public class LinkedList implements List {
     int currentIndex = 0;
 
     while (cursor != null) {
-      if (cursor.value == value) {
+      if (cursor.value.equals(value)) {
         return currentIndex;
       }
       cursor = cursor.next;

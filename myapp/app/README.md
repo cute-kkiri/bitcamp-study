@@ -28,10 +28,18 @@
 - 리팩토링
   - UserList, ProjectList, BoardList 에서 데이터를 찾는 기능을 equals로 대체 
   - UserList, ProjectList, BoardList 제거
-
+- equals() 재정의
+  - Board, Project, User 변경
+  - UserCommand, BoardCommand, ProjectCommand 변경
 
 ## 소스 파일
 
 - List.java
 - ArrayList.java
 - LinkedList.java
+- UserCommand.java
+- ProjectCommand.java
+- BoardCommand.java
+- User.java
+- Project.java
+- Board.java

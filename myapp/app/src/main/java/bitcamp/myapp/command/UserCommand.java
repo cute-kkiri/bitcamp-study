@@ -1,12 +1,12 @@
 package bitcamp.myapp.command;
 
-import bitcamp.myapp.util.ArrayList;
+import bitcamp.myapp.util.LinkedList;
 import bitcamp.myapp.util.Prompt;
 import bitcamp.myapp.vo.User;
 
 public class UserCommand {
 
-  ArrayList userList = new ArrayList();
+  LinkedList userList = new LinkedList();
 
   public void executeUserCommand(String command) {
     System.out.printf("[%s]\n", command);
@@ -86,7 +86,7 @@ public class UserCommand {
     }
   }
 
-  public ArrayList getUserList() {
+  public LinkedList getUserList() {
     return userList;
   }
 
