@@ -5,9 +5,7 @@ import java.util.Arrays;
 public class ArrayList extends AbstractList {
 
   private static final int MAX_SIZE = 3;
-
   private Object[] list = new Object[MAX_SIZE];
-
 
   @Override // 재정의 또는 추상메서드 구현을 의미
   public void add(Object obj) {
