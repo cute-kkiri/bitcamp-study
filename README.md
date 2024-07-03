@@ -334,6 +334,12 @@
 
 - 자바 기초 프로그래밍
   - 추상클래스 사용법(계속)
+  - 캡슐화
+    - 멤법 접근 제어 modifier(private, (default), protected, public)
+    - 추상화 개념
+  - GoF의 디자인 패턴
+    - Abstract Factory, Singleton 설계 패턴 이해 및 구현
+    - Factory Method, Template Method 설계 패턴 연습
 - 실습 프로젝트
 - 미니 과제 프로젝트 2
 
