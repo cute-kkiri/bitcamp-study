@@ -1,4 +1,4 @@
-// 0) 패턴 적용 전
+// 1) 패턴 적용 전
 //
 package study.patterns.ex01;
 
