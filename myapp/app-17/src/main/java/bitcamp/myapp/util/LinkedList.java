@@ -22,7 +22,7 @@ public class LinkedList implements List {
   @Override
   public Object get(int index) {
     if (index < 0 || index >= size) {
-      throw null;
+      return null;
     }
 
     Node cursor = first;

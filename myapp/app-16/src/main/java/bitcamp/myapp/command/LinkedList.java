@@ -43,7 +43,7 @@ public class LinkedList {
 
   public Object getValue(int index) {
     if (index < 0 || index >= size) {
-      throw null;
+      return null;
     }
 
     Node cursor = first;
