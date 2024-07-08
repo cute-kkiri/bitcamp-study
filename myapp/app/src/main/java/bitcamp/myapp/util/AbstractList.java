@@ -6,6 +6,6 @@ public abstract class AbstractList implements List {
 
   @Override
   public int size() {
-    return 0;
+    return this.size;
   }
 }

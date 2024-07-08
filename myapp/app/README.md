@@ -28,6 +28,9 @@
 
 - "도움말" 메뉴를 처리할 코드를 별도의 클래스로 분리
   - HelpCommand 클래스 정의
+- XxxCommand의 공통 코드를 추출하여 수퍼 클래스로 정의
+  - AbstractCommand 추상 클래스 정의
+  - UserCommand, ProjectCommand, BoardCommand 클래스를 서브로 클래스로 정의
 
 ## 소스 파일
 

@@ -5,13 +5,42 @@ import bitcamp.myapp.util.Prompt;
 import bitcamp.myapp.vo.Project;
 import bitcamp.myapp.vo.User;
 
-public class ProjectCommand {
+public class ProjectCommand extends AbstractCommand {
 
   LinkedList projectList = new LinkedList();
   LinkedList userList;
+  private String[] menus = {"등록", "목록", "조회", "변경", "삭제"};
 
-  public ProjectCommand(LinkedList userList) {
+  public ProjectCommand(String menuTitle, LinkedList userList) {
+    super(menuTitle);
     this.userList = userList;
+  }
+
+  @Override
+  protected String[] getMenus() {
+    return menus;
+  }
+
+  @Override
+  protected void processMenu(String menuName) {
+    System.out.printf("[%s]\n", menuName);
+    switch (menuName) {
+      case "등록":
+        this.addProject();
+        break;
+      case "조회":
+        this.viewProject();
+        break;
+      case "목록":
+        this.listProject();
+        break;
+      case "변경":
+        this.updateProject();
+        break;
+      case "삭제":
+        this.deleteProject();
+        break;
+    }
   }
 
   private void addMembers(Project project) {
@@ -52,26 +81,6 @@ public class ProjectCommand {
     }
   }
 
-  public void executeProjectCommand(String command) {
-    System.out.printf("[%s]\n", command);
-    switch (command) {
-      case "등록":
-        this.addProject();
-        break;
-      case "조회":
-        this.viewProject();
-        break;
-      case "목록":
-        this.listProject();
-        break;
-      case "변경":
-        this.updateProject();
-        break;
-      case "삭제":
-        this.deleteProject();
-        break;
-    }
-  }
 
   private void addProject() {
     Project project = new Project();

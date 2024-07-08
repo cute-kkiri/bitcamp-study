@@ -1,24 +1,44 @@
-# 19. 특정 클래스에서만 사용되는 클래스는 중첩 클래스로 정의하기
+# 19. 리팩토링: 상속의 Generalization 적용
 
 ## 학습목표
 
-- 중첩 클래스를 사용할 수 있다.
+- 상속의 Generalization을 이해하고 적용할 수 있다.
+- 추상 클래스의 역할을 이해하고 적용할 수 있다.
+- GoF의 Template Method 설계 패턴을 적용할 수 있다.
 
 ## 요구사항
 
-- LinkedList에서만 사용되는 Node 클래스를 패키지 멤버로 만들지 말고 중첩 클래스로 전환하기
+- ArrayList, LinkedList의 공통 코드를 분리하여 상속의 generalization으로 처리
+- UserCommand, ProjectCommand, BoardCommand의 공통 코드를 분리하여 상속의 generalization으로 처리
 
 ## 실행 결과
 
 - 이전과 같다.
 
-
 ## 작업
 
-- Node 클래스를 LinkedList 의 스태틱 중첩클래스로 옮긴다. 
-  - Node 클래스 삭제
-  - LinkedList 클래스 변경
+### ArrayList, LinkedList 일반화 하기
+
+- ArrayList와 LinkedList 공통 분모를 추출한다.
+  - AbstractList 클래스 추가
+- ArrayList, LinkedList는 AbstractList를 상속한다.
+  - ArrayList, LinkedList 변경
+
+### XxxCommand 일반화 하기
+
+- "도움말" 메뉴를 처리할 코드를 별도의 클래스로 분리
+  - HelpCommand 클래스 정의
+- XxxCommand의 공통 코드를 추출하여 수퍼 클래스로 정의
+  - AbstractCommand 추상 클래스 정의
+  - UserCommand, ProjectCommand, BoardCommand 클래스를 서브로 클래스로 정의
+
 ## 소스 파일
 
-- LinkedList.java 
-- Node.java
+- AbstractList.java
+- ArrayList.java
+- LinkedList.java
+- HelpCommand.java
+- UserCommand.java
+- ProjectCommand.java
+- BoardCommand.java
+- App.java
