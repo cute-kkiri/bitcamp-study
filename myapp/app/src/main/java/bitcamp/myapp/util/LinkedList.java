@@ -1,9 +1,10 @@
 package bitcamp.myapp.util;
 
-public class LinkedList extends AbstractList {
+public class LinkedList implements List {
 
-  private Node first;
-  private Node last;
+  Node first;
+  Node last;
+  int size;
 
   @Override
   public void add(Object value) {
@@ -21,7 +22,7 @@ public class LinkedList extends AbstractList {
   @Override
   public Object get(int index) {
     if (index < 0 || index >= size) {
-      return null;
+      throw null;
     }
 
     Node cursor = first;
@@ -100,19 +101,12 @@ public class LinkedList extends AbstractList {
       arr[i] = cursor.value;
       cursor = cursor.next;
     }
-    java.util.LinkedList l;
+
     return arr;
   }
 
-  // 1) 스태틱 중첩 클래스
-  private static class Node {
-
-    Object value;
-    Node next;
-
-    public Node(Object value) {
-      this.value = value;
-    }
+  @Override
+  public int size() {
+    return size;
   }
-
 }

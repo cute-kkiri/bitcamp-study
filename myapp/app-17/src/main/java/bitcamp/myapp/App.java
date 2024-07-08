@@ -120,16 +120,16 @@ public class App {
         } else {
           switch (menuTitle) {
             case "회원":
-              userCommand.executeUserCommand(subMenuTitle);
+              userCommand.execute(subMenuTitle);
               break;
             case "프로젝트":
-              projectCommand.executeProjectCommand(subMenuTitle);
+              projectCommand.execute(subMenuTitle);
               break;
             case "게시판":
-              boardCommand.executeBoardCommand(subMenuTitle);
+              boardCommand.execute(subMenuTitle);
               break;
             case "공지사항":
-              noticeCommand.executeBoardCommand(subMenuTitle);
+              noticeCommand.execute(subMenuTitle);
               break;
             default:
               System.out.printf("%s 메뉴의 명령을 처리할 수 없습니다.\n", menuTitle);

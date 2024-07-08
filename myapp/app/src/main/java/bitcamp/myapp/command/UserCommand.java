@@ -4,13 +4,31 @@ import bitcamp.myapp.util.LinkedList;
 import bitcamp.myapp.util.Prompt;
 import bitcamp.myapp.vo.User;
 
-public class UserCommand {
+public class UserCommand implements Command {
 
+  String menuTitle;
   LinkedList userList = new LinkedList();
+  String[] menus = {"등록", "목록", "조회", "변경", "삭제"};
 
-  public void executeUserCommand(String command) {
-    System.out.printf("[%s]\n", command);
-    switch (command) {
+  public UserCommand(String menuTitle) {
+    this.menuTitle = menuTitle;
+  }
+
+  public void execute() {
+    printMenus();
+
+    while (true) {
+      String command = Prompt.input(String.format("메인/%s>", menuTitle));
+      if (command.equals("menu")) {
+        printMenus();
+        continue;
+      } else if (command.equals("9")) { // 이전 메뉴 선택
+        return;
+      }
+    }
+
+    System.out.printf("[%s]\n", name);
+    switch (name) {
       case "등록":
         this.addUser();
         break;
@@ -27,6 +45,14 @@ public class UserCommand {
         this.deleteUser();
         break;
     }
+  }
+
+  private void printMenus() {
+    System.out.printf("[%s]\n", menuTitle);
+    for (int i = 0; i < menus.length; i++) {
+      System.out.printf("%d. %s\n", (i + 1), menus[i]);
+    }
+    System.out.println("9. 이전");
   }
 
   private void addUser() {
