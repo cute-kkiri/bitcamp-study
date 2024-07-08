@@ -7,8 +7,9 @@ import bitcamp.myapp.vo.User;
 public class UserCommand implements Command {
 
   String menuTitle;
-  LinkedList userList = new LinkedList();
   String[] menus = {"등록", "목록", "조회", "변경", "삭제"};
+
+  LinkedList userList = new LinkedList();
 
   public UserCommand(String menuTitle) {
     this.menuTitle = menuTitle;

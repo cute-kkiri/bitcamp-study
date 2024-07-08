@@ -8,18 +8,12 @@ import bitcamp.myapp.util.Prompt;
 public class App {
 
 
-  String[] mainMenus = new String[]{"회원", "프로젝트", "게시판", "공지사항", "도움말", "종료"};
-  String[][] subMenus = {
-      {"등록", "목록", "조회", "변경", "삭제"},
-      {"등록", "목록", "조회", "변경", "삭제"},
-      {"등록", "목록", "조회", "변경", "삭제"},
-      {}
-  };
+  String[] menus = {"회원", "프로젝트", "게시판", "공지사항", "도움말", "종료"};
 
   UserCommand userCommand = new UserCommand("회원");
-  BoardCommand boardCommand = new BoardCommand();
-  BoardCommand noticeCommand = new BoardCommand();
-  ProjectCommand projectCommand = new ProjectCommand(userCommand.getUserList());
+  BoardCommand boardCommand = new BoardCommand("게시판");
+  BoardCommand noticeCommand = new BoardCommand("공지사항");
+  ProjectCommand projectCommand = new ProjectCommand("프로젝트", userCommand.getUserList());
 
 
   public static void main(String[] args) {
@@ -39,7 +33,7 @@ public class App {
 
         } else {
           int menuNo = Integer.parseInt(command);
-          String menuTitle = getMenuTitle(menuNo, mainMenus); // 설명하는 변수
+          String menuTitle = getMenuTitle(menuNo); // 설명하는 변수
           if (menuTitle == null) {
             System.out.println("유효한 메뉴 번호가 아닙니다.");
           } else if (menuTitle.equals("종료")) {
@@ -69,31 +63,23 @@ public class App {
     System.out.println(boldAnsi + line + resetAnsi);
     System.out.println(boldAnsi + appTitle + resetAnsi);
 
-    for (int i = 0; i < mainMenus.length; i++) {
-      if (mainMenus[i].equals("종료")) {
-        System.out.printf("%s%d. %s%s\n", (boldAnsi + redAnsi), (i + 1), mainMenus[i], resetAnsi);
+    for (int i = 0; i < menus.length; i++) {
+      if (menus[i].equals("종료")) {
+        System.out.printf("%s%d. %s%s\n", (boldAnsi + redAnsi), (i + 1), menus[i], resetAnsi);
       } else {
-        System.out.printf("%d. %s\n", (i + 1), mainMenus[i]);
+        System.out.printf("%d. %s\n", (i + 1), menus[i]);
       }
     }
 
     System.out.println(boldAnsi + line + resetAnsi);
   }
 
-  void printSubMenu(String menuTitle, String[] menus) {
-    System.out.printf("[%s]\n", menuTitle);
-    for (int i = 0; i < menus.length; i++) {
-      System.out.printf("%d. %s\n", (i + 1), menus[i]);
-    }
-    System.out.println("9. 이전");
-  }
-
-  boolean isValidateMenu(int menuNo, String[] menus) {
+  private boolean isValidateMenu(int menuNo) {
     return menuNo >= 1 && menuNo <= menus.length;
   }
 
-  String getMenuTitle(int menuNo, String[] menus) {
-    return isValidateMenu(menuNo, menus) ? menus[menuNo - 1] : null;
+  private String getMenuTitle(int menuNo) {
+    return isValidateMenu(menuNo) ? menus[menuNo - 1] : null;
   }
 
   void processMenu(String menuTitle) {
@@ -102,13 +88,13 @@ public class App {
         userCommand.execute();
         break;
       case "프로젝트":
-//        projectCommand.execute(subMenuTitle);
+        projectCommand.execute();
         break;
       case "게시판":
-//        boardCommand.execute(subMenuTitle);
+        boardCommand.execute();
         break;
       case "공지사항":
-//        noticeCommand.execute(subMenuTitle);
+        noticeCommand.execute();
         break;
       case "도움말":
         System.out.println("도움말입니다.");

@@ -1,27 +1,34 @@
-# 18. 추상 클래스를 이용하여 공통 코드를 서브 클래스에게 상속
+# 18. 리팩토링: GRASP의 High Cohesion 적용
 
 ## 학습목표
 
-- 추상 클래스의 역할을 이해하고 사용할 수 있다.
+- GRASP 객체 지향 설계 지침 중에서 High Cohesion을 적용할 수 있다.
 
 ## 요구사항
 
-- ArrayList와 LinkedList의 공통 분모를 추출하여 수퍼 클래스를 정의
+- 서브 메뉴 처리를 각 Command 구현체에 이전하기
 
 ## 실행 결과
 
 - 이전과 같다.
 
-
 ## 작업
 
-- ArrayList와 LinkedList 공통 분모를 추출한다.
-  - AbstractList 클래스 추가
-- ArrayList, LinkedList는 AbstractList를 상속한다.
-  - ArrayList, LinkedList 변경
+- Command 인터페이스 변경
+  - execute() 메서드 변경
+- 회원 서브 메뉴 관련 코드 이전
+  - UserCommand 클래스 변경
+- 프로젝트 서브 메뉴 관련 코드 이전
+  - ProjectCommand 클래스 변경
+- 게시판 서브 메뉴 관련 코드 이전
+  - BoardCommand 클래스 변경
+- App 클래스 변경 
+
 
 ## 소스 파일
 
-- AbstractList.java
-- ArrayList.java
-- LinkedList.java
+- Command.java
+- UserCommand.java
+- ProjectCommand.java
+- BoardCommand.java
+- App.java

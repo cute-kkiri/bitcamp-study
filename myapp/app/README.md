@@ -1,4 +1,4 @@
-# 18. 리팩토링
+# 18. 리팩토링: GRASP의 High Cohesion 적용
 
 ## 학습목표
 
@@ -12,37 +12,21 @@
 
 - 이전과 같다.
 
-
 ## 작업
 
-### 목록을 다루는 객체 사용 규칙을 정의
+- Command 인터페이스 변경
+  - execute() 메서드 변경
+- 회원 서브 메뉴 관련 코드 이전
+  - UserCommand 클래스 변경
+- 프로젝트 서브 메뉴 관련 코드 이전
+  - ProjectCommand 클래스 변경
+- 게시판 서브 메뉴 관련 코드 이전
+  - BoardCommand 클래스 변경
+- App 클래스 변경 
 
-- List 인터페이스 추가 
-- ArrayList와 LinkedList 클래스를 List 규칙에 따라 정의한다.
-  - ArrayList와 LinkedList 변경
-- ArrayList, LinkedList, List 클래스를 별도의 패키지로 분류한다.
-  - 관련 클래스 이동
-- 리팩토링
-  - UserList, ProjectList, BoardList 에서 데이터를 찾는 기능을 equals로 대체 
-  - UserList, ProjectList, BoardList 제거
-- equals() 재정의
-  - Board, Project, User 변경
-  - UserCommand, BoardCommand, ProjectCommand 변경
-
-### 메뉴를 처리하는 객체의 사용 규칙을 정의
-
-- Command 인터페이스 추가
-- UserCommand, ProjectCommand, BoardCommand 클래스에 인터페이스 적용
-- 
 
 ## 소스 파일
 
-- List.java
-- ArrayList.java
-- LinkedList.java
-- User.java
-- Project.java
-- Board.java
 - Command.java
 - UserCommand.java
 - ProjectCommand.java
