@@ -25,10 +25,26 @@ public class UserCommand implements Command {
       } else if (command.equals("9")) { // 이전 메뉴 선택
         return;
       }
-    }
 
-    System.out.printf("[%s]\n", name);
-    switch (name) {
+      try {
+        int menuNo = Integer.parseInt(command);
+        String menuName = getMenuTitle(menuNo);
+        if (menuName == null) {
+          System.out.println("유효한 메뉴 번호가 아닙니다.");
+          continue;
+        }
+
+        processMenu(menuName);
+
+      } catch (NumberFormatException ex) {
+        System.out.println("숫자로 메뉴 번호를 입력하세요.");
+      }
+    }
+  }
+
+  private void processMenu(String menuName) {
+    System.out.printf("[%s]\n", menuName);
+    switch (menuName) {
       case "등록":
         this.addUser();
         break;
@@ -45,6 +61,14 @@ public class UserCommand implements Command {
         this.deleteUser();
         break;
     }
+  }
+
+  private String getMenuTitle(int menuNo) {
+    return isValidateMenu(menuNo) ? menus[menuNo - 1] : null;
+  }
+
+  private boolean isValidateMenu(int menuNo) {
+    return menuNo >= 1 && menuNo <= menus.length;
   }
 
   private void printMenus() {

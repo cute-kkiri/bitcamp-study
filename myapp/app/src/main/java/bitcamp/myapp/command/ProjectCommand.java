@@ -50,7 +50,8 @@ public class ProjectCommand implements Command {
     }
   }
 
-  public void execute(String name) {
+  public void execute() {
+    String name = "프로젝트";
     System.out.printf("[%s]\n", name);
     switch (name) {
       case "등록":

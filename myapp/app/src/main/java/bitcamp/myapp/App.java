@@ -13,7 +13,6 @@ public class App {
       {"등록", "목록", "조회", "변경", "삭제"},
       {"등록", "목록", "조회", "변경", "삭제"},
       {"등록", "목록", "조회", "변경", "삭제"},
-      {"등록", "목록", "조회", "변경", "삭제"},
       {}
   };
 
@@ -46,7 +45,7 @@ public class App {
           } else if (menuTitle.equals("종료")) {
             break;
           } else {
-            processMenu(menuTitle, subMenus[menuNo - 1]);
+            processMenu(menuTitle);
           }
         }
       } catch (NumberFormatException ex) {
@@ -97,47 +96,25 @@ public class App {
     return isValidateMenu(menuNo, menus) ? menus[menuNo - 1] : null;
   }
 
-  void processMenu(String menuTitle, String[] menus) {
-    if (menuTitle.equals("도움말")) {
-      System.out.println("도움말입니다.");
-      return;
-    }
-    printSubMenu(menuTitle, menus);
-    while (true) {
-      String command = Prompt.input(String.format("메인/%s>", menuTitle));
-      if (command.equals("menu")) {
-        printSubMenu(menuTitle, menus);
-        continue;
-      } else if (command.equals("9")) { // 이전 메뉴 선택
+  void processMenu(String menuTitle) {
+    switch (menuTitle) {
+      case "회원":
+        userCommand.execute();
         break;
-      }
-
-      try {
-        int menuNo = Integer.parseInt(command);
-        String subMenuTitle = getMenuTitle(menuNo, menus);
-        if (subMenuTitle == null) {
-          System.out.println("유효한 메뉴 번호가 아닙니다.");
-        } else {
-          switch (menuTitle) {
-            case "회원":
-              userCommand.execute(subMenuTitle);
-              break;
-            case "프로젝트":
-              projectCommand.execute(subMenuTitle);
-              break;
-            case "게시판":
-              boardCommand.execute(subMenuTitle);
-              break;
-            case "공지사항":
-              noticeCommand.execute(subMenuTitle);
-              break;
-            default:
-              System.out.printf("%s 메뉴의 명령을 처리할 수 없습니다.\n", menuTitle);
-          }
-        }
-      } catch (NumberFormatException ex) {
-        System.out.println("숫자로 메뉴 번호를 입력하세요.");
-      }
+      case "프로젝트":
+//        projectCommand.execute(subMenuTitle);
+        break;
+      case "게시판":
+//        boardCommand.execute(subMenuTitle);
+        break;
+      case "공지사항":
+//        noticeCommand.execute(subMenuTitle);
+        break;
+      case "도움말":
+        System.out.println("도움말입니다.");
+        break;
+      default:
+        System.out.printf("%s 메뉴의 명령을 처리할 수 없습니다.\n", menuTitle);
     }
   }
 }

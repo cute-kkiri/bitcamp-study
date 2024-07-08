@@ -9,7 +9,8 @@ public class BoardCommand implements Command {
 
   LinkedList boardList = new LinkedList();
 
-  public void execute(String name) {
+  public void execute() {
+    String name = "게시글";
     System.out.printf("[%s]\n", name);
     switch (name) {
       case "등록":
