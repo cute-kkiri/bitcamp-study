@@ -1,12 +1,15 @@
-# 18. 리팩토링: GRASP의 High Cohesion 적용
+# 19. 리팩토링: 상속의 Generalization 적용
 
 ## 학습목표
 
-- GRASP 객체 지향 설계 지침 중에서 High Cohesion을 적용할 수 있다.
+- 상속의 Generalization을 이해하고 적용할 수 있다.
+- 추상 클래스의 역할을 이해하고 적용할 수 있다.
+- GoF의 Template Method 설계 패턴을 적용할 수 있다.
 
 ## 요구사항
 
-- 서브 메뉴 처리를 각 Command 구현체에 이전하기
+- ArrayList, LinkedList의 공통 코드를 분리하여 상속의 generalization으로 처리
+- UserCommand, ProjectCommand, BoardCommand의 공통 코드를 분리하여 상속의 generalization으로 처리
 
 ## 실행 결과
 
@@ -14,20 +17,24 @@
 
 ## 작업
 
-- Command 인터페이스 변경
-  - execute() 메서드 변경
-- 회원 서브 메뉴 관련 코드 이전
-  - UserCommand 클래스 변경
-- 프로젝트 서브 메뉴 관련 코드 이전
-  - ProjectCommand 클래스 변경
-- 게시판 서브 메뉴 관련 코드 이전
-  - BoardCommand 클래스 변경
-- App 클래스 변경 
+### ArrayList, LinkedList 일반화 하기
 
+- ArrayList와 LinkedList 공통 분모를 추출한다.
+  - AbstractList 클래스 추가
+- ArrayList, LinkedList는 AbstractList를 상속한다.
+  - ArrayList, LinkedList 변경
+
+### XxxCommand 일반화 하기
+
+- "도움말" 메뉴를 처리할 코드를 별도의 클래스로 분리
+  - HelpCommand 클래스 정의
 
 ## 소스 파일
 
-- Command.java
+- AbstractList.java
+- ArrayList.java
+- LinkedList.java
+- HelpCommand.java
 - UserCommand.java
 - ProjectCommand.java
 - BoardCommand.java

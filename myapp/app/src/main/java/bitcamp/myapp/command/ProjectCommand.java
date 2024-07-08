@@ -5,7 +5,7 @@ import bitcamp.myapp.util.Prompt;
 import bitcamp.myapp.vo.Project;
 import bitcamp.myapp.vo.User;
 
-public class ProjectCommand implements Command {
+public class ProjectCommand extends AbstractCommand {
 
   String menuTitle;
   String[] menus = {"등록", "목록", "조회", "변경", "삭제"};

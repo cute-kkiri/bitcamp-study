@@ -1,6 +1,7 @@
 package bitcamp.myapp;
 
 import bitcamp.myapp.command.BoardCommand;
+import bitcamp.myapp.command.HelpCommand;
 import bitcamp.myapp.command.ProjectCommand;
 import bitcamp.myapp.command.UserCommand;
 import bitcamp.myapp.util.Prompt;
@@ -14,6 +15,7 @@ public class App {
   BoardCommand boardCommand = new BoardCommand("게시판");
   BoardCommand noticeCommand = new BoardCommand("공지사항");
   ProjectCommand projectCommand = new ProjectCommand("프로젝트", userCommand.getUserList());
+  HelpCommand helpCommand = new HelpCommand("도움말");
 
 
   public static void main(String[] args) {
@@ -97,7 +99,7 @@ public class App {
         noticeCommand.execute();
         break;
       case "도움말":
-        System.out.println("도움말입니다.");
+        helpCommand.execute();
         break;
       default:
         System.out.printf("%s 메뉴의 명령을 처리할 수 없습니다.\n", menuTitle);
