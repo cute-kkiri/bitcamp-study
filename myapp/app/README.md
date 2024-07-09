@@ -21,10 +21,10 @@
 - LinkedList를 상속 받아 스택을 구현한다.
   - Stack 클래스 추가
 - 프롬프트 메뉴 경로를 출력할 때 스택을 적용한다.
-  - App 클래스
+  - App 클래스 변경
     - 메뉴 경로를 저장하는 스택 객체 준비
     - 메인 메뉴 이름을 스택에 저장
-  - AbstractCommand 클래스
+  - AbstractCommand 클래스 변경
     - 서브 메뉴 이름을 스택에 보관 및 꺼내기
     - 메뉴 경로를 리턴하는 메서드 추가: getMenuPath()
 
@@ -32,19 +32,20 @@
 
 - LinkedList를 상속 받아 큐를 구현한다.
   - Queue 클래스 추가
-  
+- 사용자가 입력한 내역을 큐를 이용하여 저장한다.
+  - Prompt 클래스 변경
+    - 사용자가 입력한 내용을 큐에 순서대로 저장
+    - 입력한 내역을 출력: printHistory()
+- 사용자가 입력한 내역을 출력한다.
+  - HistoryCommand 클래스 추가
+  - App 클래스 변경 
+    - "명령내역" 메뉴 추가
 
-
-### 의존 객체를 외부에서 주입하기(SOLID의 DIP 적용)
-
-- UserCommand, ProjectCommand, BoardCommand 클래스의 의존 객체를 외부에서 주입
-  - 생성자 변경
-- Command 객체가 사용할 List 객체 준비
-  - App 클래스 변경: 생성자 변경
 
 ## 소스 파일
 
-- UserCommand.java
-- ProjectCommand.java
-- BoardCommand.java
+- Stack.java
+- Queue.java
+- AbstractCommand.java
+- Prompt.java
 - App.java
