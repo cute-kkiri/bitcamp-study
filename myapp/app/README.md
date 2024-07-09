@@ -1,15 +1,14 @@
-# 19. 리팩토링: 상속의 Generalization 적용
+# 20. 리팩토링: Map 컬렉션과 의존성 주입
 
 ## 학습목표
 
-- 상속의 Generalization을 이해하고 적용할 수 있다.
-- 추상 클래스의 역할을 이해하고 적용할 수 있다.
-- GoF의 Template Method 설계 패턴을 적용할 수 있다.
+- GRASP 설계 지침에서 Low Coupling을 이해하고 적용할 수 있다.
+- SOLID 설계 원칙에서 DIP(Dependency Inversion Principle)를 이해하고 적용할 수 있다.
+- Map 컬렉션 객체를 사용하여 객체를 저장하고 조회할 수 있다.
 
 ## 요구사항
 
-- ArrayList, LinkedList의 공통 코드를 분리하여 상속의 generalization으로 처리
-- UserCommand, ProjectCommand, BoardCommand의 공통 코드를 분리하여 상속의 generalization으로 처리
+- 의존 객체를 다룰 때 DIP 설계 원칙을 적용
 
 ## 실행 결과
 
@@ -17,27 +16,22 @@
 
 ## 작업
 
-### ArrayList, LinkedList 일반화 하기
+### Command 구현체 저장 및 실행
 
-- ArrayList와 LinkedList 공통 분모를 추출한다.
-  - AbstractList 클래스 추가
-- ArrayList, LinkedList는 AbstractList를 상속한다.
-  - ArrayList, LinkedList 변경
+- Map 컬렉션 객체를 사용하여 Command 구현체를 저장
+  - App 클래스: 생성자 추가
+- 메뉴에 대한 Command 구현체를 찾아 실행
+  - App 클래스: processMenu() 변경
 
-### XxxCommand 일반화 하기
+### 의존 객체를 외부에서 주입하기(SOLID의 DIP 적용)
 
-- "도움말" 메뉴를 처리할 코드를 별도의 클래스로 분리
-  - HelpCommand 클래스 정의
-- XxxCommand의 공통 코드를 추출하여 수퍼 클래스로 정의
-  - AbstractCommand 추상 클래스 정의
-  - UserCommand, ProjectCommand, BoardCommand 클래스를 서브로 클래스로 정의
+- UserCommand, ProjectCommand, BoardCommand 클래스의 의존 객체를 외부에서 주입
+  - 생성자 변경
+- Command 객체가 사용할 List 객체 준비
+  - App 클래스 변경: 생성자 변경
 
 ## 소스 파일
 
-- AbstractList.java
-- ArrayList.java
-- LinkedList.java
-- HelpCommand.java
 - UserCommand.java
 - ProjectCommand.java
 - BoardCommand.java
