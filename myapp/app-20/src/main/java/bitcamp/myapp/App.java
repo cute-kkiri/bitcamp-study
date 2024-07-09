@@ -9,7 +9,6 @@ import bitcamp.myapp.util.ArrayList;
 import bitcamp.myapp.util.LinkedList;
 import bitcamp.myapp.util.List;
 import bitcamp.myapp.util.Prompt;
-import bitcamp.myapp.util.Stack;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,7 +16,6 @@ public class App {
 
 
   String[] menus = {"회원", "프로젝트", "게시판", "도움말", "종료"};
-  Stack menuPath = new Stack();
 
   Map<String, Command> commandMap = new HashMap<>();
 
@@ -37,14 +35,12 @@ public class App {
   }
 
   void execute() {
-    menuPath.push("메인");
-
     printMenu();
 
     String command;
     while (true) {
       try {
-        command = Prompt.input("%s>", getMenuPathTitle(menuPath));
+        command = Prompt.input("메인>");
 
         if (command.equals("menu")) {
           printMenu();
@@ -106,17 +102,6 @@ public class App {
       System.out.printf("%s 메뉴의 명령을 처리할 수 없습니다.\n", menuTitle);
       return;
     }
-    command.execute(menuPath);
-  }
-
-  private String getMenuPathTitle(Stack menuPath) {
-    StringBuilder strBuilder = new StringBuilder();
-    for (int i = 0; i < menuPath.size(); i++) {
-      if (strBuilder.length() > 0) {
-        strBuilder.append("/");
-      }
-      strBuilder.append(menuPath.get(i));
-    }
-    return strBuilder.toString();
+    command.execute();
   }
 }
