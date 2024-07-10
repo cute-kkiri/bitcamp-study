@@ -23,11 +23,9 @@
 ## 21. 스택과 큐 다루기
 ## 22. Iterator 디자인 패턴을 활용하여 목록 조회 기능을 캡슐화하기
 ## 23. 특정 클래스에서만 사용되는 의존 객체는 중첩 클래스로 정의하기
+## 24. 자바 Collection API 사용하기
 
 
-- 중접 클래스 문법을 이용하여 Iterator 구현하기
-  - static/non-static nested 클래스 문법을 활용하는 방법
-  - local/anonymous 클래스 문법을 활용하는 방법
 
 
 
@@ -54,11 +52,7 @@
   - Arrays.copyOf() 메서드 사용하기
 
 
-## 21. 자바 Collection API 사용하기
 
--  기존의 컬렉션 클래스 및 인터페이스를 자바 컬렉션 API로 교체하기
-
-- java.util 패키지에서 제공하는 컬렉션 API로 교체
 
 
 ## 17. 인터페이스와 GoF의 Composite 패턴을 이용하여 메뉴를 구현하기
