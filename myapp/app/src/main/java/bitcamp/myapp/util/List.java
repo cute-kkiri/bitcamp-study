@@ -17,5 +17,7 @@ public interface List {
 
   int size();
 
+  boolean contains(Object value);
+
   Iterator iterator();
 }

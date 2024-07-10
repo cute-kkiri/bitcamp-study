@@ -76,8 +76,5 @@ public class ArrayList extends AbstractList {
     return list[index];
   }
 
-  public boolean contains(Object obj) {
-    return indexOf(obj) != -1;
-  }
 
 }

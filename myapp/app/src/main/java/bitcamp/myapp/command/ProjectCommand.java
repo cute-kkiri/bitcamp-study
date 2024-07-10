@@ -123,8 +123,9 @@ public class ProjectCommand extends AbstractCommand {
     System.out.printf("설명: %s\n", project.getDescription());
     System.out.printf("기간: %s ~ %s\n", project.getStartDate(), project.getEndDate());
     System.out.println("팀원:");
-    for (int i = 0; i < project.getMembers().size(); i++) {
-      User user = (User) project.getMembers().get(i);
+    Iterator memberIterator = project.getMembers().iterator();
+    while (memberIterator.hasNext()) {
+      User user = (User) memberIterator.next();
       System.out.printf("- %s\n", user.getName());
     }
   }
