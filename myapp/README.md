@@ -21,7 +21,14 @@
 ## 19. 리팩토링: 상속의 Generalization 적용
 ## 20. 리팩토링: Map 컬렉션과 의존성 주입
 ## 21. 스택과 큐 다루기
+## 22. Iterator 디자인 패턴을 활용하여 목록 조회 기능을 캡슐화하기
 
+
+- GoF의 디자인 패턴 중 Iterator 패턴의 동작원리 이해 및 구현
+- ArrayList, LinkedList, Stack, Queue에 적용
+- 중접 클래스 문법을 이용하여 Iterator 구현하기
+  - static/non-static nested 클래스 문법을 활용하는 방법
+  - local/anonymous 클래스 문법을 활용하는 방법
 
 ## 19. 특정 클래스에서만 사용되는 클래스는 중첩 클래스로 정의하기
 ## 20. 목록에서 데이터를 조회하는 기능을 캡슐화 하기 : Iterator 설계 패턴
@@ -124,36 +131,11 @@
 - 예외가 발생했을 때 시스템을 멈추기 않게 하는 방법
 - try ~ catch ~ finally 사용법
 
-## 26. LinkedList 자료구조 구현하기
-
-- 목록 관리 범용 클래스 LinkedList 정의
-  - LinkedList 구동원리 이해 및 구현
-  - 중첩 클래스 활용: static 중첩 클래스 Node 정의
-  - 제네릭 적용
-  - List 구현체를 생성자를 통해 주입: DI(Dependency Injection) 적용
-- List 객체 사용 규칙 정의
-  - ArrayList, LinkedList에 List 인터페이스 적용
-- AbstractList 추상 클래스 적용 
-  - ArrayList, LinkedList에 AbstractList 추상 클래스 적용
-- MenuGroup에 적용
-- Handler에 적용
-
-## 27. Stack, Queue 자료구조 구현하기
-
-- Stack과 Queue의 구동원리 이해 및 구현
-- Stack 적용
-  - MenuGroup에 Stack을 이용하여 Breadcrumb 구현
-- GoF의 "Factory Method" 디자인 패턴 적용
-  - MenuGroup에 적용
 
 
-## 28. Iterator 디자인 패턴을 활용하여 목록 조회 기능을 캡슐화하기
 
-- GoF의 디자인 패턴 중 Iterator 패턴의 동작원리 이해 및 구현
-- ArrayList, LinkedList, Stack, Queue에 적용
-- 중접 클래스 문법을 이용하여 Iterator 구현하기
-  - static/non-static nested 클래스 문법을 활용하는 방법
-  - local/anonymous 클래스 문법을 활용하는 방법
+
+
 
 ## 29. 기존의 컬렉션 클래스 및 인터페이스를 자바 컬렉션 API로 교체하기
 
