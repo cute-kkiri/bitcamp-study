@@ -1,12 +1,12 @@
-# 22. Iterator 디자인 패턴을 활용하여 목록 조회 기능을 캡슐화하기
+# 23. 특정 클래스에서만 사용되는 의존 객체는 중첩 클래스로 정의하기
 
 ## 학습목표
 
-- GoF의 Iterator 설계 패턴을 이해하고 적용할 수 있다.
+- 중첩 클래스의 구동 원리를 이해하고 사용할 수 있다.
 
 ## 요구사항
 
-- 자료구조에 상관없이 일관된 방법으로 데이터를 조회할 수 있도록 캡슐화 하기
+- 특정 클래스에서만 사용되는 클래스가 있다면 중첩 클래스로 코드를 정리하기
 
 ## 실행 결과
 
@@ -14,24 +14,21 @@
 
 ## 작업
 
-### Iterator 인터페이스 정의 및 구현, 적용
+### Node 클래스를 중첩 클래스로 전환
 
-- Iterator 인터페이스 추가
-- List 인터페이스 변경
-  - iterator() 메서드 추가
-- Iterator 구현체 추가
-  - ListIterator 클래스 정의
-- AbstractList 클래스 변경
-  - iterator() 추가: ListIterator 객체 리턴
-- Command 구현체에 적용
-  - BoardCommand, ProjectCommand, UserCommand 클래스 변경
+- LinkedList 클래스 변경
+  - Node 클래스를 LinkedList의 static nested class 로 옮긴다.
   
+### ListIterator 클래스를 중첩 클래스로 전환
+
+- AbstractList 클래스 변경
+  - ListIterator 클래스를 이 클래스의 static nested class로 옮긴다.
 
 ## 소스 파일
 
-- Iterator.java
-- List.java
-- ListIterator.java
+- Node.java (삭제)
+- LinkedList.java
+- ListIterator.java (삭제)
 - AbstractList.java
 - BoardCommand.java
 - ProjectCommand.java
