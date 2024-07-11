@@ -1,6 +1,6 @@
 package bitcamp.myapp.util;
 
-public abstract class AbstractList implements List {
+public abstract class AbstractList03 implements List {
 
   protected int size = 0;
 
@@ -9,26 +9,15 @@ public abstract class AbstractList implements List {
     return this.size;
   }
 
-  @Override
   public boolean contains(Object obj) {
     return indexOf(obj) != -1;
   }
 
   @Override
-  public boolean remove(Object obj) {
-    int index = indexOf(obj);
-    if (index == -1) {
-      return false;
-    }
-    remove(index);
-    return true;
-  }
-
-  @Override
   public Iterator iterator() {
 
-    // 4) anonymous class
-    return new Iterator() {
+    // 3) local class
+    class ListIterator implements Iterator {
 
       private int cursor;
 
@@ -41,6 +30,8 @@ public abstract class AbstractList implements List {
       public Object next() {
         return get(cursor++);
       }
-    };
+    }
+
+    return new ListIterator();
   }
 }

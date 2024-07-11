@@ -1,9 +1,9 @@
 package bitcamp.myapp.command;
 
+import bitcamp.myapp.util.Iterator;
+import bitcamp.myapp.util.List;
 import bitcamp.myapp.util.Prompt;
 import bitcamp.myapp.vo.User;
-import java.util.Iterator;
-import java.util.List;
 
 public class UserCommand extends AbstractCommand {
 
@@ -100,7 +100,7 @@ public class UserCommand extends AbstractCommand {
       System.out.println("없는 회원입니다.");
       return;
     }
-    
+
     User deletedUser = (User) userList.remove(index);
     System.out.printf("'%s' 회원을 삭제 했습니다.\n", deletedUser.getName());
   }
