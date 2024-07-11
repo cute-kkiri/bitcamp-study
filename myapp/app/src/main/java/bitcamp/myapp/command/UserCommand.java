@@ -1,9 +1,8 @@
 package bitcamp.myapp.command;
 
-import bitcamp.myapp.util.Iterator;
-import bitcamp.myapp.util.List;
 import bitcamp.myapp.util.Prompt;
 import bitcamp.myapp.vo.User;
+import java.util.List;
 
 public class UserCommand extends AbstractCommand {
 
@@ -54,9 +53,7 @@ public class UserCommand extends AbstractCommand {
 
   private void listUser() {
     System.out.println("번호 이름 이메일");
-    Iterator<User> iterator = userList.iterator();
-    while (iterator.hasNext()) {
-      User user = iterator.next();
+    for (User user : userList) {
       System.out.printf("%d %s %s\n", user.getNo(), user.getName(), user.getEmail());
     }
   }
