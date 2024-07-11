@@ -1,12 +1,12 @@
-# 24. 자바 Collection API 사용하기
+# 24. 제네릭을 사용하여 타입을 파라미터로 다루기
 
 ## 학습목표
 
-- 자바에서 제공하는 컬렉션 API를 사용할 수 있다.
+- 제네릭(Generic) 문법을 사용할 수 있다. 
 
 ## 요구사항
 
-- 기존에 작성한 컬렉션 클래스 대신 자바에서 제공하는 클래스로 교체하기
+- ArrayList, LinkedList 등이 특정 타입만 다룰 수 있도록 항목의 타입을 제한하기
 
 ## 실행 결과
 
@@ -14,15 +14,18 @@
 
 ## 작업
 
-- 목록 관련 클래스 삭제
-    
-## 소스 파일
+- Iterator 인터페이스 변경
+- List 인터페이스 변경
+- AbstractList 클래스 변경
+- LinkedList 클래스 변경
+- Node 클래스 변경
+- ArrayList 클래스 변경
+- Queue 클래스 변경
+- Stack 클래스 변경
+- XxxCommand 클래스 변경
+- Prompt 클래스 변경
+- Project 클래스 변경
+- App 클래스 변경
 
-- List.java (삭제)
-- Iterator.java (삭제)
-- AbstractList.java (삭제)
-- ArrayList.java (삭제)
-- LinkedList.java (삭제)
-- Stack.java (삭제)
-- Queue.java (삭제)
-- Board.java, User.java 빼고 모두 변경
+  
+## 소스 파일

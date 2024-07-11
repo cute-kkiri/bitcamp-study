@@ -5,12 +5,12 @@ import java.util.Scanner;
 public class Prompt {
 
   static Scanner keyboardScanner = new Scanner(System.in);
-  static Queue inputQueue = new Queue();
+  static Queue<String> inputQueue = new Queue<>();
 
   public static String input(String format, Object... args) {
     String promptTitle = String.format(format + " ", args);
     System.out.print(promptTitle);
-    
+
     String input = keyboardScanner.nextLine();
     if (format.endsWith(">")) {
       inputQueue.offer(promptTitle + input); // 최근 명령어를 큐의 맨 뒤에 넣는다.

@@ -5,7 +5,7 @@ import bitcamp.myapp.util.Stack;
 
 public class HistoryCommand implements Command {
 
-  public void execute(Stack menuPath) {
+  public void execute(Stack<String> menuPath) {
     Prompt.printHistory();
   }
 }
