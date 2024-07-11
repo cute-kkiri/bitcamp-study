@@ -12,7 +12,7 @@ public class TeamGenerator {
         "황민지"
     };
 
-    ArrayList<String> list = new ArrayList();
+    ArrayList<String> list = new ArrayList<>();
     for (String s : students) {
       list.add(s);
     }
