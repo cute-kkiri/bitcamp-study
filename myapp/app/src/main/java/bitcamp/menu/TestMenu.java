@@ -6,13 +6,13 @@ public class TestMenu {
     MenuGroup root = new MenuGroup("메인");
 
     MenuGroup file = new MenuGroup("파일");
-    root.addMenu(file);
+    root.add(file);
 
     MenuGroup edit = new MenuGroup("편집");
-    root.addMenu(edit);
+    root.add(edit);
 
     MenuItem help = new MenuItem("도움말");
-    root.addMenu(help);
+    root.add(help);
 
     root.execute();
 
