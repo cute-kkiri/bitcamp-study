@@ -1,6 +1,6 @@
 package study.oop.lambda;
 
-public class Test04 {
+public class Test {
 
   interface InterestCalculator {
     double compute(int money);
@@ -8,44 +8,40 @@ public class Test04 {
 
   //1) 일반 클래스(로컬 클래스의 특징 이용 안함)
   static InterestCalculator create1(double rate) {
-
     class My implements InterestCalculator {
       double rate;
       public My(double rate) {
         this.rate = rate;
       }
+
       @Override
       public double compute(int money) {
         return money + (money * rate);
       }
     }
-
     return new My(rate);
   }
 
   //1) 일반 클래스 + 로컬 클래스의 특징 이용
   static InterestCalculator create2(double rate) {
-
     class My implements InterestCalculator {
       @Override
       public double compute(int money) {
         return money + (money * rate);
       }
     }
-
     return new My();
   }
 
   //3) 익명 클래스
   static InterestCalculator create3(double rate) {
-    InterestCalculator c = new InterestCalculator() {
+    InterestCalculator c3 = new InterestCalculator() {
       @Override
       public double compute(int money) {
         return money + (money * rate);
       }
     };
-
-    return c;
+    return c3;
   }
 
   //4) 익명 클래스 직접 대입
@@ -61,12 +57,13 @@ public class Test04 {
 
   //5) 람다
   static InterestCalculator create5(double rate) {
-    InterestCalculator c = money -> money + (money * rate);
-    return c;
+    InterestCalculator c5 = money -> money + (money * rate);
+    return c5;
   }
 
   //6) 람다 직접 대입
   static InterestCalculator create6(double rate) {
+
     return money -> money + (money * rate);
   }
 
