@@ -135,7 +135,28 @@ public class App {
   }
 
   private void loadProjects() {
+    try (FileInputStream in = new FileInputStream("project.data")) {
 
+      int projectLength = (in.read() << 8) | in.read();
+      int maxProjectNo = 0;
+      for (int i = 0; i < projectLength; i++) {
+        int len = (in.read() << 8) | in.read();
+        byte[] bytes = new byte[len];
+        in.read(bytes);
+
+        Project project = Project.valueOf(bytes);
+        projectList.add(project);
+
+        if (project.getNo() > maxProjectNo) {
+          maxProjectNo = project.getNo();
+        }
+      }
+
+      Project.initSeqNo(maxProjectNo);
+
+    } catch (IOException e) {
+      System.out.println("프로젝트 정보 로딩 중 오류 발생!");
+    }
   }
 
   private void loadBoards() {
@@ -190,8 +211,18 @@ public class App {
   }
 
   private void saveProjects() {
-    for (Project project : projectList) {
-      // project 객체에 저장된 값을 꺼내 파일로 출력한다.
+    try (FileOutputStream out = new FileOutputStream("project.data")) {
+      out.write(projectList.size() >> 8);
+      out.write(projectList.size());
+
+      for (Project project : projectList) {
+        byte[] bytes = project.getBytes();
+        out.write(bytes.length >> 8);
+        out.write(bytes.length);
+        out.write(bytes);
+      }
+    } catch (IOException e) {
+      System.out.println("프로젝트 정보 저장 중 오류 발생!");
     }
   }
 
