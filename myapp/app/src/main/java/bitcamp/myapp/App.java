@@ -109,6 +109,7 @@ public class App {
       // User 데이터 개수: 파일에서 2바이트를 읽는다.
       int userLength = (in.read() << 8) | in.read();
 
+      int maxUserNo = 0;
       for (int i = 0; i < userLength; i++) {
         // 한 개의 User 데이터 바이트 배열 크기: 파일에서 2바이트를 읽는다.
         int len = (in.read() << 8) | in.read();
@@ -120,7 +121,13 @@ public class App {
         // User 바이트 배열을 가지고 User 객체를 생성
         User user = User.valueOf(bytes);
         userList.add(user);
+
+        if (user.getNo() > maxUserNo) {
+          maxUserNo = user.getNo();
+        }
       }
+
+      User.initSeqNo(maxUserNo);
 
     } catch (IOException e) {
       System.out.println("회원 정보 로딩 중 오류 발생!");

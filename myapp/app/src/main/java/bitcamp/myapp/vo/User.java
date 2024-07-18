@@ -28,6 +28,14 @@ public class User {
     return ++seqNo;
   }
 
+  public static void initSeqNo(int no) {
+    seqNo = no;
+  }
+
+  public static int getSeqNo() {
+    return seqNo;
+  }
+
   public static User valueOf(byte[] bytes) throws IOException {
     try (ByteArrayInputStream in = new ByteArrayInputStream(bytes)) {
       User user = new User();
