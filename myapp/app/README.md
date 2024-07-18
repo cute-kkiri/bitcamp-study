@@ -15,6 +15,8 @@
 ## 작업
 
 - Command 객체의 각 메서드를 클래스로 분리
+- MenuGroup의 경로 계산을 메서드로 추출하기
+  - MenuGroup 변경: getMenuPathTitle() ==> getMenuPath() 로 변경 및 로직 변경
 
 ## 소스 파일
 
@@ -37,4 +39,5 @@
   - BoardViewCommand.java(추가)
   - BoardUpdateCommand.java(추가)
   - BoardDeleteCommand.java(추가)
+- MenuGroup.java(변경)
 - App.java
