@@ -1,5 +1,8 @@
 package bitcamp.myapp.vo;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
 // 메모리 설계도
@@ -22,6 +25,37 @@ public class User {
 
   public static int getNextSeqNo() {
     return ++seqNo;
+  }
+
+  public byte[] getBytes() throws IOException {
+    try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
+      out.write(no >> 24);
+      out.write(no >> 16);
+      out.write(no >> 8);
+      out.write(no);
+
+      byte[] bytes = name.getBytes(StandardCharsets.UTF_8);
+      out.write(bytes.length >> 8);
+      out.write(bytes.length);
+      out.write(bytes);
+
+      bytes = email.getBytes(StandardCharsets.UTF_8);
+      out.write(bytes.length >> 8);
+      out.write(bytes.length);
+      out.write(bytes);
+
+      bytes = password.getBytes(StandardCharsets.UTF_8);
+      out.write(bytes.length >> 8);
+      out.write(bytes.length);
+      out.write(bytes);
+
+      bytes = tel.getBytes(StandardCharsets.UTF_8);
+      out.write(bytes.length >> 8);
+      out.write(bytes.length);
+      out.write(bytes);
+
+      return out.toByteArray(); // return 하기 전에 out.close()가 자동 호출된다.
+    }
   }
 
   @Override

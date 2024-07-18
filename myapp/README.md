@@ -27,7 +27,12 @@
 ## 25. 자바 Collection API 사용하기
 ## 26. 메뉴 UI를 캡슐화하기: GoF의 Composite 패턴 적용
 ## 27. 각각의 메뉴 처리 기능을 객체화 하기: GoF의 Command 패턴 적용하기
+## 28. File I/O API 활용하기 I :  데이터를 바이너리 형식으로 입출력
 
+
+
+- FileInputStream/FileOutputStream 사용법
+- 바이너리 형식으로 데이터를 입출력하는 방법
 
 
 
@@ -72,10 +77,7 @@
 
 
 
-## 31. File I/O API를 이용하여 데이터를 바이너리 형식으로 입출력하기
 
-- FileInputStream/FileOutputStream 사용법
-- 바이너리 형식으로 데이터를 입출력하는 방법
 
 ## 32. 상속을 이용하여 primitive type과 String 출력 기능을 추가하기
 
