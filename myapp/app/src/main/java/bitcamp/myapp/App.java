@@ -139,7 +139,28 @@ public class App {
   }
 
   private void loadBoards() {
+    try (FileInputStream in = new FileInputStream("board.data")) {
 
+      int userLength = (in.read() << 8) | in.read();
+      int maxBoardNo = 0;
+      for (int i = 0; i < userLength; i++) {
+        int len = (in.read() << 8) | in.read();
+        byte[] bytes = new byte[len];
+        in.read(bytes);
+
+        Board board = Board.valueOf(bytes);
+        boardList.add(board);
+
+        if (board.getNo() > maxBoardNo) {
+          maxBoardNo = board.getNo();
+        }
+      }
+
+      Board.initSeqNo(maxBoardNo);
+
+    } catch (IOException e) {
+      System.out.println("게시글 정보 로딩 중 오류 발생!");
+    }
   }
 
   private void saveData() {
@@ -175,8 +196,18 @@ public class App {
   }
 
   private void saveBoards() {
-    for (Board board : boardList) {
-      // board 객체에 저장된 값을 꺼내 파일로 출력한다.
+    try (FileOutputStream out = new FileOutputStream("board.data")) {
+      out.write(boardList.size() >> 8);
+      out.write(boardList.size());
+
+      for (Board board : boardList) {
+        byte[] bytes = board.getBytes();
+        out.write(bytes.length >> 8);
+        out.write(bytes.length);
+        out.write(bytes);
+      }
+    } catch (IOException e) {
+      System.out.println("게시글 정보 저장 중 오류 발생!");
     }
   }
 }
