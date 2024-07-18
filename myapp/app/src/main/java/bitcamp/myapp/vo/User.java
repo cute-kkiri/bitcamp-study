@@ -1,5 +1,6 @@
 package bitcamp.myapp.vo;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -25,6 +26,33 @@ public class User {
 
   public static int getNextSeqNo() {
     return ++seqNo;
+  }
+
+  public static User valueOf(byte[] bytes) throws IOException {
+    try (ByteArrayInputStream in = new ByteArrayInputStream(bytes)) {
+      User user = new User();
+      user.setNo(in.read() << 24 | in.read() << 16 | in.read() << 8 | in.read());
+
+      byte[] buf = new byte[1000];
+
+      int len = in.read() << 8 | in.read();
+      in.read(buf, 0, len);
+      user.setName(new String(buf, 0, len, StandardCharsets.UTF_8));
+
+      len = in.read() << 8 | in.read();
+      in.read(buf, 0, len);
+      user.setEmail(new String(buf, 0, len, StandardCharsets.UTF_8));
+
+      len = in.read() << 8 | in.read();
+      in.read(buf, 0, len);
+      user.setPassword(new String(buf, 0, len, StandardCharsets.UTF_8));
+
+      len = in.read() << 8 | in.read();
+      in.read(buf, 0, len);
+      user.setTel(new String(buf, 0, len, StandardCharsets.UTF_8));
+
+      return user;
+    }
   }
 
   public byte[] getBytes() throws IOException {

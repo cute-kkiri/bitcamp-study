@@ -24,6 +24,7 @@ import bitcamp.myapp.vo.Board;
 import bitcamp.myapp.vo.Project;
 import bitcamp.myapp.vo.User;
 import bitcamp.util.Prompt;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -96,7 +97,42 @@ public class App {
   }
 
   private void loadData() {
+    loadUsers();
+    loadProjects();
+    loadBoards();
     System.out.println("데이터를 로딩 했습니다.");
+  }
+
+  private void loadUsers() {
+    try (FileInputStream in = new FileInputStream("user.data")) {
+
+      // User 데이터 개수: 파일에서 2바이트를 읽는다.
+      int userLength = (in.read() << 8) | in.read();
+
+      for (int i = 0; i < userLength; i++) {
+        // 한 개의 User 데이터 바이트 배열 크기: 파일에서 2바이트를 읽는다.
+        int len = (in.read() << 8) | in.read();
+
+        // 한 개의 User 데이터 바이트 배열: 위에서 지정한 개 수 만큼 바이트 배열을 읽는다.
+        byte[] bytes = new byte[len];
+        in.read(bytes);
+
+        // User 바이트 배열을 가지고 User 객체를 생성
+        User user = User.valueOf(bytes);
+        userList.add(user);
+      }
+
+    } catch (IOException e) {
+      System.out.println("회원 정보 로딩 중 오류 발생!");
+    }
+  }
+
+  private void loadProjects() {
+
+  }
+
+  private void loadBoards() {
+
   }
 
   private void saveData() {
