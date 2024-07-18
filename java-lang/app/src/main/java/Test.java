@@ -15,3 +15,16 @@
 
 // class C {
 // }
+
+class Test {
+  public static void main(String[] args) {
+    long value = 0x1a1b1c1d2a2b2c2dL;
+
+    print((int)value >> 56);
+    print((int)(value >> 56));
+  }
+
+  static void print(int a) {
+    System.out.printf("%016x\n", a);
+  }
+}

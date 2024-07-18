@@ -1,4 +1,4 @@
-# 28. File I/O API 활용하기 I :  데이터를 바이너리 형식으로 입출력
+# 29. File I/O API 활용하기 II :  데이터 변환 자동화 데코레이터 활용
 
 ## 학습목표
 
@@ -17,9 +17,16 @@
 
 - 데이터를 저장
   - App 클래스 변경
-    - loadData() 메서드 추가
-
+    - loadData(), saveData() 메서드 추가
+    - loadUsers(), saveUsers() 메서드 추가
+    - loadProjects(), saveProjects() 메서드 추가
+    - loadBoards(), saveBoards() 메서드 추가
+  - User, Project, Board 클래스 변경
+    - getSeqNo(), initSeqNo() 메서드 추가
+    - getBytes(), valueOf() 메서드 추가
 ## 소스 파일
 
-
 - App.java
+- Board.java
+- Project.java
+- User.java
