@@ -39,8 +39,8 @@ public class App {
   MenuGroup mainMenu = new MenuGroup("메인");
 
   List<User> userList;
-  List<Project> projectList = new LinkedList<>();
-  List<Board> boardList = new LinkedList<>();
+  List<Project> projectList;
+  List<Board> boardList;
 
   public App() {
 

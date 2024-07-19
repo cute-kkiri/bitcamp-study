@@ -26,19 +26,22 @@ import bitcamp.myapp.vo.User;
 import bitcamp.util.Prompt;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Scanner;
 
 public class App {
 
 
   MenuGroup mainMenu = new MenuGroup("메인");
 
-  List<User> userList;
+  List<User> userList = new ArrayList<>();
   List<Project> projectList = new LinkedList<>();
   List<Board> boardList = new LinkedList<>();
 
@@ -110,9 +113,15 @@ public class App {
   }
 
   private void loadUsers() {
-    try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("user.data"))) {
-
-      userList = (List<User>) in.readObject();
+    try (Scanner in = new Scanner(new FileReader("user.csv"))) {
+      while (true) {
+        try {
+          String csv = in.nextLine();
+          userList.add(User.valueOf(csv));
+        } catch (Exception e) {
+          break;
+        }
+      }
 
       int maxUserNo = 0;
       for (User user : userList) {
@@ -123,10 +132,9 @@ public class App {
 
       User.initSeqNo(maxUserNo);
 
-    } catch (IOException | ClassNotFoundException e) {
+    } catch (IOException e) {
       System.out.println("회원 정보 로딩 중 오류 발생!");
       // e.printStackTrace();
-      userList = new ArrayList<>();
     }
   }
 
@@ -180,9 +188,11 @@ public class App {
   }
 
   private void saveUsers() {
-    try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("user.data"))) {
+    try (FileWriter out = new FileWriter("user.csv")) {
 
-      out.writeObject(userList);
+      for (User user : userList) {
+        out.write(user.toCsvString() + "\n");
+      }
 
     } catch (IOException e) {
       System.out.println("회원 정보 저장 중 오류 발생!");

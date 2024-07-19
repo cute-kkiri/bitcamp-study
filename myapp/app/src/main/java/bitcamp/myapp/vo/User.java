@@ -36,6 +36,54 @@ public class User implements Serializable {
     return seqNo;
   }
 
+  public static User valueOf(String csv) {
+    String[] values = csv.split(","); // csv: "1,홍길동,hong@test.com,1111,010-1111-2222"
+    User user = new User();
+    user.setNo(Integer.parseInt(values[0]));
+    user.setName(values[1]);
+    user.setEmail(values[2]);
+    user.setPassword(values[3]);
+    user.setTel(values[4]);
+    return user;
+  }
+
+  public static void main(String[] args) {
+    User user = new User();
+    user.setNo(100);
+    user.setName("홍길동");
+    user.setEmail("hong@test.com");
+    user.setPassword("1111");
+    user.setTel("010-1111-2222");
+
+    String csv = user.toCsvString();
+    System.out.println(csv);
+
+    User user2 = User.valueOf(csv);
+    System.out.println(user2);
+
+  }
+
+  public String toCsvString() {
+    return new StringBuilder()
+        .append(no).append(",")
+        .append(name).append(",")
+        .append(email).append(",")
+        .append(password).append(",")
+        .append(tel)
+        .toString();
+  }
+
+  @Override
+  public String toString() {
+    return "User{" +
+        "no=" + no +
+        ", name='" + name + '\'' +
+        ", email='" + email + '\'' +
+        ", password='" + password + '\'' +
+        ", tel='" + tel + '\'' +
+        '}';
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
