@@ -1,9 +1,5 @@
 package bitcamp.myapp.vo;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
 // 메모리 설계도
@@ -34,64 +30,6 @@ public class User {
 
   public static int getSeqNo() {
     return seqNo;
-  }
-
-  public static User valueOf(byte[] bytes) throws IOException {
-    try (ByteArrayInputStream in = new ByteArrayInputStream(bytes)) {
-      User user = new User();
-      user.setNo(in.read() << 24 | in.read() << 16 | in.read() << 8 | in.read());
-
-      byte[] buf = new byte[1000];
-
-      int len = in.read() << 8 | in.read();
-      in.read(buf, 0, len);
-      user.setName(new String(buf, 0, len, StandardCharsets.UTF_8));
-
-      len = in.read() << 8 | in.read();
-      in.read(buf, 0, len);
-      user.setEmail(new String(buf, 0, len, StandardCharsets.UTF_8));
-
-      len = in.read() << 8 | in.read();
-      in.read(buf, 0, len);
-      user.setPassword(new String(buf, 0, len, StandardCharsets.UTF_8));
-
-      len = in.read() << 8 | in.read();
-      in.read(buf, 0, len);
-      user.setTel(new String(buf, 0, len, StandardCharsets.UTF_8));
-
-      return user;
-    }
-  }
-
-  public byte[] getBytes() throws IOException {
-    try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
-      out.write(no >> 24);
-      out.write(no >> 16);
-      out.write(no >> 8);
-      out.write(no);
-
-      byte[] bytes = name.getBytes(StandardCharsets.UTF_8);
-      out.write(bytes.length >> 8);
-      out.write(bytes.length);
-      out.write(bytes);
-
-      bytes = email.getBytes(StandardCharsets.UTF_8);
-      out.write(bytes.length >> 8);
-      out.write(bytes.length);
-      out.write(bytes);
-
-      bytes = password.getBytes(StandardCharsets.UTF_8);
-      out.write(bytes.length >> 8);
-      out.write(bytes.length);
-      out.write(bytes);
-
-      bytes = tel.getBytes(StandardCharsets.UTF_8);
-      out.write(bytes.length >> 8);
-      out.write(bytes.length);
-      out.write(bytes);
-
-      return out.toByteArray(); // return 하기 전에 out.close()가 자동 호출된다.
-    }
   }
 
   @Override

@@ -24,6 +24,8 @@ import bitcamp.myapp.vo.Board;
 import bitcamp.myapp.vo.Project;
 import bitcamp.myapp.vo.User;
 import bitcamp.util.Prompt;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -104,22 +106,20 @@ public class App {
   }
 
   private void loadUsers() {
-    try (FileInputStream in = new FileInputStream("user.data")) {
+    try (FileInputStream in0 = new FileInputStream("user.data");
+        DataInputStream in = new DataInputStream(in0)) {
 
-      // User 데이터 개수: 파일에서 2바이트를 읽는다.
-      int userLength = (in.read() << 8) | in.read();
+      int userLength = in.readInt();
 
       int maxUserNo = 0;
       for (int i = 0; i < userLength; i++) {
-        // 한 개의 User 데이터 바이트 배열 크기: 파일에서 2바이트를 읽는다.
-        int len = (in.read() << 8) | in.read();
+        User user = new User();
+        user.setNo(in.readInt());
+        user.setName(in.readUTF());
+        user.setEmail(in.readUTF());
+        user.setPassword(in.readUTF());
+        user.setTel(in.readUTF());
 
-        // 한 개의 User 데이터 바이트 배열: 위에서 지정한 개 수 만큼 바이트 배열을 읽는다.
-        byte[] bytes = new byte[len];
-        in.read(bytes);
-
-        // User 바이트 배열을 가지고 User 객체를 생성
-        User user = User.valueOf(bytes);
         userList.add(user);
 
         if (user.getNo() > maxUserNo) {
@@ -135,16 +135,32 @@ public class App {
   }
 
   private void loadProjects() {
-    try (FileInputStream in = new FileInputStream("project.data")) {
+    try (FileInputStream in0 = new FileInputStream("project.data");
+        DataInputStream in = new DataInputStream(in0)) {
 
-      int projectLength = (in.read() << 8) | in.read();
+      int projectLength = in.readInt();
+
       int maxProjectNo = 0;
       for (int i = 0; i < projectLength; i++) {
-        int len = (in.read() << 8) | in.read();
-        byte[] bytes = new byte[len];
-        in.read(bytes);
+        Project project = new Project();
+        project.setNo(in.readInt());
+        project.setTitle(in.readUTF());
+        project.setDescription(in.readUTF());
+        project.setStartDate(in.readUTF());
+        project.setEndDate(in.readUTF());
 
-        Project project = Project.valueOf(bytes);
+        int memberLength = in.readInt();
+        for (int j = 0; j < memberLength; j++) {
+          User user = new User();
+          user.setNo(in.readInt());
+          user.setName(in.readUTF());
+          user.setEmail(in.readUTF());
+          user.setPassword(in.readUTF());
+          user.setTel(in.readUTF());
+
+          project.getMembers().add(user);
+        }
+        
         projectList.add(project);
 
         if (project.getNo() > maxProjectNo) {
@@ -192,18 +208,17 @@ public class App {
   }
 
   private void saveUsers() {
-    try (FileOutputStream out = new FileOutputStream("user.data")) {
-      // 몇 개의 데이터를 읽을지 알려주기 위해 저장 데이터의 개수를 출력한다.
-      out.write(userList.size() >> 8);
-      out.write(userList.size());
+    try (FileOutputStream out0 = new FileOutputStream("user.data");
+        DataOutputStream out = new DataOutputStream(out0)) {
+
+      out.writeInt(userList.size());
 
       for (User user : userList) {
-        byte[] bytes = user.getBytes();
-        // User 데이터의 바이트 배열 크기를 출력한다.
-        // 왜? 읽을 때 한 개 분량의 User 바이트 배열을 읽기 위해
-        out.write(bytes.length >> 8);
-        out.write(bytes.length);
-        out.write(bytes);
+        out.writeInt(user.getNo());
+        out.writeUTF(user.getName());
+        out.writeUTF(user.getEmail());
+        out.writeUTF(user.getPassword());
+        out.writeUTF(user.getTel());
       }
     } catch (IOException e) {
       System.out.println("회원 정보 저장 중 오류 발생!");
@@ -211,15 +226,25 @@ public class App {
   }
 
   private void saveProjects() {
-    try (FileOutputStream out = new FileOutputStream("project.data")) {
-      out.write(projectList.size() >> 8);
-      out.write(projectList.size());
+    try (FileOutputStream out0 = new FileOutputStream("project.data");
+        DataOutputStream out = new DataOutputStream(out0)) {
+
+      out.writeInt(projectList.size());
 
       for (Project project : projectList) {
-        byte[] bytes = project.getBytes();
-        out.write(bytes.length >> 8);
-        out.write(bytes.length);
-        out.write(bytes);
+        out.writeInt(project.getNo());
+        out.writeUTF(project.getTitle());
+        out.writeUTF(project.getDescription());
+        out.writeUTF(project.getStartDate());
+        out.writeUTF(project.getEndDate());
+        out.writeInt(project.getMembers().size());
+        for (User member : project.getMembers()) {
+          out.writeInt(member.getNo());
+          out.writeUTF(member.getName());
+          out.writeUTF(member.getEmail());
+          out.writeUTF(member.getPassword());
+          out.writeUTF(member.getTel());
+        }
       }
     } catch (IOException e) {
       System.out.println("프로젝트 정보 저장 중 오류 발생!");
