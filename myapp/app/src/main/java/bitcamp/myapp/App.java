@@ -29,6 +29,8 @@ import java.io.DataOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
@@ -39,11 +41,13 @@ public class App {
 
   MenuGroup mainMenu = new MenuGroup("메인");
 
-  List<User> userList = new ArrayList<>();
+  List<User> userList;
   List<Project> projectList = new LinkedList<>();
   List<Board> boardList = new LinkedList<>();
 
   public App() {
+
+    loadData();
 
     MenuGroup userMenu = new MenuGroup("회원");
     userMenu.add(new MenuItem("등록", new UserAddCommand(userList)));
@@ -86,10 +90,12 @@ public class App {
     String line = "----------------------------------";
 
     try {
-      loadData();
       mainMenu.execute();
+
     } catch (Exception ex) {
       System.out.println("실행 오류!");
+      ex.printStackTrace();
+
     } finally {
       saveData();
     }
@@ -107,22 +113,12 @@ public class App {
   }
 
   private void loadUsers() {
-    try (FileInputStream in0 = new FileInputStream("user.data");
-        DataInputStream in = new DataInputStream(in0)) {
+    try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("user.data"))) {
 
-      int userLength = in.readInt();
+      userList = (List<User>) in.readObject();
 
       int maxUserNo = 0;
-      for (int i = 0; i < userLength; i++) {
-        User user = new User();
-        user.setNo(in.readInt());
-        user.setName(in.readUTF());
-        user.setEmail(in.readUTF());
-        user.setPassword(in.readUTF());
-        user.setTel(in.readUTF());
-
-        userList.add(user);
-
+      for (User user : userList) {
         if (user.getNo() > maxUserNo) {
           maxUserNo = user.getNo();
         }
@@ -130,8 +126,10 @@ public class App {
 
       User.initSeqNo(maxUserNo);
 
-    } catch (IOException e) {
+    } catch (IOException | ClassNotFoundException e) {
       System.out.println("회원 정보 로딩 중 오류 발생!");
+      // e.printStackTrace();
+      userList = new ArrayList<>();
     }
   }
 
@@ -173,6 +171,7 @@ public class App {
 
     } catch (IOException e) {
       System.out.println("프로젝트 정보 로딩 중 오류 발생!");
+      // e.printStackTrace();
     }
   }
 
@@ -202,6 +201,7 @@ public class App {
 
     } catch (IOException e) {
       System.out.println("게시글 정보 로딩 중 오류 발생!");
+      // e.printStackTrace();
     }
   }
 
@@ -213,20 +213,13 @@ public class App {
   }
 
   private void saveUsers() {
-    try (FileOutputStream out0 = new FileOutputStream("user.data");
-        DataOutputStream out = new DataOutputStream(out0)) {
+    try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("user.data"))) {
 
-      out.writeInt(userList.size());
+      out.writeObject(userList);
 
-      for (User user : userList) {
-        out.writeInt(user.getNo());
-        out.writeUTF(user.getName());
-        out.writeUTF(user.getEmail());
-        out.writeUTF(user.getPassword());
-        out.writeUTF(user.getTel());
-      }
     } catch (IOException e) {
       System.out.println("회원 정보 저장 중 오류 발생!");
+      e.printStackTrace();
     }
   }
 
@@ -253,6 +246,7 @@ public class App {
       }
     } catch (IOException e) {
       System.out.println("프로젝트 정보 저장 중 오류 발생!");
+      e.printStackTrace();
     }
   }
 
@@ -271,6 +265,7 @@ public class App {
       }
     } catch (IOException e) {
       System.out.println("게시글 정보 저장 중 오류 발생!");
+      e.printStackTrace();
     }
   }
 }

@@ -1,9 +1,13 @@
 package bitcamp.myapp.vo;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-// 메모리 설계도
-public class User {
+// Serializable 인터페이스
+// - 추상 메서드가 없다.
+// - 직렬화/역직렬화를 승인한다는 표시로 사용한다.
+// - 유사한 예) Cloneable 인터페이스
+public class User implements Serializable {
 
   private static int seqNo;
 

@@ -1,13 +1,13 @@
-# 29. File I/O API 활용하기 II :  데코레이터를 이용한 데이터 변환 자동화
+# 30. File I/O API 활용하기 III :  객체 직렬화/역직렬화
 
 ## 학습목표
 
-- GoF의 Decorator 설계 패턴을 이해하고 적용할 수 있다.
-- File I/O API의 데코레이터 클래스를 사용하여 Primitive type, String 타입 값을 byte[] 배열로 입출력 할 수 있다.
+- Serialize/Deserialize를 이해하고 설명할 수 있다.
+- File I/O API의 데코레이터 클래스를 사용하여 객체를 입출력 할 수 있다.
 
 ## 요구사항
 
-- 데이터를 입출력 할 때 File I/O API에서 데코레이터 클래스를 사용
+- File I/O API의 데코레이터를 사용하여 객체를 직접 입출력 하기
 
 ## 실행 결과
 
