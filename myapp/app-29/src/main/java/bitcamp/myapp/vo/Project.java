@@ -1,22 +1,28 @@
 package bitcamp.myapp.vo;
 
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class Board {
+public class Project {
 
   private static int seqNo;
 
   private int no;
   private String title;
-  private String content;
-  private Date createdDate;
-  private int viewCount;
+  private String description;
+  private String startDate;
+  private String endDate;
+  private List<User> members;
 
-  public Board() {
+  { // 인스턴스 블록
+    members = new ArrayList<>();
   }
 
-  public Board(int no) {
+  public Project() {
+  }
+
+  public Project(int no) {
     this.no = no;
   }
 
@@ -40,8 +46,8 @@ public class Board {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Board board = (Board) o;
-    return no == board.no;
+    Project project = (Project) o;
+    return no == project.no;
   }
 
   @Override
@@ -65,27 +71,31 @@ public class Board {
     this.title = title;
   }
 
-  public String getContent() {
-    return content;
+  public String getDescription() {
+    return description;
   }
 
-  public void setContent(String content) {
-    this.content = content;
+  public void setDescription(String description) {
+    this.description = description;
   }
 
-  public Date getCreatedDate() {
-    return createdDate;
+  public String getStartDate() {
+    return startDate;
   }
 
-  public void setCreatedDate(Date createdDate) {
-    this.createdDate = createdDate;
+  public void setStartDate(String startDate) {
+    this.startDate = startDate;
   }
 
-  public int getViewCount() {
-    return viewCount;
+  public String getEndDate() {
+    return endDate;
   }
 
-  public void setViewCount(int viewCount) {
-    this.viewCount = viewCount;
+  public void setEndDate(String endDate) {
+    this.endDate = endDate;
+  }
+
+  public List<User> getMembers() {
+    return members;
   }
 }
