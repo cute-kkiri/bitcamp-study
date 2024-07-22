@@ -24,6 +24,8 @@ import bitcamp.myapp.vo.Board;
 import bitcamp.myapp.vo.Project;
 import bitcamp.myapp.vo.User;
 import bitcamp.util.Prompt;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -109,15 +111,9 @@ public class App {
   }
 
   private void loadUsers() {
-    try (Scanner in = new Scanner(new FileReader("user.csv"))) {
-      while (true) {
-        try {
-          String csv = in.nextLine();
-          userList.add(User.valueOf(csv));
-        } catch (Exception e) {
-          break;
-        }
-      }
+    try (Scanner in = new Scanner(new FileReader("user.json"))) {
+
+      userList.addAll((ArrayList<User>) new Gson().fromJson(JSON문자열, 컬렉션타입정보));
 
       int maxUserNo = 0;
       for (User user : userList) {
@@ -194,11 +190,9 @@ public class App {
   }
 
   private void saveUsers() {
-    try (FileWriter out = new FileWriter("user.csv")) {
+    try (FileWriter out = new FileWriter("user.json")) {
 
-      for (User user : userList) {
-        out.write(user.toCsvString() + "\n");
-      }
+      out.write(new Gson().toJson(userList));
 
     } catch (IOException e) {
       System.out.println("회원 정보 저장 중 오류 발생!");
@@ -207,11 +201,9 @@ public class App {
   }
 
   private void saveProjects() {
-    try (FileWriter out = new FileWriter("project.csv")) {
+    try (FileWriter out = new FileWriter("project.json")) {
 
-      for (Project project : projectList) {
-        out.write(project.toCsvString() + "\n");
-      }
+      out.write(new Gson().toJson(projectList));
 
     } catch (IOException e) {
       System.out.println("프로젝트 정보 저장 중 오류 발생!");
@@ -220,11 +212,12 @@ public class App {
   }
 
   private void saveBoards() {
-    try (FileWriter out = new FileWriter("board.csv")) {
+    try (FileWriter out = new FileWriter("board.json")) {
 
-      for (Board board : boardList) {
-        out.write(board.toCsvString() + "\n");
-      }
+      out.write(new GsonBuilder()
+          .setDateFormat("yyyy-MM-dd HH:mm:ss")
+          .create()
+          .toJson(boardList));
 
     } catch (IOException e) {
       System.out.println("게시글 정보 저장 중 오류 발생!");

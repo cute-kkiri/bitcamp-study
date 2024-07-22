@@ -27,15 +27,14 @@
 ## 25. 자바 Collection API 사용하기
 ## 26. 메뉴 UI를 캡슐화하기: GoF의 Composite 패턴 적용
 ## 27. 각각의 메뉴 처리 기능을 객체화 하기: GoF의 Command 패턴 적용하기
-## 28. File I/O API 활용하기 I :  데이터를 바이너리 형식으로 입출력
-## 29. File I/O API 활용하기 II :  데코레이터를 이용한 데이터 변환 자동화
-## 30. File I/O API 활용하기 III :  객체 직렬화/역직렬화
-## 31. File I/O API 활용하기 IV :  데이터를 CSV 형식의 텍스트로 입출력
+## 28. File I/O API 활용하기 I : 데이터를 바이너리 형식으로 입출력
+## 29. File I/O API 활용하기 II : 데코레이터를 이용한 데이터 변환 자동화
+## 30. File I/O API 활용하기 III : 객체 직렬화/역직렬화
+## 31. File I/O API 활용하기 IV : 데이터를 CSV 형식의 텍스트로 입출력
+## 32. File I/O API 활용하기 IV : JSON 형식의 텍스트로 입출력
 
-
-- FileInputStream/FileOutputStream 사용법
-- 바이너리 형식으로 데이터를 입출력하는 방법
-
+- JSON 형식으로 데이터를 읽고 쓰는 법
+- Gson 라이브러리 사용법
 
 
 ## 18. 인스턴스 목록 제어 기능을 별도의 클래스로 캡슐화: 재사용성 높임
@@ -78,60 +77,14 @@
 
 
 
-
-
-
-## 32. 상속을 이용하여 primitive type과 String 출력 기능을 추가하기
-
-- 상속을 이용하여 바이트 입출력 기능을 확장하기
-  - DataInputStream = FileInputStream 클래스 + primitive type/String 값 읽기
-  - DataOutputStream = FileOutputStream 클래스 + primitive type/String 값 쓰기
-
 ## 33. 입출력 성능을 높이기 위해 버퍼 기능 추가하기
 
 - 기존의 클래스에 버퍼 기능을 추가한다.
   - BufferedDataInputStream = DataInputStream + 버퍼 기능
   - BufferedDataOutputStream = DataOutputStream + 버퍼 기능
 
-## 34. 입출력 기능 확장에 상속 대신 Decorator 패턴을 적용하기
 
-- 상속 vs Decorator 패턴(GoF)
-  - 기존 코드를 손대지 않고 기능 확장하는 방법
-  - 상속: 기능 확장 용이
-  - Decorator: 기능 확장 및 기능 제거 용이
-- BufferedDataInputStream 분해
-  - BufferedInputStream, DataInputStream, FileInputStream
-- BufferedDataOutputStream 분해
-  - BufferedOutputStream, DataOutputStream, FileOutputStream
-- Java I/O Stream API로 대체하기
 
-## 35. 인스턴스를 통째로 입출력하기(객체 직렬화)
-
-- ObjectInputStream/ObjectOutputStream 사용법
-  - java.io.Serializable 인터페이스 사용법
-  - transient modifier 사용법
-
-## 36. 리팩토링 - 중복 코드 정리
-
-- 데이터 읽고 쓰는 중복 코드 정리
-- serialVersionUID 스태틱 필드 사용하기
-
-## 37. character I/O stream API를 사용하여 CSV 텍스트 형식으로 입출력하기
-
-- CSV 형식으로 데이터를 읽고 쓰는 법
-- FileReader/FileWriter 사용법
-- GRASP의 Information Expert 패턴 적용
-  - toCsvString() 메서드 정의
-  - createFromCsv() 메서드 정의
-- GoF의 Factory Method 패턴 적용
-  - createFromCsv() 메서드 정의
-- Reflection API 사용
-  - createFromCsv() 메서드 정보 알아내기 및 호출하기
-
-## 38. JSON 형식으로 입출력하기
-
-- JSON 형식으로 데이터를 읽고 쓰는 법
-- Gson 라이브러리 사용법
 
 ## 39. 데이터의 등록, 조회, 수정, 삭제 기능을 캡슐화하기 : DAO 객체 도입
 
