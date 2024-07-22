@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Project implements Serializable {
+public class Project implements Serializable, SequenceNo {
 
   private static int seqNo;
 
@@ -101,10 +101,11 @@ public class Project implements Serializable {
     return Objects.hashCode(no);
   }
 
+  @Override
   public int getNo() {
     return no;
   }
-
+  
   public void setNo(int no) {
     this.no = no;
   }
