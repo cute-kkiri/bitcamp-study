@@ -26,13 +26,14 @@ import bitcamp.myapp.vo.User;
 import bitcamp.util.Prompt;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Scanner;
 
 public class App {
 
@@ -105,15 +106,24 @@ public class App {
 
   private void loadData() {
     loadUsers();
-    loadProjects();
+    //loadProjects();
     loadBoards();
     System.out.println("데이터를 로딩 했습니다.");
   }
 
   private void loadUsers() {
-    try (Scanner in = new Scanner(new FileReader("user.json"))) {
+    try (BufferedReader in = new BufferedReader(new FileReader("user.json"))) {
 
-      userList.addAll((ArrayList<User>) new Gson().fromJson(JSON문자열, 컬렉션타입정보));
+      StringBuilder strBuilder = new StringBuilder();
+      String line;
+      while ((line = in.readLine()) != null) {
+        strBuilder.append(line);
+      }
+
+      userList.addAll((ArrayList<User>) new Gson().fromJson(
+          strBuilder.toString(),
+          new TypeToken<ArrayList<User>>() {
+          }));
 
       int maxUserNo = 0;
       for (User user : userList) {
@@ -131,15 +141,18 @@ public class App {
   }
 
   private void loadProjects() {
-    try (Scanner in = new Scanner(new FileReader("project.csv"))) {
-      while (true) {
-        try {
-          String csv = in.nextLine();
-          projectList.add(Project.valueOf(csv));
-        } catch (Exception e) {
-          break;
-        }
+    try (BufferedReader in = new BufferedReader(new FileReader("project.csv"))) {
+
+      StringBuilder strBuilder = new StringBuilder();
+      String line;
+      while ((line = in.readLine()) != null) {
+        strBuilder.append(line);
       }
+
+      projectList.addAll(new Gson().fromJson(
+          strBuilder.toString(),
+          new TypeToken<LinkedList<Project>>() {
+          }));
 
       int maxProjectNo = 0;
       for (Project project : projectList) {
@@ -157,15 +170,19 @@ public class App {
   }
 
   private void loadBoards() {
-    try (Scanner in = new Scanner(new FileReader("board.csv"))) {
-      while (true) {
-        try {
-          String csv = in.nextLine();
-          boardList.add(Board.valueOf(csv));
-        } catch (Exception e) {
-          break;
-        }
+    try (BufferedReader in = new BufferedReader(new FileReader("board.json"))) {
+
+      StringBuilder strBuilder = new StringBuilder();
+      String line;
+      while ((line = in.readLine()) != null) {
+        strBuilder.append(line);
       }
+
+      boardList.addAll(new GsonBuilder()
+          .setDateFormat("yyyy-MM-dd HH:mm:ss")
+          .create()
+          .fromJson(strBuilder.toString(), new TypeToken<LinkedList<Board>>() {
+          }));
 
       int maxBoardNo = 0;
       for (Board board : boardList) {
@@ -184,7 +201,7 @@ public class App {
 
   private void saveData() {
     saveUsers();
-    saveProjects();
+    //saveProjects();
     saveBoards();
     System.out.println("데이터를 저장 했습니다.");
   }
