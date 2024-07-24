@@ -33,6 +33,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -169,6 +170,7 @@ public class App {
       XSSFWorkbook workbook = new XSSFWorkbook();
 
       saveUsers(workbook);
+      saveBoards(workbook);
 
       try (FileOutputStream out = new FileOutputStream("data.xlsx")) {
         workbook.write(out);
@@ -200,6 +202,31 @@ public class App {
       dataRow.createCell(2).setCellValue(user.getEmail());
       dataRow.createCell(3).setCellValue(user.getPassword());
       dataRow.createCell(4).setCellValue(user.getTel());
+    }
+  }
+
+  private void saveBoards(XSSFWorkbook workbook) {
+    XSSFSheet sheet = workbook.createSheet("boards");
+
+    // 셀 이름 출력
+    String[] cellHeaders = {"no", "title", "content", "created_date", "view_count"};
+    Row headerRow = sheet.createRow(0);
+    for (int i = 0; i < cellHeaders.length; i++) {
+      headerRow.createCell(i).setCellValue(cellHeaders[i]);
+    }
+
+    // 데이터 저장
+    for (int i = 0; i < boardList.size(); i++) {
+      Board board = boardList.get(i);
+      Row dataRow = sheet.createRow(i + 1);
+      dataRow.createCell(0).setCellValue(String.valueOf(board.getNo()));
+      dataRow.createCell(1).setCellValue(board.getTitle());
+      dataRow.createCell(2).setCellValue(board.getContent());
+
+      SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+      dataRow.createCell(3).setCellValue(formatter.format(board.getCreatedDate()));
+
+      dataRow.createCell(4).setCellValue(String.valueOf(board.getViewCount()));
     }
   }
 
