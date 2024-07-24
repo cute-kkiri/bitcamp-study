@@ -30,8 +30,6 @@ import com.google.gson.reflect.TypeToken;
 import java.io.BufferedReader;
 import java.io.FileOutputStream;
 import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -259,20 +257,6 @@ public class App {
         strBuilder.append(member.getNo());
       }
       dataRow.createCell(5).setCellValue(strBuilder.toString());
-    }
-  }
-
-  private void saveJson(Object obj, String filename) {
-    try (FileWriter out = new FileWriter(filename)) {
-
-      out.write(new GsonBuilder()
-          .setDateFormat("yyyy-MM-dd HH:mm:ss")
-          .create()
-          .toJson(obj));
-
-    } catch (IOException e) {
-      System.out.printf("%s 파일 저장 중 오류 발생!\n", filename);
-      e.printStackTrace();
     }
   }
 
