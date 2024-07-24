@@ -28,6 +28,7 @@ import bitcamp.util.Prompt;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import java.io.BufferedReader;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -35,6 +36,9 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class App {
 
@@ -161,10 +165,42 @@ public class App {
   }
 
   private void saveData() {
-    saveJson(userList, "user.json");
-    saveJson(projectList, "project.json");
-    saveJson(boardList, "board.json");
-    System.out.println("데이터를 저장 했습니다.");
+    try {
+      XSSFWorkbook workbook = new XSSFWorkbook();
+
+      saveUsers(workbook);
+
+      try (FileOutputStream out = new FileOutputStream("data.xlsx")) {
+        workbook.write(out);
+      }
+      System.out.println("데이터를 저장 했습니다.");
+
+    } catch (Exception e) {
+      System.out.println("데이터 저장 중 오류 발생!");
+      e.printStackTrace();
+    }
+  }
+
+  private void saveUsers(XSSFWorkbook workbook) {
+    XSSFSheet sheet = workbook.createSheet("users");
+
+    // 셀 이름 출력
+    String[] cellHeaders = {"no", "name", "email", "password", "tel"};
+    Row headerRow = sheet.createRow(0);
+    for (int i = 0; i < cellHeaders.length; i++) {
+      headerRow.createCell(i).setCellValue(cellHeaders[i]);
+    }
+
+    // 데이터 저장
+    for (int i = 0; i < userList.size(); i++) {
+      User user = userList.get(i);
+      Row dataRow = sheet.createRow(i + 1);
+      dataRow.createCell(0).setCellValue(String.valueOf(user.getNo()));
+      dataRow.createCell(1).setCellValue(user.getName());
+      dataRow.createCell(2).setCellValue(user.getEmail());
+      dataRow.createCell(3).setCellValue(user.getPassword());
+      dataRow.createCell(4).setCellValue(user.getTel());
+    }
   }
 
   private void saveJson(Object obj, String filename) {
