@@ -22,9 +22,11 @@ import bitcamp.myapp.command.user.UserUpdateCommand;
 import bitcamp.myapp.command.user.UserViewCommand;
 import bitcamp.myapp.vo.Board;
 import bitcamp.myapp.vo.Project;
+import bitcamp.myapp.vo.SequenceNo;
 import bitcamp.myapp.vo.User;
 import bitcamp.util.Prompt;
 import java.io.FileOutputStream;
+import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -121,7 +123,6 @@ public class App {
   private void loadUsers(XSSFWorkbook workbook) {
     XSSFSheet sheet = workbook.getSheet("users");
 
-    int maxNo = 0;
     for (int i = 1; i <= sheet.getLastRowNum(); i++) {
       Row row = sheet.getRow(i);
       try {
@@ -133,21 +134,22 @@ public class App {
         user.setTel(row.getCell(4).getStringCellValue());
         userList.add(user);
 
-        if (user.getNo() > maxNo) {
-          maxNo = user.getNo();
-        }
       } catch (Exception e) {
         System.out.printf("%s 번 회원의 데이터 형식이 맞지 않습니다.\n", row.getCell(0).getStringCellValue());
       }
     }
 
-    User.initSeqNo(maxNo);
+    try {
+      initSeqNo(userList, User.class);
+    } catch (Exception e) {
+      System.out.println("회원 일련 번호 초기화 오류!");
+    }
+
   }
 
   private void loadBoards(XSSFWorkbook workbook) {
     XSSFSheet sheet = workbook.getSheet("boards");
 
-    int maxNo = 0;
     for (int i = 1; i <= sheet.getLastRowNum(); i++) {
       Row row = sheet.getRow(i);
 
@@ -164,20 +166,21 @@ public class App {
 
         boardList.add(board);
 
-        if (board.getNo() > maxNo) {
-          maxNo = board.getNo();
-        }
       } catch (Exception e) {
         System.out.printf("%s 번 게시글의 데이터 형식이 맞지 않습니다.\n", row.getCell(0).getStringCellValue());
       }
     }
-    Board.initSeqNo(maxNo);
+
+    try {
+      initSeqNo(boardList, Board.class);
+    } catch (Exception e) {
+      System.out.println("게시글 일련 번호 초기화 오류!");
+    }
   }
 
   private void loadProjects(XSSFWorkbook workbook) {
     XSSFSheet sheet = workbook.getSheet("projects");
 
-    int maxNo = 0;
     for (int i = 1; i <= sheet.getLastRowNum(); i++) {
       Row row = sheet.getRow(i);
 
@@ -198,14 +201,16 @@ public class App {
         }
         projectList.add(project);
 
-        if (project.getNo() > maxNo) {
-          maxNo = project.getNo();
-        }
       } catch (Exception e) {
         System.out.printf("%s 번 프로젝트의 데이터 형식이 맞지 않습니다.\n", row.getCell(0).getStringCellValue());
       }
     }
-    Project.initSeqNo(maxNo);
+
+    try {
+      initSeqNo(projectList, Project.class);
+    } catch (Exception e) {
+      System.out.println("프로젝트 일련 번호 초기화 오류!");
+    }
   }
 
   private User findUserByNo(int no) {
@@ -215,6 +220,21 @@ public class App {
       }
     }
     return null;
+  }
+
+  private <E> void initSeqNo(List<E> list, Class<E> elementType) throws Exception {
+    int maxSeqNo = 0;
+    for (Object element : list) {
+      SequenceNo seqObj = (SequenceNo) element;
+      if (seqObj.getNo() > maxSeqNo) {
+        maxSeqNo = seqObj.getNo();
+      }
+    }
+
+    Method method = elementType.getMethod("initSeqNo", int.class);
+    method.invoke(null, maxSeqNo);
+    // 위 코드는 다음과 같다.
+    // 예) User.initSeqNo(maxSeqNo);
   }
 
   private void saveData() {
