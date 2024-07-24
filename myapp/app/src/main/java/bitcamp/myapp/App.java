@@ -171,6 +171,7 @@ public class App {
 
       saveUsers(workbook);
       saveBoards(workbook);
+      saveProjects(workbook);
 
       try (FileOutputStream out = new FileOutputStream("data.xlsx")) {
         workbook.write(out);
@@ -227,6 +228,37 @@ public class App {
       dataRow.createCell(3).setCellValue(formatter.format(board.getCreatedDate()));
 
       dataRow.createCell(4).setCellValue(String.valueOf(board.getViewCount()));
+    }
+  }
+
+  private void saveProjects(XSSFWorkbook workbook) {
+    XSSFSheet sheet = workbook.createSheet("projects");
+
+    // 셀 이름 출력
+    String[] cellHeaders = {"no", "title", "description", "start_date", "end_date", "members"};
+    Row headerRow = sheet.createRow(0);
+    for (int i = 0; i < cellHeaders.length; i++) {
+      headerRow.createCell(i).setCellValue(cellHeaders[i]);
+    }
+
+    // 데이터 저장
+    for (int i = 0; i < projectList.size(); i++) {
+      Project project = projectList.get(i);
+      Row dataRow = sheet.createRow(i + 1);
+      dataRow.createCell(0).setCellValue(String.valueOf(project.getNo()));
+      dataRow.createCell(1).setCellValue(project.getTitle());
+      dataRow.createCell(2).setCellValue(project.getDescription());
+      dataRow.createCell(3).setCellValue(project.getStartDate());
+      dataRow.createCell(4).setCellValue(project.getEndDate());
+
+      StringBuilder strBuilder = new StringBuilder();
+      for (User member : project.getMembers()) {
+        if (strBuilder.length() > 0) {
+          strBuilder.append(",");
+        }
+        strBuilder.append(member.getNo());
+      }
+      dataRow.createCell(5).setCellValue(strBuilder.toString());
     }
   }
 
