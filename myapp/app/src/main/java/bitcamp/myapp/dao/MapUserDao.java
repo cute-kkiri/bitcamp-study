@@ -1,6 +1,7 @@
 package bitcamp.myapp.dao;
 
 import bitcamp.myapp.vo.User;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,12 +25,10 @@ public class MapUserDao implements UserDao {
   }
 
   public MapUserDao(String path, String dataName) {
-    try {
-      this.path = path;
-      this.dataName = dataName;
+    this.path = path;
+    this.dataName = dataName;
 
-      XSSFWorkbook workbook = new XSSFWorkbook(path);
-
+    try (XSSFWorkbook workbook = new XSSFWorkbook(path)) {
       XSSFSheet sheet = workbook.getSheet(dataName);
 
       for (int i = 1; i <= sheet.getLastRowNum(); i++) {
@@ -54,12 +53,13 @@ public class MapUserDao implements UserDao {
 
     } catch (Exception e) {
       System.out.println("회원 데이터 로딩 중 오류 발생!");
+      e.printStackTrace();
     }
   }
 
-  public void save() {
-    try {
-      XSSFWorkbook workbook = new XSSFWorkbook(path);
+  public void save() throws Exception {
+    try (FileInputStream in = new FileInputStream(path);
+        XSSFWorkbook workbook = new XSSFWorkbook(in)) {
 
       int sheetIndex = workbook.getSheetIndex(dataName);
       if (sheetIndex != -1) {
@@ -87,13 +87,13 @@ public class MapUserDao implements UserDao {
         dataRow.createCell(4).setCellValue(user.getTel());
       }
 
+      // 엑셀 파일로 데이터를 출력하기 전에
+      // workbook을 위해 연결한 입력 스트림을 먼저 종료한다.
+      in.close();
+
       try (FileOutputStream out = new FileOutputStream(path)) {
         workbook.write(out);
       }
-      System.out.println("데이터를 저장 했습니다.");
-
-    } catch (Exception e) {
-      System.out.println("회원 데이터 저장 오류!");
     }
   }
 
@@ -107,16 +107,25 @@ public class MapUserDao implements UserDao {
 
   @Override
   public List<User> list() throws Exception {
-    return List.of();
+    ArrayList<User> users = new ArrayList<>();
+    for (Integer userNo : userNoList) {
+      users.add(userMap.get(userNo));
+    }
+    return users;
   }
 
   @Override
   public User findBy(int no) throws Exception {
-    return null;
+    return userMap.get(no);
   }
 
   @Override
   public boolean update(User user) throws Exception {
+    if (!userMap.containsKey(user.getNo())) {
+      return false;
+    }
+
+    userMap.put(user.getNo(), user);
     return false;
   }
 

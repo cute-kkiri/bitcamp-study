@@ -16,6 +16,7 @@ import bitcamp.myapp.command.project.ProjectMemberHandler;
 import bitcamp.myapp.command.project.ProjectUpdateCommand;
 import bitcamp.myapp.command.project.ProjectViewCommand;
 import bitcamp.myapp.command.user.UserAddCommand;
+import bitcamp.myapp.command.user.UserListCommand;
 import bitcamp.myapp.dao.MapUserDao;
 import bitcamp.myapp.dao.UserDao;
 import bitcamp.myapp.vo.Board;
@@ -54,7 +55,7 @@ public class App {
 
     MenuGroup userMenu = new MenuGroup("회원");
     userMenu.add(new MenuItem("등록", new UserAddCommand(userDao)));
-//    userMenu.add(new MenuItem("목록", new UserListCommand(userMap, userNoList)));
+    userMenu.add(new MenuItem("목록", new UserListCommand(userDao)));
 //    userMenu.add(new MenuItem("조회", new UserViewCommand(userMap)));
 //    userMenu.add(new MenuItem("변경", new UserUpdateCommand(userMap)));
 //    userMenu.add(new MenuItem("삭제", new UserDeleteCommand(userMap, userNoList)));
@@ -102,7 +103,13 @@ public class App {
 
     } finally {
       //saveData();
-      ((MapUserDao) userDao).save();
+      try {
+        ((MapUserDao) userDao).save();
+      } catch (Exception e) {
+        System.out.println("회원 데이터 저장 중 오류 발생!");
+        e.printStackTrace();
+        System.out.println();
+      }
     }
 
     System.out.println("종료합니다.");
