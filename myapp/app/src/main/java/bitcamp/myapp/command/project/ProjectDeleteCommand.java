@@ -4,6 +4,7 @@ import bitcamp.myapp.command.Command;
 import bitcamp.myapp.vo.Project;
 import bitcamp.util.Prompt;
 import java.util.List;
+import java.util.Map;
 
 public class ProjectDeleteCommand implements Command {
 
@@ -11,6 +12,9 @@ public class ProjectDeleteCommand implements Command {
 
   public ProjectDeleteCommand(List<Project> projectList) {
     this.projectList = projectList;
+  }
+
+  public ProjectDeleteCommand(Map<Integer, Project> projectMap, List<Integer> projectNoList) {
   }
 
   @Override

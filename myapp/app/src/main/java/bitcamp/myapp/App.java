@@ -31,7 +31,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import org.apache.poi.ss.usermodel.Row;
@@ -49,9 +48,8 @@ public class App {
   Map<Integer, Board> boardMap = new HashMap<>();
   List<Integer> boardNoList = new ArrayList<>();
 
-  List<User> userList = new ArrayList<>();
-  List<Project> projectList = new LinkedList<>();
-  List<Board> boardList = new LinkedList<>();
+  Map<Integer, Project> projectMap = new HashMap<>();
+  List<Integer> projectNoList = new ArrayList<>();
 
   public App() {
 
@@ -66,12 +64,13 @@ public class App {
     mainMenu.add(userMenu);
 
     MenuGroup projectMenu = new MenuGroup("프로젝트");
-    ProjectMemberHandler memberHandler = new ProjectMemberHandler(userList);
-    projectMenu.add(new MenuItem("등록", new ProjectAddCommand(projectList, memberHandler)));
-    projectMenu.add(new MenuItem("목록", new ProjectListCommand(projectList)));
-    projectMenu.add(new MenuItem("조회", new ProjectViewCommand(projectList)));
-    projectMenu.add(new MenuItem("변경", new ProjectUpdateCommand(projectList, memberHandler)));
-    projectMenu.add(new MenuItem("삭제", new ProjectDeleteCommand(projectList)));
+    ProjectMemberHandler memberHandler = new ProjectMemberHandler(userMap);
+    projectMenu.add(
+        new MenuItem("등록", new ProjectAddCommand(projectMap, projectNoList, memberHandler)));
+    projectMenu.add(new MenuItem("목록", new ProjectListCommand(projectMap, projectNoList)));
+    projectMenu.add(new MenuItem("조회", new ProjectViewCommand((List<Project>) projectMap)));
+    projectMenu.add(new MenuItem("변경", new ProjectUpdateCommand(projectMap, memberHandler)));
+    projectMenu.add(new MenuItem("삭제", new ProjectDeleteCommand(projectMap, projectNoList)));
     mainMenu.add(projectMenu);
 
     MenuGroup boardMenu = new MenuGroup("게시판");
