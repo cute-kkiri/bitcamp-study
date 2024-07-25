@@ -126,7 +126,7 @@ public class MapUserDao implements UserDao {
     }
 
     userMap.put(user.getNo(), user);
-    return false;
+    return true;
   }
 
   @Override
