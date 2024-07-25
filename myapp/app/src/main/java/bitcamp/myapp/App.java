@@ -16,10 +16,8 @@ import bitcamp.myapp.command.project.ProjectMemberHandler;
 import bitcamp.myapp.command.project.ProjectUpdateCommand;
 import bitcamp.myapp.command.project.ProjectViewCommand;
 import bitcamp.myapp.command.user.UserAddCommand;
-import bitcamp.myapp.command.user.UserDeleteCommand;
-import bitcamp.myapp.command.user.UserListCommand;
-import bitcamp.myapp.command.user.UserUpdateCommand;
-import bitcamp.myapp.command.user.UserViewCommand;
+import bitcamp.myapp.dao.MapUserDao;
+import bitcamp.myapp.dao.UserDao;
 import bitcamp.myapp.vo.Board;
 import bitcamp.myapp.vo.Project;
 import bitcamp.myapp.vo.User;
@@ -39,8 +37,6 @@ public class App {
 
   MenuGroup mainMenu = new MenuGroup("메인");
 
-  Map<Integer, User> userMap = new HashMap<>();
-  List<Integer> userNoList = new ArrayList<>();
 
   Map<Integer, Board> boardMap = new HashMap<>();
   List<Integer> boardNoList = new ArrayList<>();
@@ -48,20 +44,24 @@ public class App {
   Map<Integer, Project> projectMap = new HashMap<>();
   List<Integer> projectNoList = new ArrayList<>();
 
+  UserDao userDao;
+
   public App() {
 
-    loadData();
+    //loadData();
+
+    userDao = new MapUserDao("data.xlsx");
 
     MenuGroup userMenu = new MenuGroup("회원");
-    userMenu.add(new MenuItem("등록", new UserAddCommand(userMap, userNoList)));
-    userMenu.add(new MenuItem("목록", new UserListCommand(userMap, userNoList)));
-    userMenu.add(new MenuItem("조회", new UserViewCommand(userMap)));
-    userMenu.add(new MenuItem("변경", new UserUpdateCommand(userMap)));
-    userMenu.add(new MenuItem("삭제", new UserDeleteCommand(userMap, userNoList)));
+    userMenu.add(new MenuItem("등록", new UserAddCommand(userDao)));
+//    userMenu.add(new MenuItem("목록", new UserListCommand(userMap, userNoList)));
+//    userMenu.add(new MenuItem("조회", new UserViewCommand(userMap)));
+//    userMenu.add(new MenuItem("변경", new UserUpdateCommand(userMap)));
+//    userMenu.add(new MenuItem("삭제", new UserDeleteCommand(userMap, userNoList)));
     mainMenu.add(userMenu);
 
     MenuGroup projectMenu = new MenuGroup("프로젝트");
-    ProjectMemberHandler memberHandler = new ProjectMemberHandler(userMap);
+    ProjectMemberHandler memberHandler = new ProjectMemberHandler(null);
     projectMenu.add(
         new MenuItem("등록", new ProjectAddCommand(projectMap, projectNoList, memberHandler)));
     projectMenu.add(new MenuItem("목록", new ProjectListCommand(projectMap, projectNoList)));
@@ -101,7 +101,8 @@ public class App {
       ex.printStackTrace();
 
     } finally {
-      saveData();
+      //saveData();
+      ((MapUserDao) userDao).save();
     }
 
     System.out.println("종료합니다.");
@@ -113,7 +114,6 @@ public class App {
     try {
       XSSFWorkbook workbook = new XSSFWorkbook("data.xlsx");
 
-      loadUsers(workbook);
       loadBoards(workbook);
       loadProjects(workbook);
 
@@ -123,30 +123,6 @@ public class App {
       System.out.println("데이터 로딩 중 오류 발생!");
       e.printStackTrace();
     }
-  }
-
-  private void loadUsers(XSSFWorkbook workbook) {
-    XSSFSheet sheet = workbook.getSheet("users");
-
-    for (int i = 1; i <= sheet.getLastRowNum(); i++) {
-      Row row = sheet.getRow(i);
-      try {
-        User user = new User();
-        user.setNo(Integer.parseInt(row.getCell(0).getStringCellValue()));
-        user.setName(row.getCell(1).getStringCellValue());
-        user.setEmail(row.getCell(2).getStringCellValue());
-        user.setPassword(row.getCell(3).getStringCellValue());
-        user.setTel(row.getCell(4).getStringCellValue());
-
-        userMap.put(user.getNo(), user);
-        userNoList.add(user.getNo());
-
-      } catch (Exception e) {
-        System.out.printf("%s 번 회원의 데이터 형식이 맞지 않습니다.\n", row.getCell(0).getStringCellValue());
-      }
-    }
-
-    User.initSeqNo(userNoList.getLast());
   }
 
   private void loadBoards(XSSFWorkbook workbook) {
@@ -193,7 +169,7 @@ public class App {
 
         String[] members = row.getCell(5).getStringCellValue().split(",");
         for (String memberNo : members) {
-          User member = userMap.get(Integer.valueOf(memberNo));
+          User member = null; //userMap.get(Integer.valueOf(memberNo));
           if (member != null) {
             project.getMembers().add(member);
           }
@@ -213,7 +189,6 @@ public class App {
     try {
       XSSFWorkbook workbook = new XSSFWorkbook();
 
-      saveUsers(workbook);
       saveBoards(workbook);
       saveProjects(workbook);
 
@@ -228,28 +203,6 @@ public class App {
     }
   }
 
-  private void saveUsers(XSSFWorkbook workbook) {
-    XSSFSheet sheet = workbook.createSheet("users");
-
-    // 셀 이름 출력
-    String[] cellHeaders = {"no", "name", "email", "password", "tel"};
-    Row headerRow = sheet.createRow(0);
-    for (int i = 0; i < cellHeaders.length; i++) {
-      headerRow.createCell(i).setCellValue(cellHeaders[i]);
-    }
-
-    // 데이터 저장
-    int rowNo = 1;
-    for (Integer userNo : userNoList) {
-      User user = userMap.get(userNo);
-      Row dataRow = sheet.createRow(rowNo++);
-      dataRow.createCell(0).setCellValue(String.valueOf(user.getNo()));
-      dataRow.createCell(1).setCellValue(user.getName());
-      dataRow.createCell(2).setCellValue(user.getEmail());
-      dataRow.createCell(3).setCellValue(user.getPassword());
-      dataRow.createCell(4).setCellValue(user.getTel());
-    }
-  }
 
   private void saveBoards(XSSFWorkbook workbook) {
     XSSFSheet sheet = workbook.createSheet("boards");
