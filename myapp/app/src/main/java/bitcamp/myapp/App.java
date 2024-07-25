@@ -147,12 +147,7 @@ public class App {
       }
     }
 
-    try {
-      initSeqNo(userNoList, User.class);
-    } catch (Exception e) {
-      System.out.println("회원 일련 번호 초기화 오류!");
-    }
-
+    User.initSeqNo(userNoList.getLast());
   }
 
   private void loadBoards(XSSFWorkbook workbook) {
@@ -276,7 +271,8 @@ public class App {
 
     // 데이터 저장
     int rowNo = 1;
-    for (User user : userMap.values()) {
+    for (Integer userNo : userNoList) {
+      User user = userMap.get(userNo);
       Row dataRow = sheet.createRow(rowNo++);
       dataRow.createCell(0).setCellValue(String.valueOf(user.getNo()));
       dataRow.createCell(1).setCellValue(user.getName());

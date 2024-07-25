@@ -26,7 +26,7 @@ public class UserDeleteCommand implements Command {
       System.out.println("없는 회원입니다.");
       return;
     }
-    userNoList.remove(userNo);
+    userNoList.remove(Integer.valueOf(userNo));
     System.out.printf("'%s' 회원을 삭제 했습니다.\n", deletedUser.getName());
   }
 }
