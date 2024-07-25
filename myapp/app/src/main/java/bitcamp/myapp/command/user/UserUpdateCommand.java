@@ -35,9 +35,9 @@ public class UserUpdateCommand implements Command {
       } else {
         System.out.println("변경 실패입니다!");
       }
-      
+
     } catch (Exception e) {
-      System.out.println("데이터 변경 중 오류 발생!");
+      System.out.println("변경 중 오류 발생!");
     }
   }
 

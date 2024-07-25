@@ -30,7 +30,7 @@ public class UserViewCommand implements Command {
       System.out.printf("연락처: %s\n", user.getTel());
 
     } catch (Exception e) {
-      System.out.println("데이터 조회 중 오류 발생!");
+      System.out.println("조회 중 오류 발생!");
     }
   }
 }

@@ -1,19 +1,16 @@
 package bitcamp.myapp.command.board;
 
 import bitcamp.myapp.command.Command;
+import bitcamp.myapp.dao.BoardDao;
 import bitcamp.myapp.vo.Board;
 import bitcamp.util.Prompt;
-import java.util.List;
-import java.util.Map;
 
 public class BoardDeleteCommand implements Command {
 
-  private Map<Integer, Board> boardMap;
-  private List<Integer> boardNoList;
+  private BoardDao boardDao;
 
-  public BoardDeleteCommand(Map<Integer, Board> boardMap, List<Integer> boardNoList) {
-    this.boardMap = boardMap;
-    this.boardNoList = boardNoList;
+  public BoardDeleteCommand(BoardDao boardDao) {
+    this.boardDao = boardDao;
   }
 
   @Override
@@ -21,13 +18,22 @@ public class BoardDeleteCommand implements Command {
     System.out.printf("[%s]\n", menuName);
     int boardNo = Prompt.inputInt("게시글 번호?");
 
-    Board deletedBoard = boardMap.remove(boardNo);
-    if (deletedBoard == null) {
-      System.out.println("없는 게시글입니다.");
-      return;
+    try {
+      Board deletedBoard = boardDao.findBy(boardNo);
+      if (deletedBoard == null) {
+        System.out.println("없는 게시글입니다.");
+        return;
+      }
+
+      if (boardDao.delete(boardNo)) {
+        System.out.printf("'%s'번 게시글을 삭제 했습니다.\n", deletedBoard.getNo());
+      } else {
+        System.out.println("삭제 실패입니다!");
+      }
+      
+    } catch (Exception e) {
+      System.out.println("삭제 중 오류 발생!");
     }
-    boardNoList.remove(Integer.valueOf(boardNo));
-    System.out.printf("%d번 게시글을 삭제 했습니다.\n", deletedBoard.getNo());
   }
 
 

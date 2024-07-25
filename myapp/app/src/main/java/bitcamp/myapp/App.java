@@ -20,6 +20,8 @@ import bitcamp.myapp.command.user.UserDeleteCommand;
 import bitcamp.myapp.command.user.UserListCommand;
 import bitcamp.myapp.command.user.UserUpdateCommand;
 import bitcamp.myapp.command.user.UserViewCommand;
+import bitcamp.myapp.dao.BoardDao;
+import bitcamp.myapp.dao.MapBoardDao;
 import bitcamp.myapp.dao.MapUserDao;
 import bitcamp.myapp.dao.UserDao;
 import bitcamp.myapp.vo.Board;
@@ -27,7 +29,6 @@ import bitcamp.myapp.vo.Project;
 import bitcamp.myapp.vo.User;
 import bitcamp.util.Prompt;
 import java.io.FileOutputStream;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -49,12 +50,14 @@ public class App {
   List<Integer> projectNoList = new ArrayList<>();
 
   UserDao userDao;
+  BoardDao boardDao;
 
   public App() {
 
     //loadData();
 
     userDao = new MapUserDao("data.xlsx");
+    boardDao = new MapBoardDao("data.xlsx");
 
     MenuGroup userMenu = new MenuGroup("회원");
     userMenu.add(new MenuItem("등록", new UserAddCommand(userDao)));
@@ -75,11 +78,11 @@ public class App {
     mainMenu.add(projectMenu);
 
     MenuGroup boardMenu = new MenuGroup("게시판");
-    boardMenu.add(new MenuItem("등록", new BoardAddCommand(boardMap, boardNoList)));
-    boardMenu.add(new MenuItem("목록", new BoardListCommand(boardMap, boardNoList)));
-    boardMenu.add(new MenuItem("조회", new BoardViewCommand(boardMap)));
-    boardMenu.add(new MenuItem("변경", new BoardUpdateCommand(boardMap)));
-    boardMenu.add(new MenuItem("삭제", new BoardDeleteCommand(boardMap, boardNoList)));
+    boardMenu.add(new MenuItem("등록", new BoardAddCommand(boardDao)));
+    boardMenu.add(new MenuItem("목록", new BoardListCommand(boardDao)));
+    boardMenu.add(new MenuItem("조회", new BoardViewCommand(boardDao)));
+    boardMenu.add(new MenuItem("변경", new BoardUpdateCommand(boardDao)));
+    boardMenu.add(new MenuItem("삭제", new BoardDeleteCommand(boardDao)));
     mainMenu.add(boardMenu);
 
     mainMenu.add(new MenuItem("도움말", new HelpCommand()));
@@ -113,6 +116,14 @@ public class App {
         e.printStackTrace();
         System.out.println();
       }
+
+      try {
+        ((MapBoardDao) boardDao).save();
+      } catch (Exception e) {
+        System.out.println("게시글 데이터 저장 중 오류 발생!");
+        e.printStackTrace();
+        System.out.println();
+      }
     }
 
     System.out.println("종료합니다.");
@@ -124,7 +135,6 @@ public class App {
     try {
       XSSFWorkbook workbook = new XSSFWorkbook("data.xlsx");
 
-      loadBoards(workbook);
       loadProjects(workbook);
 
       System.out.println("데이터를 로딩 했습니다.");
@@ -133,34 +143,6 @@ public class App {
       System.out.println("데이터 로딩 중 오류 발생!");
       e.printStackTrace();
     }
-  }
-
-  private void loadBoards(XSSFWorkbook workbook) {
-    XSSFSheet sheet = workbook.getSheet("boards");
-
-    for (int i = 1; i <= sheet.getLastRowNum(); i++) {
-      Row row = sheet.getRow(i);
-
-      try {
-        Board board = new Board();
-        board.setNo(Integer.parseInt(row.getCell(0).getStringCellValue()));
-        board.setTitle(row.getCell(1).getStringCellValue());
-        board.setContent(row.getCell(2).getStringCellValue());
-
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        board.setCreatedDate(formatter.parse(row.getCell(3).getStringCellValue()));
-
-        board.setViewCount(Integer.parseInt(row.getCell(4).getStringCellValue()));
-
-        boardMap.put(board.getNo(), board);
-        boardNoList.add(board.getNo());
-
-      } catch (Exception e) {
-        System.out.printf("%s 번 게시글의 데이터 형식이 맞지 않습니다.\n", row.getCell(0).getStringCellValue());
-      }
-    }
-
-    Board.initSeqNo(boardNoList.getLast());
   }
 
   private void loadProjects(XSSFWorkbook workbook) {
@@ -199,7 +181,6 @@ public class App {
     try {
       XSSFWorkbook workbook = new XSSFWorkbook();
 
-      saveBoards(workbook);
       saveProjects(workbook);
 
       try (FileOutputStream out = new FileOutputStream("data.xlsx")) {
@@ -213,32 +194,6 @@ public class App {
     }
   }
 
-
-  private void saveBoards(XSSFWorkbook workbook) {
-    XSSFSheet sheet = workbook.createSheet("boards");
-
-    // 셀 이름 출력
-    String[] cellHeaders = {"no", "title", "content", "created_date", "view_count"};
-    Row headerRow = sheet.createRow(0);
-    for (int i = 0; i < cellHeaders.length; i++) {
-      headerRow.createCell(i).setCellValue(cellHeaders[i]);
-    }
-
-    // 데이터 저장
-    int rowNo = 1;
-    for (Integer boardNo : boardNoList) {
-      Board board = boardMap.get(boardNo);
-      Row dataRow = sheet.createRow(rowNo++);
-      dataRow.createCell(0).setCellValue(String.valueOf(board.getNo()));
-      dataRow.createCell(1).setCellValue(board.getTitle());
-      dataRow.createCell(2).setCellValue(board.getContent());
-
-      SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-      dataRow.createCell(3).setCellValue(formatter.format(board.getCreatedDate()));
-
-      dataRow.createCell(4).setCellValue(String.valueOf(board.getViewCount()));
-    }
-  }
 
   private void saveProjects(XSSFWorkbook workbook) {
     XSSFSheet sheet = workbook.createSheet("projects");

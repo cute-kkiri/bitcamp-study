@@ -25,7 +25,7 @@ public class UserAddCommand implements Command {
     try {
       userDao.insert(user);
     } catch (Exception e) {
-      System.out.println("회원 등록 중 오류 발생!");
+      System.out.println("등록 중 오류 발생!");
     }
   }
 }
