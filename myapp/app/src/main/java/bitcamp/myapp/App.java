@@ -29,8 +29,11 @@ import java.io.FileOutputStream;
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -39,6 +42,9 @@ public class App {
 
 
   MenuGroup mainMenu = new MenuGroup("메인");
+
+  Map<Integer, User> userMap = new HashMap<>();
+  List<Integer> userNoList = new ArrayList<>();
 
   List<User> userList = new ArrayList<>();
   List<Project> projectList = new LinkedList<>();
@@ -49,11 +55,11 @@ public class App {
     loadData();
 
     MenuGroup userMenu = new MenuGroup("회원");
-    userMenu.add(new MenuItem("등록", new UserAddCommand(userList)));
-    userMenu.add(new MenuItem("목록", new UserListCommand(userList)));
-    userMenu.add(new MenuItem("조회", new UserViewCommand(userList)));
-    userMenu.add(new MenuItem("변경", new UserUpdateCommand(userList)));
-    userMenu.add(new MenuItem("삭제", new UserDeleteCommand(userList)));
+    userMenu.add(new MenuItem("등록", new UserAddCommand(userMap, userNoList)));
+    userMenu.add(new MenuItem("목록", new UserListCommand(userMap, userNoList)));
+    userMenu.add(new MenuItem("조회", new UserViewCommand(userMap)));
+    userMenu.add(new MenuItem("변경", new UserUpdateCommand(userMap)));
+    userMenu.add(new MenuItem("삭제", new UserDeleteCommand(userMap, userNoList)));
     mainMenu.add(userMenu);
 
     MenuGroup projectMenu = new MenuGroup("프로젝트");
@@ -132,7 +138,9 @@ public class App {
         user.setEmail(row.getCell(2).getStringCellValue());
         user.setPassword(row.getCell(3).getStringCellValue());
         user.setTel(row.getCell(4).getStringCellValue());
-        userList.add(user);
+
+        userMap.put(user.getNo(), user);
+        userNoList.add(user.getNo());
 
       } catch (Exception e) {
         System.out.printf("%s 번 회원의 데이터 형식이 맞지 않습니다.\n", row.getCell(0).getStringCellValue());
@@ -140,7 +148,7 @@ public class App {
     }
 
     try {
-      initSeqNo(userList, User.class);
+      initSeqNo(userNoList, User.class);
     } catch (Exception e) {
       System.out.println("회원 일련 번호 초기화 오류!");
     }
@@ -222,7 +230,7 @@ public class App {
     return null;
   }
 
-  private <E> void initSeqNo(List<E> list, Class<E> elementType) throws Exception {
+  private <E> void initSeqNo(Collection<E> list, Class<E> elementType) throws Exception {
     int maxSeqNo = 0;
     for (Object element : list) {
       SequenceNo seqObj = (SequenceNo) element;
@@ -267,9 +275,9 @@ public class App {
     }
 
     // 데이터 저장
-    for (int i = 0; i < userList.size(); i++) {
-      User user = userList.get(i);
-      Row dataRow = sheet.createRow(i + 1);
+    int rowNo = 1;
+    for (User user : userMap.values()) {
+      Row dataRow = sheet.createRow(rowNo++);
       dataRow.createCell(0).setCellValue(String.valueOf(user.getNo()));
       dataRow.createCell(1).setCellValue(user.getName());
       dataRow.createCell(2).setCellValue(user.getEmail());

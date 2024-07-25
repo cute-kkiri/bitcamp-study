@@ -4,13 +4,16 @@ import bitcamp.myapp.command.Command;
 import bitcamp.myapp.vo.User;
 import bitcamp.util.Prompt;
 import java.util.List;
+import java.util.Map;
 
 public class UserAddCommand implements Command {
 
-  private List<User> userList;
+  private Map<Integer, User> userMap;
+  private List<Integer> userNoList;
 
-  public UserAddCommand(List<User> list) {
-    this.userList = list;
+  public UserAddCommand(Map<Integer, User> userMap, List<Integer> userNoList) {
+    this.userMap = userMap;
+    this.userNoList = userNoList;
   }
 
   @Override
@@ -22,6 +25,8 @@ public class UserAddCommand implements Command {
     user.setPassword(Prompt.input("암호?"));
     user.setTel(Prompt.input("연락처?"));
     user.setNo(User.getNextSeqNo());
-    userList.add(user);
+    
+    userMap.put(user.getNo(), user);
+    userNoList.add(user.getNo());
   }
 }
