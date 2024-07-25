@@ -131,6 +131,10 @@ public class MapUserDao implements UserDao {
 
   @Override
   public boolean delete(int no) throws Exception {
-    return false;
+    if (userMap.remove(no) == null) {
+      return false;
+    }
+    userNoList.remove(Integer.valueOf(no));
+    return true;
   }
 }

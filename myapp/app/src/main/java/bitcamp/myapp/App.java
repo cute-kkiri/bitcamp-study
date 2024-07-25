@@ -16,7 +16,10 @@ import bitcamp.myapp.command.project.ProjectMemberHandler;
 import bitcamp.myapp.command.project.ProjectUpdateCommand;
 import bitcamp.myapp.command.project.ProjectViewCommand;
 import bitcamp.myapp.command.user.UserAddCommand;
+import bitcamp.myapp.command.user.UserDeleteCommand;
 import bitcamp.myapp.command.user.UserListCommand;
+import bitcamp.myapp.command.user.UserUpdateCommand;
+import bitcamp.myapp.command.user.UserViewCommand;
 import bitcamp.myapp.dao.MapUserDao;
 import bitcamp.myapp.dao.UserDao;
 import bitcamp.myapp.vo.Board;
@@ -56,9 +59,9 @@ public class App {
     MenuGroup userMenu = new MenuGroup("회원");
     userMenu.add(new MenuItem("등록", new UserAddCommand(userDao)));
     userMenu.add(new MenuItem("목록", new UserListCommand(userDao)));
-//    userMenu.add(new MenuItem("조회", new UserViewCommand(userMap)));
-//    userMenu.add(new MenuItem("변경", new UserUpdateCommand(userMap)));
-//    userMenu.add(new MenuItem("삭제", new UserDeleteCommand(userMap, userNoList)));
+    userMenu.add(new MenuItem("조회", new UserViewCommand(userDao)));
+    userMenu.add(new MenuItem("변경", new UserUpdateCommand(userDao)));
+    userMenu.add(new MenuItem("삭제", new UserDeleteCommand(userDao)));
     mainMenu.add(userMenu);
 
     MenuGroup projectMenu = new MenuGroup("프로젝트");
