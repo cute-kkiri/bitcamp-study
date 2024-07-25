@@ -46,6 +46,9 @@ public class App {
   Map<Integer, User> userMap = new HashMap<>();
   List<Integer> userNoList = new ArrayList<>();
 
+  Map<Integer, Board> boardMap = new HashMap<>();
+  List<Integer> boardNoList = new ArrayList<>();
+
   List<User> userList = new ArrayList<>();
   List<Project> projectList = new LinkedList<>();
   List<Board> boardList = new LinkedList<>();
@@ -72,11 +75,11 @@ public class App {
     mainMenu.add(projectMenu);
 
     MenuGroup boardMenu = new MenuGroup("게시판");
-    boardMenu.add(new MenuItem("등록", new BoardAddCommand(boardList)));
-    boardMenu.add(new MenuItem("목록", new BoardListCommand(boardList)));
-    boardMenu.add(new MenuItem("조회", new BoardViewCommand(boardList)));
-    boardMenu.add(new MenuItem("변경", new BoardUpdateCommand(boardList)));
-    boardMenu.add(new MenuItem("삭제", new BoardDeleteCommand(boardList)));
+    boardMenu.add(new MenuItem("등록", new BoardAddCommand(boardMap, boardNoList)));
+    boardMenu.add(new MenuItem("목록", new BoardListCommand(boardMap, boardNoList)));
+    boardMenu.add(new MenuItem("조회", new BoardViewCommand(boardMap)));
+    boardMenu.add(new MenuItem("변경", new BoardUpdateCommand(boardMap)));
+    boardMenu.add(new MenuItem("삭제", new BoardDeleteCommand(boardMap, boardNoList)));
     mainMenu.add(boardMenu);
 
     mainMenu.add(new MenuItem("도움말", new HelpCommand()));
@@ -167,18 +170,15 @@ public class App {
 
         board.setViewCount(Integer.parseInt(row.getCell(4).getStringCellValue()));
 
-        boardList.add(board);
+        boardMap.put(board.getNo(), board);
+        boardNoList.add(board.getNo());
 
       } catch (Exception e) {
         System.out.printf("%s 번 게시글의 데이터 형식이 맞지 않습니다.\n", row.getCell(0).getStringCellValue());
       }
     }
 
-    try {
-      initSeqNo(boardList, Board.class);
-    } catch (Exception e) {
-      System.out.println("게시글 일련 번호 초기화 오류!");
-    }
+    Board.initSeqNo(boardNoList.getLast());
   }
 
   private void loadProjects(XSSFWorkbook workbook) {
@@ -293,9 +293,10 @@ public class App {
     }
 
     // 데이터 저장
-    for (int i = 0; i < boardList.size(); i++) {
-      Board board = boardList.get(i);
-      Row dataRow = sheet.createRow(i + 1);
+    int rowNo = 1;
+    for (Integer boardNo : boardNoList) {
+      Board board = boardMap.get(boardNo);
+      Row dataRow = sheet.createRow(rowNo++);
       dataRow.createCell(0).setCellValue(String.valueOf(board.getNo()));
       dataRow.createCell(1).setCellValue(board.getTitle());
       dataRow.createCell(2).setCellValue(board.getContent());
