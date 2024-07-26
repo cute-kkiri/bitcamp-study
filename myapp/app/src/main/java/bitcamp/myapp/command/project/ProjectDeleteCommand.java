@@ -1,19 +1,16 @@
 package bitcamp.myapp.command.project;
 
 import bitcamp.myapp.command.Command;
+import bitcamp.myapp.dao.ProjectDao;
 import bitcamp.myapp.vo.Project;
 import bitcamp.util.Prompt;
-import java.util.List;
-import java.util.Map;
 
 public class ProjectDeleteCommand implements Command {
 
-  private Map<Integer, Project> projectMap;
-  private List<Integer> projectNoList;
+  private ProjectDao projectDao;
 
-  public ProjectDeleteCommand(Map<Integer, Project> projectMap, List<Integer> projectNoList) {
-    this.projectMap = projectMap;
-    this.projectNoList = projectNoList;
+  public ProjectDeleteCommand(ProjectDao projectDao) {
+    this.projectDao = projectDao;
   }
 
   @Override
@@ -21,13 +18,18 @@ public class ProjectDeleteCommand implements Command {
     System.out.printf("[%s]\n", menuName);
     int projectNo = Prompt.inputInt("프로젝트 번호?");
 
-    Project deletedProject = projectMap.remove(projectNo);
-    if (deletedProject == null) {
-      System.out.println("없는 프로젝트입니다.");
-      return;
-    }
+    try {
+      Project deletedProject = projectDao.findBy(projectNo);
+      if (deletedProject == null) {
+        System.out.println("없는 프로젝트입니다.");
+        return;
+      }
 
-    projectNoList.remove(Integer.valueOf(projectNo));
-    System.out.printf("%d번 프로젝트를 삭제 했습니다.\n", deletedProject.getNo());
+      projectDao.delete(projectNo);
+      System.out.printf("%d번 프로젝트를 삭제 했습니다.\n", deletedProject.getNo());
+
+    } catch (Exception e) {
+      System.out.println("삭제 중 오류 발생!");
+    }
   }
 }

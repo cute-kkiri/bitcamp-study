@@ -30,11 +30,8 @@ public class UserUpdateCommand implements Command {
       user.setPassword(Prompt.input("암호?"));
       user.setTel(Prompt.input("연락처(%s)?", user.getTel()));
 
-      if (userDao.update(user)) {
-        System.out.println("변경 했습니다.");
-      } else {
-        System.out.println("변경 실패입니다!");
-      }
+      userDao.update(user);
+      System.out.println("변경 했습니다.");
 
     } catch (Exception e) {
       System.out.println("변경 중 오류 발생!");

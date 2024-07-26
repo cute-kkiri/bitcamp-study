@@ -12,7 +12,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-public class MapBoardDao implements BoardDao {
+public class ListBoardDao implements BoardDao {
 
   private static final String DEFAULT_DATANAME = "boards";
   private int seqNo;
@@ -21,11 +21,11 @@ public class MapBoardDao implements BoardDao {
   private String path;
   private String dataName;
 
-  public MapBoardDao(String path) {
+  public ListBoardDao(String path) {
     this(path, DEFAULT_DATANAME);
   }
 
-  public MapBoardDao(String path, String dataName) {
+  public ListBoardDao(String path, String dataName) {
     this.path = path;
     this.dataName = dataName;
 

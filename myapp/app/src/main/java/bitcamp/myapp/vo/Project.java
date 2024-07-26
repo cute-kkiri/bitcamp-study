@@ -5,38 +5,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Project implements Serializable, SequenceNo {
+public class Project implements Serializable {
 
-  private static int seqNo;
+  private static final long serialVersionUID = 1L;
 
   private int no;
   private String title;
   private String description;
   private String startDate;
   private String endDate;
-  private List<User> members;
-
-  { // 인스턴스 블록
-    members = new ArrayList<>();
-  }
+  private List<User> members = new ArrayList<>();
+  ;
 
   public Project() {
   }
 
   public Project(int no) {
     this.no = no;
-  }
-
-  public static int getNextSeqNo() {
-    return ++seqNo;
-  }
-
-  public static void initSeqNo(int no) {
-    seqNo = no;
-  }
-
-  public static int getSeqNo() {
-    return seqNo;
   }
 
   @Override
@@ -56,7 +41,6 @@ public class Project implements Serializable, SequenceNo {
     return Objects.hashCode(no);
   }
 
-  @Override
   public int getNo() {
     return no;
   }

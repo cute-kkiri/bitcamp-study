@@ -25,11 +25,8 @@ public class UserDeleteCommand implements Command {
         return;
       }
 
-      if (userDao.delete(userNo)) {
-        System.out.printf("'%s' 회원을 삭제 했습니다.\n", deletedUser.getName());
-      } else {
-        System.out.println("삭제 실패입니다!");
-      }
+      userDao.delete(userNo);
+      System.out.printf("'%s' 회원을 삭제 했습니다.\n", deletedUser.getName());
 
     } catch (Exception e) {
       System.out.println("삭제 중 오류 발생!");

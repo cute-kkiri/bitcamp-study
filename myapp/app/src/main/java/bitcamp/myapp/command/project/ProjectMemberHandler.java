@@ -1,26 +1,26 @@
 package bitcamp.myapp.command.project;
 
+import bitcamp.myapp.dao.UserDao;
 import bitcamp.myapp.vo.Project;
 import bitcamp.myapp.vo.User;
 import bitcamp.util.Prompt;
-import java.util.Map;
 
 public class ProjectMemberHandler {
 
-  private Map<Integer, User> userMap;
+  private UserDao userDao;
 
-  public ProjectMemberHandler(Map<Integer, User> userMap) {
-    this.userMap = userMap;
+  public ProjectMemberHandler(UserDao userDao) {
+    this.userDao = userDao;
   }
 
-  public void addMembers(Project project) {
+  public void addMembers(Project project) throws Exception {
     while (true) {
       int userNo = Prompt.inputInt("추가할 팀원 번호?(종료: 0)");
       if (userNo == 0) {
         break;
       }
 
-      User user = userMap.get(userNo);
+      User user = userDao.findBy(userNo);
       if (user == null) {
         System.out.println("없는 팀원입니다.");
         continue;
