@@ -5,9 +5,7 @@ import bitcamp.myapp.vo.User;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -16,16 +14,15 @@ public class ListProjectDao implements ProjectDao {
 
   private static final String DEFAULT_DATANAME = "projects";
   private int seqNo;
-  private Map<Integer, Project> projectMap = new HashMap<>();
-  private List<Integer> projectNoList = new ArrayList<>();
+  private List<Project> projectList = new ArrayList<>();
   private String path;
   private String dataName;
 
-  public ListProjectDao(String path) {
-    this(path, DEFAULT_DATANAME);
+  public ListProjectDao(String path, UserDao userDao) {
+    this(path, DEFAULT_DATANAME, userDao);
   }
 
-  public ListProjectDao(String path, String dataName) {
+  public ListProjectDao(String path, String dataName, UserDao userDao) {
     this.path = path;
     this.dataName = dataName;
 
@@ -44,20 +41,19 @@ public class ListProjectDao implements ProjectDao {
 
           String[] members = row.getCell(5).getStringCellValue().split(",");
           for (String memberNo : members) {
-            User member = null; //userMap.get(Integer.valueOf(memberNo));
+            User member = userDao.findBy(Integer.parseInt(memberNo));
             if (member != null) {
               project.getMembers().add(member);
             }
           }
-          projectMap.put(project.getNo(), project);
-          projectNoList.add(project.getNo());
+          projectList.add(project);
 
         } catch (Exception e) {
           System.out.printf("%s 번 게시글의 데이터 형식이 맞지 않습니다.\n", row.getCell(0).getStringCellValue());
         }
       }
 
-      seqNo = projectNoList.getLast();
+      seqNo = projectList.getLast().getNo();
 
     } catch (Exception e) {
       System.out.println("게시글 데이터 로딩 중 오류 발생!");
@@ -85,8 +81,7 @@ public class ListProjectDao implements ProjectDao {
 
       // 데이터 저장
       int rowNo = 1;
-      for (Integer projectNo : projectNoList) {
-        Project project = projectMap.get(projectNo);
+      for (Project project : projectList) {
         Row dataRow = sheet.createRow(rowNo++);
         dataRow.createCell(0).setCellValue(String.valueOf(project.getNo()));
         dataRow.createCell(1).setCellValue(project.getTitle());
@@ -117,41 +112,43 @@ public class ListProjectDao implements ProjectDao {
   @Override
   public boolean insert(Project project) throws Exception {
     project.setNo(++seqNo);
-    projectMap.put(project.getNo(), project);
-    projectNoList.add(project.getNo());
+    projectList.add(project);
     return true;
   }
 
   @Override
   public List<Project> list() throws Exception {
-    ArrayList<Project> projects = new ArrayList<>();
-    for (Integer projectNo : projectNoList) {
-      projects.add(projectMap.get(projectNo));
-    }
-    return projects;
+    return projectList;
   }
 
   @Override
   public Project findBy(int no) throws Exception {
-    return projectMap.get(no);
+    for (Project project : projectList) {
+      if (project.getNo() == no) {
+        return project;
+      }
+    }
+    return null;
   }
 
   @Override
   public boolean update(Project project) throws Exception {
-    if (!projectMap.containsKey(project.getNo())) {
+    int index = projectList.indexOf(project);
+    if (index == -1) {
       return false;
     }
 
-    projectMap.put(project.getNo(), project);
+    projectList.set(index, project);
     return true;
   }
 
   @Override
   public boolean delete(int no) throws Exception {
-    if (projectMap.remove(no) == null) {
+    int index = projectList.indexOf(new Project(no));
+    if (index == -1) {
       return false;
     }
-    projectNoList.remove(Integer.valueOf(no));
+    projectList.remove(index);
     return true;
   }
 }

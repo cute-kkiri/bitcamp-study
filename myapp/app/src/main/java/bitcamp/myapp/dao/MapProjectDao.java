@@ -21,11 +21,11 @@ public class MapProjectDao implements ProjectDao {
   private String path;
   private String dataName;
 
-  public MapProjectDao(String path) {
-    this(path, DEFAULT_DATANAME);
+  public MapProjectDao(String path, UserDao userDao) {
+    this(path, DEFAULT_DATANAME, userDao);
   }
 
-  public MapProjectDao(String path, String dataName) {
+  public MapProjectDao(String path, String dataName, UserDao userDao) {
     this.path = path;
     this.dataName = dataName;
 
@@ -44,7 +44,7 @@ public class MapProjectDao implements ProjectDao {
 
           String[] members = row.getCell(5).getStringCellValue().split(",");
           for (String memberNo : members) {
-            User member = null; //userMap.get(Integer.valueOf(memberNo));
+            User member = userDao.findBy(Integer.parseInt(memberNo));
             if (member != null) {
               project.getMembers().add(member);
             }

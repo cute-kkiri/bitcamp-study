@@ -21,9 +21,9 @@ import bitcamp.myapp.command.user.UserListCommand;
 import bitcamp.myapp.command.user.UserUpdateCommand;
 import bitcamp.myapp.command.user.UserViewCommand;
 import bitcamp.myapp.dao.BoardDao;
-import bitcamp.myapp.dao.MapBoardDao;
-import bitcamp.myapp.dao.MapProjectDao;
-import bitcamp.myapp.dao.MapUserDao;
+import bitcamp.myapp.dao.ListBoardDao;
+import bitcamp.myapp.dao.ListProjectDao;
+import bitcamp.myapp.dao.ListUserDao;
 import bitcamp.myapp.dao.ProjectDao;
 import bitcamp.myapp.dao.UserDao;
 import bitcamp.myapp.vo.Project;
@@ -47,11 +47,13 @@ public class App {
 
   public App() {
 
-    //loadData();
+//    userDao = new MapUserDao("data.xlsx");
+//    boardDao = new MapBoardDao("data.xlsx");
+//    projectDao = new MapProjectDao("data.xlsx", userDao);
 
-    userDao = new MapUserDao("data.xlsx");
-    boardDao = new MapBoardDao("data.xlsx");
-    projectDao = new MapProjectDao("data.xlsx");
+    userDao = new ListUserDao("data.xlsx");
+    boardDao = new ListBoardDao("data.xlsx");
+    projectDao = new ListProjectDao("data.xlsx", userDao);
 
     MenuGroup userMenu = new MenuGroup("회원");
     userMenu.add(new MenuItem("등록", new UserAddCommand(userDao)));
@@ -102,9 +104,9 @@ public class App {
       ex.printStackTrace();
 
     } finally {
-      //saveData();
       try {
-        ((MapUserDao) userDao).save();
+        //((MapUserDao) userDao).save();
+        ((ListUserDao) userDao).save();
       } catch (Exception e) {
         System.out.println("회원 데이터 저장 중 오류 발생!");
         e.printStackTrace();
@@ -112,7 +114,8 @@ public class App {
       }
 
       try {
-        ((MapBoardDao) boardDao).save();
+        //((MapBoardDao) boardDao).save();
+        ((ListBoardDao) boardDao).save();
       } catch (Exception e) {
         System.out.println("게시글 데이터 저장 중 오류 발생!");
         e.printStackTrace();
@@ -120,7 +123,8 @@ public class App {
       }
 
       try {
-        ((MapProjectDao) projectDao).save();
+        //((MapProjectDao) projectDao).save();
+        ((ListProjectDao) projectDao).save();
       } catch (Exception e) {
         System.out.println("프로젝트 데이터 저장 중 오류 발생!");
         e.printStackTrace();
