@@ -2,10 +2,11 @@ package bitcamp.myapp;
 
 import bitcamp.context.ApplicationContext;
 import bitcamp.listener.ApplicationListener;
+import bitcamp.myapp.dao.skel.UserDaoSkel;
 import bitcamp.myapp.listener.InitApplicationListener;
 import bitcamp.util.Prompt;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -44,27 +45,32 @@ public class ServerApp {
       }
     }
 
+    // 서버에서 사용할 Dao Skeloton 객체를 준비한다.
+    UserDaoSkel userDaoSkel = (UserDaoSkel) appCtx.getAttribute("userDaoSkel");
+
     System.out.println("서버 프로젝트 관리 시스템 시작!");
 
     try (ServerSocket serverSocket = new ServerSocket(8888);) {
       System.out.println("서버 실행 중...");
 
-      // 클라이언트 연결을 기다림 => 대기열에 클라이언트가 등록되는 순간 즉시 통신 연결
       try (Socket socket = serverSocket.accept();) {
         System.out.println("클라이언트와 연결되었음!");
 
-        // 클라이언트와 데이터를 주고 받기 위해 스트림 객체에 적절한 데코레이터를 붙인다.
-        DataInputStream in = new DataInputStream(socket.getInputStream());
-        DataOutputStream out = new DataOutputStream(socket.getOutputStream());
+        ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
+        ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 
-        // 클라이언트가 문자열을 보낼 때까지 기다리고 있다가
-        // 클라이언트가 문자열을 보내면 즉시 읽어서 String 객체로 리턴한다.
-        String message = in.readUTF();
+        String dataName = in.readUTF();
 
-        // 클라이언트에게 보낼 문자열을 네트워크 카드의 메모리에 전송해 둔다.
-        // 데이터를 전송하는 것은 OS가 할 일이다.
-        // 데이터가 도착하는지 확인하지 않고 즉시 리턴한다.
-        out.writeUTF(message + "!!(강사)");
+        switch (dataName) {
+          case "users":
+            userDaoSkel.service(in, out);
+            break;
+          case "projects":
+            break;
+          case "boards":
+            break;
+          default:
+        }
       }
 
     } catch (Exception e) {
