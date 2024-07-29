@@ -60,7 +60,8 @@ public class ServerApp {
         ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 
         String dataName = in.readUTF();
-
+        System.out.println(dataName);
+        
         switch (dataName) {
           case "users":
             userDaoSkel.service(in, out);

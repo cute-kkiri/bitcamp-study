@@ -1,4 +1,4 @@
-package bitcamp.myapp.dao.skel;
+package bitcamp.net;
 
 public class ResponseStatus {
 

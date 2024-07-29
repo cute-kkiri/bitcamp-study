@@ -1,10 +1,13 @@
 package bitcamp.myapp;
 
+import static bitcamp.net.ResponseStatus.FAILURE;
+
 import bitcamp.context.ApplicationContext;
 import bitcamp.listener.ApplicationListener;
+import bitcamp.myapp.vo.User;
 import bitcamp.util.Prompt;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,21 +50,29 @@ public class ClientApp {
     try {
       //appCtx.getMainMenu().execute();
 
-      // 상대편과 연결을 시도한다. 연결되면 객체를 리턴한다.
-      Socket socket = new Socket("192.168.0.62", 8888);
+      Socket socket = new Socket("127.0.0.1", 8888);
 
-      // 상대편과 편리하게 입출력할 수 있도록 데코레이터를 붙인다.
-      DataInputStream in = new DataInputStream(socket.getInputStream());
-      DataOutputStream out = new DataOutputStream(socket.getOutputStream());
+      ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+      ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
 
-      // 서버에게 보낼 문자열을 네트워크 카드 메모리로 전송한다. 그리고 즉시 리턴한다.
-      out.writeUTF("Hello");
+      out.writeUTF("users");
+      out.writeUTF("list");
+      out.flush();
 
-      // 서버에서 문자열을 받을 때까지 기다리다가 문자열이 완전하게 모두 도착하면
-      // String 객체를 만들어 리턴한다.
-      String response = in.readUTF();
+      System.out.println("명령보냄!");
 
-      System.out.println(response);
+      String status = in.readUTF();
+      System.out.println("응답기다림!");
+
+      if (status.equals(FAILURE)) {
+        System.out.println("실행 오류 입니다!");
+        return;
+      }
+
+      List<User> list = (List<User>) in.readObject();
+      for (User user : list) {
+        System.out.println(user);
+      }
 
     } catch (Exception ex) {
       System.out.println("실행 오류!");

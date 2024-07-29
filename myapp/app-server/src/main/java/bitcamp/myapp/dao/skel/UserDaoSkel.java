@@ -1,10 +1,9 @@
 package bitcamp.myapp.dao.skel;
 
-import static bitcamp.myapp.dao.skel.ResponseStatus.ERROR;
-import static bitcamp.myapp.dao.skel.ResponseStatus.FAILURE;
-import static bitcamp.myapp.dao.skel.ResponseStatus.SUCCESS;
+import static bitcamp.net.ResponseStatus.ERROR;
+import static bitcamp.net.ResponseStatus.FAILURE;
+import static bitcamp.net.ResponseStatus.SUCCESS;
 
-import bitcamp.myapp.dao.UserDao;
 import bitcamp.myapp.vo.User;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -65,6 +64,8 @@ public class UserDaoSkel {
         out.writeUTF(ERROR);
         out.writeUTF("무효한 명령입니다.");
     }
+
+    out.flush();
   }
 
 }

@@ -1,5 +1,5 @@
 plugins {
-    id 'application'
+    id 'java-library'
 }
 
 repositories {
@@ -7,8 +7,6 @@ repositories {
 }
 
 dependencies {
-    implementation project(':app-common')
-
     implementation 'org.apache.poi:poi-ooxml:5.3.0'
     //implementation 'com.google.code.gson:gson:2.11.0'
 
@@ -23,10 +21,12 @@ java {
     }
 }
 
-application {
-    mainClass = 'bitcamp.myapp.ServerApp'
-}
-
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = "UTF-8" // 소스 파일이 UTF-8로 인코딩 되어 있음을 알려준다.
+    // Gradle에서 컴파일 할 때 다음과 같이 옵션을 추가한다.
+    // $java -encoding UTF-8 ...
 }

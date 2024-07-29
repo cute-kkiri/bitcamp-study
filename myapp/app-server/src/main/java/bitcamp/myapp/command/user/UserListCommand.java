@@ -15,7 +15,7 @@ public class UserListCommand implements Command {
   @Override
   public void execute(String menuName) {
     System.out.printf("[%s]\n", menuName);
-    
+
     try {
       System.out.println("번호 이름 이메일");
 
