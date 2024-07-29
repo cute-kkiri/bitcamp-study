@@ -25,9 +25,11 @@ import bitcamp.myapp.command.user.UserViewCommand;
 import bitcamp.myapp.dao.BoardDao;
 import bitcamp.myapp.dao.ListBoardDao;
 import bitcamp.myapp.dao.ListProjectDao;
-import bitcamp.myapp.dao.ListUserDao;
 import bitcamp.myapp.dao.ProjectDao;
 import bitcamp.myapp.dao.UserDao;
+import bitcamp.myapp.dao.stub.UserDaoStub;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 public class InitApplicationListener implements ApplicationListener {
 
@@ -36,8 +38,12 @@ public class InitApplicationListener implements ApplicationListener {
   ProjectDao projectDao;
 
   @Override
-  public void onStart(ApplicationContext ctx) {
-    userDao = new ListUserDao("data.xlsx");
+  public void onStart(ApplicationContext ctx) throws Exception {
+    
+    ObjectInputStream in = (ObjectInputStream) ctx.getAttribute("inputStream");
+    ObjectOutputStream out = (ObjectOutputStream) ctx.getAttribute("outputStream");
+
+    userDao = new UserDaoStub(in, out, "users");
     boardDao = new ListBoardDao("data.xlsx");
     projectDao = new ListProjectDao("data.xlsx", userDao);
 
@@ -73,32 +79,5 @@ public class InitApplicationListener implements ApplicationListener {
     mainMenu.add(new MenuItem("명령내역", new HistoryCommand()));
 
     mainMenu.setExitMenuTitle("종료");
-  }
-
-  @Override
-  public void onShutdown(ApplicationContext ctx) {
-    try {
-      ((ListUserDao) userDao).save();
-    } catch (Exception e) {
-      System.out.println("회원 데이터 저장 중 오류 발생!");
-      e.printStackTrace();
-      System.out.println();
-    }
-
-    try {
-      ((ListBoardDao) boardDao).save();
-    } catch (Exception e) {
-      System.out.println("게시글 데이터 저장 중 오류 발생!");
-      e.printStackTrace();
-      System.out.println();
-    }
-
-    try {
-      ((ListProjectDao) projectDao).save();
-    } catch (Exception e) {
-      System.out.println("프로젝트 데이터 저장 중 오류 발생!");
-      e.printStackTrace();
-      System.out.println();
-    }
   }
 }

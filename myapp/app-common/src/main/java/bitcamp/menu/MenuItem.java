@@ -1,6 +1,7 @@
 package bitcamp.menu;
 
-import bitcamp.myapp.command.Command;
+
+import bitcamp.command.Command;
 
 public class MenuItem extends AbstractMenu {
 

@@ -4,6 +4,7 @@ import static bitcamp.net.ResponseStatus.ERROR;
 import static bitcamp.net.ResponseStatus.FAILURE;
 import static bitcamp.net.ResponseStatus.SUCCESS;
 
+import bitcamp.myapp.dao.UserDao;
 import bitcamp.myapp.vo.User;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;

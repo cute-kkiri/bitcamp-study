@@ -5,7 +5,6 @@ import bitcamp.myapp.vo.User;
 import bitcamp.net.ResponseStatus;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.net.Socket;
 import java.util.List;
 
 public class UserDaoStub implements UserDao {
@@ -14,9 +13,10 @@ public class UserDaoStub implements UserDao {
   private ObjectOutputStream out;
   private String dataName;
 
-  public UserDaoStub(Socket socket, String dataName) throws Exception {
-    in = new ObjectInputStream(socket.getInputStream());
-    out = new ObjectOutputStream(socket.getOutputStream());
+  public UserDaoStub(ObjectInputStream in, ObjectOutputStream out, String dataName)
+      throws Exception {
+    this.in = in;
+    this.out = out;
     this.dataName = dataName;
   }
 

@@ -1,10 +1,8 @@
 package bitcamp.myapp;
 
-import static bitcamp.net.ResponseStatus.FAILURE;
-
 import bitcamp.context.ApplicationContext;
 import bitcamp.listener.ApplicationListener;
-import bitcamp.myapp.vo.User;
+import bitcamp.myapp.listener.InitApplicationListener;
 import bitcamp.util.Prompt;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -21,7 +19,7 @@ public class ClientApp {
     ClientApp app = new ClientApp();
 
     // 애플리케이션이 시작되거나 종료될 때 알림 받을 객체의 연락처를 등록한다.
-    //app.addApplicationListener(new InitApplicationListener());
+    app.addApplicationListener(new InitApplicationListener());
 
     app.execute();
   }
@@ -36,44 +34,31 @@ public class ClientApp {
 
   void execute() {
 
-    // 애플리케이션이 시작될 때 리스너에게 알린다.
-    for (ApplicationListener listener : listeners) {
-      try {
-        listener.onStart(appCtx);
-      } catch (Exception e) {
-        System.out.println("리스너 실행 중 오류 발생!");
-      }
-    }
-
-    System.out.println("[프로젝트 관리 시스템]");
-
     try {
-      //appCtx.getMainMenu().execute();
-
       Socket socket = new Socket("127.0.0.1", 8888);
 
       ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
       ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
 
-      out.writeUTF("users");
-      out.writeUTF("list");
+      appCtx.setAttribute("inputStream", in);
+      appCtx.setAttribute("outputStream", out);
+
+      // 애플리케이션이 시작될 때 리스너에게 알린다.
+      for (ApplicationListener listener : listeners) {
+        try {
+          listener.onStart(appCtx);
+        } catch (Exception e) {
+          System.out.println("리스너 실행 중 오류 발생!");
+        }
+      }
+
+      System.out.println("[프로젝트 관리 시스템]");
+
+      appCtx.getMainMenu().execute();
+
+      out.writeUTF("quit");
       out.flush();
-
-      System.out.println("명령보냄!");
-
-      String status = in.readUTF();
-      System.out.println("응답기다림!");
-
-      if (status.equals(FAILURE)) {
-        System.out.println("실행 오류 입니다!");
-        return;
-      }
-
-      List<User> list = (List<User>) in.readObject();
-      for (User user : list) {
-        System.out.println(user);
-      }
-
+      
     } catch (Exception ex) {
       System.out.println("실행 오류!");
       ex.printStackTrace();

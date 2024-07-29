@@ -1,6 +1,6 @@
 package bitcamp.myapp.command.board;
 
-import bitcamp.myapp.command.Command;
+import bitcamp.command.Command;
 import bitcamp.myapp.dao.BoardDao;
 import bitcamp.myapp.vo.Board;
 import bitcamp.util.Prompt;

@@ -17,7 +17,7 @@ public class InitApplicationListener implements ApplicationListener {
   ProjectDao projectDao;
 
   @Override
-  public void onStart(ApplicationContext ctx) {
+  public void onStart(ApplicationContext ctx) throws Exception {
     userDao = new ListUserDao("data.xlsx");
     boardDao = new ListBoardDao("data.xlsx");
     projectDao = new ListProjectDao("data.xlsx", userDao);
@@ -28,7 +28,7 @@ public class InitApplicationListener implements ApplicationListener {
   }
 
   @Override
-  public void onShutdown(ApplicationContext ctx) {
+  public void onShutdown(ApplicationContext ctx) throws Exception {
     try {
       ((ListUserDao) userDao).save();
     } catch (Exception e) {

@@ -1,4 +1,4 @@
-package bitcamp.myapp.command;
+package bitcamp.command;
 
 public interface Command {
 

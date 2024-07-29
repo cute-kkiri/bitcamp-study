@@ -4,7 +4,6 @@ import bitcamp.context.ApplicationContext;
 import bitcamp.listener.ApplicationListener;
 import bitcamp.myapp.dao.skel.UserDaoSkel;
 import bitcamp.myapp.listener.InitApplicationListener;
-import bitcamp.util.Prompt;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
@@ -59,18 +58,25 @@ public class ServerApp {
         ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
         ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 
-        String dataName = in.readUTF();
-        System.out.println(dataName);
-        
-        switch (dataName) {
-          case "users":
-            userDaoSkel.service(in, out);
+        while (true) {
+
+          String dataName = in.readUTF();
+          if (dataName.equals("quit")) {
             break;
-          case "projects":
-            break;
-          case "boards":
-            break;
-          default:
+          }
+
+          System.out.println(dataName + " 데이터 요청을 처리합니다.");
+
+          switch (dataName) {
+            case "users":
+              userDaoSkel.service(in, out);
+              break;
+            case "projects":
+              break;
+            case "boards":
+              break;
+            default:
+          }
         }
       }
 
@@ -80,8 +86,6 @@ public class ServerApp {
     }
 
     System.out.println("종료합니다.");
-
-    Prompt.close();
 
     // 애플리케이션이 종료될 때 리스너에게 알린다.
     for (ApplicationListener listener : listeners) {
