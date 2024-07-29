@@ -8,6 +8,8 @@ import bitcamp.myapp.dao.ListProjectDao;
 import bitcamp.myapp.dao.ListUserDao;
 import bitcamp.myapp.dao.ProjectDao;
 import bitcamp.myapp.dao.UserDao;
+import bitcamp.myapp.dao.skel.BoardDaoSkel;
+import bitcamp.myapp.dao.skel.ProjectDaoSkel;
 import bitcamp.myapp.dao.skel.UserDaoSkel;
 
 public class InitApplicationListener implements ApplicationListener {
@@ -23,8 +25,12 @@ public class InitApplicationListener implements ApplicationListener {
     projectDao = new ListProjectDao("data.xlsx", userDao);
 
     UserDaoSkel userDaoSkel = new UserDaoSkel(userDao);
+    BoardDaoSkel boardDaoSkel = new BoardDaoSkel(boardDao);
+    ProjectDaoSkel projectDaoSkel = new ProjectDaoSkel(projectDao);
 
     ctx.setAttribute("userDaoSkel", userDaoSkel);
+    ctx.setAttribute("boardDaoSkel", boardDaoSkel);
+    ctx.setAttribute("projectDaoSkel", projectDaoSkel);
   }
 
   @Override
