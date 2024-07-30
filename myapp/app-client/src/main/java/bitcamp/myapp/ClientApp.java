@@ -35,7 +35,7 @@ public class ClientApp {
   void execute() {
 
     try {
-      Socket socket = new Socket("192.168.0.23", 8888);
+      Socket socket = new Socket("192.168.0.7", 8888);
 
       ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
       ObjectInputStream in = new ObjectInputStream(socket.getInputStream());

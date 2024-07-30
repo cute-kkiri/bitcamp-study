@@ -88,25 +88,18 @@ public class ServerApp {
       ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
       ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 
-      while (true) {
-
-        String dataName = in.readUTF();
-        if (dataName.equals("quit")) {
+      String dataName = in.readUTF();
+      switch (dataName) {
+        case "users":
+          userDaoSkel.service(in, out);
           break;
-        }
-
-        switch (dataName) {
-          case "users":
-            userDaoSkel.service(in, out);
-            break;
-          case "projects":
-            projectDaoSkel.service(in, out);
-            break;
-          case "boards":
-            boardDaoSkel.service(in, out);
-            break;
-          default:
-        }
+        case "projects":
+          projectDaoSkel.service(in, out);
+          break;
+        case "boards":
+          boardDaoSkel.service(in, out);
+          break;
+        default:
       }
     }
   }
