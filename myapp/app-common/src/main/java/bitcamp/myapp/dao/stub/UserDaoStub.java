@@ -26,7 +26,7 @@ public class UserDaoStub implements UserDao {
     try (Socket socket = new Socket(host, port);
         ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
         ObjectInputStream in = new ObjectInputStream(socket.getInputStream())) {
-      
+
       out.writeUTF(dataName);
       out.writeUTF("insert");
       out.writeObject(user);
@@ -42,56 +42,76 @@ public class UserDaoStub implements UserDao {
 
   @Override
   public List<User> list() throws Exception {
-    out.writeUTF(dataName);
-    out.writeUTF("list");
-    out.flush();
+    try (Socket socket = new Socket(host, port);
+        ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+        ObjectInputStream in = new ObjectInputStream(socket.getInputStream())) {
+      
+      out.writeUTF(dataName);
+      out.writeUTF("list");
+      out.flush();
 
-    if (in.readUTF().equals(ResponseStatus.SUCCESS)) {
-      return (List<User>) in.readObject();
+      if (in.readUTF().equals(ResponseStatus.SUCCESS)) {
+        return (List<User>) in.readObject();
+      }
+
+      return null;
     }
-
-    return null;
   }
 
   @Override
   public User findBy(int no) throws Exception {
-    out.writeUTF(dataName);
-    out.writeUTF("get");
-    out.writeInt(no);
-    out.flush();
+    try (Socket socket = new Socket(host, port);
+        ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+        ObjectInputStream in = new ObjectInputStream(socket.getInputStream())) {
 
-    if (in.readUTF().equals(ResponseStatus.SUCCESS)) {
-      return (User) in.readObject();
+      out.writeUTF(dataName);
+      out.writeUTF("get");
+      out.writeInt(no);
+      out.flush();
+
+      if (in.readUTF().equals(ResponseStatus.SUCCESS)) {
+        return (User) in.readObject();
+      }
+
+      return null;
     }
-
-    return null;
   }
 
   @Override
   public boolean update(User user) throws Exception {
-    out.writeUTF(dataName);
-    out.writeUTF("update");
-    out.writeObject(user);
-    out.flush();
+    try (Socket socket = new Socket(host, port);
+        ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+        ObjectInputStream in = new ObjectInputStream(socket.getInputStream())) {
 
-    if (in.readUTF().equals(ResponseStatus.SUCCESS)) {
-      return true;
+      out.writeUTF(dataName);
+      out.writeUTF("update");
+      out.writeObject(user);
+      out.flush();
+
+      if (in.readUTF().equals(ResponseStatus.SUCCESS)) {
+        return true;
+      }
+
+      return false;
     }
-
-    return false;
   }
 
   @Override
   public boolean delete(int no) throws Exception {
-    out.writeUTF(dataName);
-    out.writeUTF("delete");
-    out.writeInt(no);
-    out.flush();
+    try (Socket socket = new Socket(host, port);
+        ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+        ObjectInputStream in = new ObjectInputStream(socket.getInputStream())) {
 
-    if (in.readUTF().equals(ResponseStatus.SUCCESS)) {
-      return true;
+      out.writeUTF(dataName);
+      out.writeUTF("delete");
+      out.writeInt(no);
+      out.flush();
+
+      if (in.readUTF().equals(ResponseStatus.SUCCESS)) {
+        return true;
+      }
+
+      return false;
     }
-
-    return false;
   }
 }
