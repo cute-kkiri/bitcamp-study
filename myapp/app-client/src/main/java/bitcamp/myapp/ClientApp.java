@@ -35,7 +35,7 @@ public class ClientApp {
   void execute() {
 
     try {
-      Socket socket = new Socket("127.0.0.1", 8888);
+      Socket socket = new Socket("192.168.0.23", 8888);
 
       ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
       ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
@@ -58,7 +58,7 @@ public class ClientApp {
 
       out.writeUTF("quit");
       out.flush();
-      
+
     } catch (Exception ex) {
       System.out.println("실행 오류!");
       ex.printStackTrace();
