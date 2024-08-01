@@ -38,7 +38,7 @@
 ## 36. 애플리케이션 시작/종료 상태일 때 알림 받기 : GoF의 Observer 패턴 적용 
 ## 37. 애플리케이션 간에 데이터 공유하기 : Client/Server 아키텍처로 전환
 ## 38. 여러 클라이언트의 요청을 순차적으로 처리하기: Stateful vs Stateless
-## 39. 여러 클라이언트 요청을 동시에 처리하기: Multi-thread 적용
+## 39. 여러 클라이언트의 요청을 동시에 처리하기: Multi-thread 적용
 
 - 멀티태스킹의 메커니즘 이해
   - 프로세스 스케쥴링: Round Robin 방식, Priority + Aging 방식
@@ -50,76 +50,11 @@
   - Thread 클래스와 Runnable 인터페이스 사용법
 
 
-## 18. 인스턴스 목록 제어 기능을 별도의 클래스로 캡슐화: 재사용성 높임
-
-- 핸들러 객체에서 수행하는 배열 다루는 일을 실제 배열을 가지고 있는 Repository 객체로 이관하기
-  - 현황:
-    - Repository 클래스의 배열 레퍼런스를 Handler에서 다루고 있다.
-  - 목표:
-    - 인스턴스를 다루는 기능을 다른 프로젝트에서도 재사용할 수 있게 만들고 싶다.
-  - 객체지향 설계 원칙 및 OOP 개념:
-    - GRASP의 Information Expert 책임 할당 원칙 준수
-    - GRASP의 High Cohesion 책임 할당 원칙 준수
-    - OOP의 Encapsulation(캡슐화)
-  - 효과: 
-    - 배열을 다루는 코드를 별도의 객체로 분리하면 코드 재사용이 쉬워진다.
-    - 객체의 역할을 전문화함으로써 코드를 관리하기가 쉬워진다. 
-    - 목록을 다루는 방식을 감추고 대신 외부에 공개된 도구(메서드)를 통해 목록을 사용하도록 유도하면,
-      목록을 다루는 방식을 변경하더라도 외부에 영향을 주지 않는다.
-      즉 기능을 변경하더라도 다른 클래스에 미치는 영향을 최소화시킬 수 있다.
-
-## 19. 다형성을 이용하여 범용으로 사용할 수 있는 Repository 클래스 만들기
-
-- 목록 관리 범용 클래스 ObjectRepository 정의
-  - 다형성의 polymorphic variable 문법 활용
-- 기존의 Repository 클래스를 ObjectRepository로 대체
-
-
-
-## 23. 상속(generalization)과 추상 클래스/추상 메서드, 접근 제어 활용하기
-
-- MenuItem과 MenuGroup의 공통 코드를 추출하여 수퍼 클래스를 정의하기
-- MenuHandler 구현체의 공통 분모를 추출하여 수퍼 클래스 정의하기
-- 수퍼 클래스를 추상 클래스로 정의하여 직접 사용을 막기
-- 추상 메서드를 선언하여 서브 클래스에게 구현을 강요하기
-- 서브 클래스가 의존 객체를 사용할 수 있도록 접근 범위를 protected로 설정하기
-
-## 24. Date 클래스를 사용하여 날짜 데이터를 다루기
-
-- java.util.Date/java.sql.Date 클래스를 활용하기
-
-
-
-## 33. 입출력 성능을 높이기 위해 버퍼 기능 추가하기
-
-- 기존의 클래스에 버퍼 기능을 추가한다.
-  - BufferedDataInputStream = DataInputStream + 버퍼 기능
-  - BufferedDataOutputStream = DataOutputStream + 버퍼 기능
-
-
-
-
-
-
-
-
-## 41. 공통 기능을 서브 프로젝트로 분리하기
-
-- Gradle 빌드 도구에서 멀티 서브 프로젝트를 다루는 방법
-- 클라이언트와 서버에서 공통으로 사용하는 코드를 별도의 프로젝트로 분리
-  - app-common 프로젝트 생성
-- 원격 서비스 객체(DAO)의 Stub을 별도의 프로젝트로 분리
-  - app-api 프로젝트 생성
-
-
 ## 42. DAO 프록시 객체(스텁 객체)를 자동 생성하기
 
 - java.lang.reflect.Proxy 클래스 사용법
 - Reflection API를 사용하여 메서드 정보를 추출하기
 - GoF의 Factory Method 패턴 활용 
-
-
-
 
 ## 45. 스레드 재사용하기 : 스레드풀(thread pool) 구현
 
