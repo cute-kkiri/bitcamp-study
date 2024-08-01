@@ -31,6 +31,7 @@ public class UserDaoSkel {
         out.writeUTF(SUCCESS);
         break;
       case "list":
+        //Thread.sleep(30000);
         List<User> list = userDao.list();
         out.writeUTF(SUCCESS);
         out.writeObject(list);
