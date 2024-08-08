@@ -603,4 +603,5 @@
   - DB 프로그래밍
     - 실습:
       - SQL DML 예제(Exam02.sql) 테스트
+      - SQL DQL 예제(Exam03.sql) 테스트
 - 실습 프로젝트 
