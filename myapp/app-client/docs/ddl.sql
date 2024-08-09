@@ -1,4 +1,6 @@
 drop table myapp_users;
+drop table myapp_boards;
+drop table myapp_projects;
 
 create table myapp_users (
   user_id int not null,
@@ -13,14 +15,39 @@ alter table myapp_users
   modify column user_id int not null auto_increment,
   add constraint myapp_users_uk unique (email);
 
-insert into myapp_users(user_id, name, email, pwd) values
-  (1, 'user1', 'user1@test.com', sha1('1111')),
-  (2, 'user2', 'user2@test.com', sha1('1111')),
-  (3, 'user3', 'user3@test.com', sha1('1111')),
-  (4, 'user4', 'user4@test.com', sha1('1111')),
-  (5, 'user5', 'user5@test.com', sha1('1111')),
-  (6, 'user6', 'user6@test.com', sha1('1111')),
-  (7, 'user7', 'user7@test.com', sha1('1111')),
-  (8, 'user8', 'user8@test.com', sha1('1111')),
-  (9, 'user9', 'user9@test.com', sha1('1111')),
-  (10, 'user10', 'user10@test.com', sha1('1111'));
+create table myapp_boards (
+  board_id int not null,
+  title varchar(255) not null,
+  content text not null,
+  created_date datetime default now(),
+  view_count int default 0
+);
+
+alter table myapp_boards
+  add constraint primary key (board_id),
+  modify column board_id int not null auto_increment;
+
+
+create table myapp_projects (
+  project_id int not null,
+  title varchar(255) not null,
+  description text not null,
+  start_date date not null, -- 예) 'yyyy-MM-dd'
+  end_date date not null, -- 예) 'yyyy-MM-dd'
+  members varchar(20) -- 예) '2,3,6,11'
+);
+
+alter table myapp_projects
+  add constraint primary key (project_id),
+  modify column project_id int not null auto_increment;
+
+
+
+
+
+
+
+
+
+
+
