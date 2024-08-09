@@ -3,7 +3,6 @@ package bitcamp.myapp.dao.mysql;
 import bitcamp.myapp.dao.ProjectDao;
 import bitcamp.myapp.vo.Project;
 import java.sql.Connection;
-import java.sql.Statement;
 import java.util.List;
 
 public class ProjectDaoImpl implements ProjectDao {
@@ -21,11 +20,6 @@ public class ProjectDaoImpl implements ProjectDao {
 
   @Override
   public List<Project> list() throws Exception {
-    // SQL을 서버에 전달할 객체 준비
-    Statement stmt = con.createStatement();
-
-    // select 문 전달
-    stmt.executeQuery("select * from myapp_users");
 
     return List.of();
   }
