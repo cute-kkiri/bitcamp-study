@@ -2,9 +2,16 @@ package bitcamp.myapp.dao.mysql;
 
 import bitcamp.myapp.dao.UserDao;
 import bitcamp.myapp.vo.User;
+import java.sql.Connection;
 import java.util.List;
 
 public class UserDaoImpl implements UserDao {
+
+  private Connection con;
+
+  public UserDaoImpl(Connection con) {
+    this.con = con;
+  }
 
   @Override
   public boolean insert(User user) throws Exception {

@@ -32,8 +32,9 @@ public class ClientApp {
   void execute() {
 
     try {
-      appCtx.setAttribute("host", Prompt.input("서버 주소?"));
-      appCtx.setAttribute("port", Prompt.inputInt("포트 번호?"));
+      appCtx.setAttribute("url", Prompt.input("DBMS URL?"));
+      appCtx.setAttribute("username", Prompt.inputInt("아이디?"));
+      appCtx.setAttribute("password", Prompt.inputInt("암호?"));
 
       // 애플리케이션이 시작될 때 리스너에게 알린다.
       for (ApplicationListener listener : listeners) {

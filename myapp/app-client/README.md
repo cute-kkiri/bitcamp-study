@@ -16,6 +16,9 @@
 
 ## 작업
 
+- 데이터베이스에 테이블 생성 및 예제 데이터 입력
+  - myapp_users, myapp_projects, myapp_boards 테이블 생성
+  - 예제 데이터 입력
 - MySQL JDBC Type4 드라이버 설정
   - build.gradle 변경
 

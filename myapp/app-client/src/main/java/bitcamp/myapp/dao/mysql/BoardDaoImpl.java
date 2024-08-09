@@ -2,9 +2,16 @@ package bitcamp.myapp.dao.mysql;
 
 import bitcamp.myapp.dao.BoardDao;
 import bitcamp.myapp.vo.Board;
+import java.sql.Connection;
 import java.util.List;
 
 public class BoardDaoImpl implements BoardDao {
+
+  private Connection con;
+
+  public BoardDaoImpl(Connection con) {
+    this.con = con;
+  }
 
   @Override
   public boolean insert(Board board) throws Exception {
