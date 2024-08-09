@@ -605,3 +605,12 @@
       - SQL DML 예제(Exam02.sql) 테스트
       - SQL DQL 예제(Exam03.sql) 테스트
 - 실습 프로젝트 
+
+## 54일차(2024-08-09,금)
+
+- 이론
+  - DB 프로그래밍
+    - JDBC API와 JDBC Driver 소개
+    - JDBC API 사용법
+- 실습 프로젝트 
+  - 40. DBMS 도입하기
