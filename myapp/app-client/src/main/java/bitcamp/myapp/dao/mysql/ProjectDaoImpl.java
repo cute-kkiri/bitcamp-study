@@ -90,6 +90,12 @@ public class ProjectDaoImpl implements ProjectDao {
   @Override
   public boolean update(Project project) throws Exception {
     try (Statement stmt = con.createStatement()) {
+
+      // Stream API를 사용하여 no 필드 값을 CSV 형식의 문자열로 변환
+      String memberNoList = project.getMembers().stream()
+          .map(user -> String.valueOf(user.getNo()))  // User의 no 필드 값을 문자열로 변환
+          .collect(Collectors.joining(","));          // 문자열을 ,로 구분하여 연결
+
       int count = stmt.executeUpdate(String.format(
           "update myapp_projects set"
               + " title='%s',"
@@ -102,7 +108,7 @@ public class ProjectDaoImpl implements ProjectDao {
           project.getDescription(),
           project.getStartDate(),
           project.getEndDate(),
-          "",
+          memberNoList,
           project.getNo()));
       return count > 0;
     }
