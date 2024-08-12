@@ -621,6 +621,6 @@
   - DB 프로그래밍
     - SQL 사용법
       - foreign key 제약 조건
-    - JDBC API 사용법(계속)
+      - select 사용법
 - 실습 프로젝트 
   - 40. DBMS 도입하기(계속)
