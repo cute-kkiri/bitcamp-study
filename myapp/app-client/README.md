@@ -21,6 +21,10 @@
   - 예제 데이터 입력
 - MySQL JDBC Type4 드라이버 설정
   - build.gradle 변경
+- DAO 구현체 생성 및 적용
+  - UserDaoImpl 클래스 정의
+  - BoardDaoImpl 클래스 정의
+  - ProjectDaoImpl 클래스 정의
 
 ## 소스 파일
 
