@@ -17,4 +17,8 @@ public interface ProjectDao {
   boolean delete(int no) throws Exception;
 
   boolean insertMembers(int projectNo, List<User> members) throws Exception;
+
+  List<User> getMembers(int projectNo) throws Exception;
+
+  boolean deleteMembers(int projectNo) throws Exception;
 }

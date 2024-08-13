@@ -1,7 +1,6 @@
 package bitcamp.myapp.dao.mysql;
 
 import bitcamp.myapp.dao.ProjectDao;
-import bitcamp.myapp.dao.UserDao;
 import bitcamp.myapp.vo.Project;
 import bitcamp.myapp.vo.User;
 import java.sql.Connection;
@@ -9,16 +8,13 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ProjectDaoImpl implements ProjectDao {
 
   private Connection con;
-  private UserDao userDao;
 
-  public ProjectDaoImpl(Connection con, UserDao userDao) {
+  public ProjectDaoImpl(Connection con) {
     this.con = con;
-    this.userDao = userDao;
   }
 
   @Override
@@ -82,17 +78,6 @@ public class ProjectDaoImpl implements ProjectDao {
         project.setDescription(rs.getString("description"));
         project.setStartDate(rs.getDate("start_date"));
         project.setEndDate(rs.getDate("end_date"));
-
-        String members = rs.getString("members");
-        String[] memberNoList = members.split(",");
-        for (String memberNo : memberNoList) {
-          // 회원 번호를 User 객체를 얻어서 리스트에 담는다.
-          User user = userDao.findBy(Integer.parseInt(memberNo));
-          if (user != null) {
-            project.getMembers().add(user);
-          }
-        }
-
         return project;
       }
       return null;
@@ -102,25 +87,17 @@ public class ProjectDaoImpl implements ProjectDao {
   @Override
   public boolean update(Project project) throws Exception {
     try (Statement stmt = con.createStatement()) {
-
-      // Stream API를 사용하여 no 필드 값을 CSV 형식의 문자열로 변환
-      String memberNoList = project.getMembers().stream()
-          .map(user -> String.valueOf(user.getNo()))  // User의 no 필드 값을 문자열로 변환
-          .collect(Collectors.joining(","));          // 문자열을 ,로 구분하여 연결
-
       int count = stmt.executeUpdate(String.format(
           "update myapp_projects set"
               + " title='%s',"
               + " description='%s',"
               + " start_date='%s',"
-              + " end_date='%s',"
-              + " members='%s'"
+              + " end_date='%s'"
               + " where project_id=%d",
           project.getTitle(),
           project.getDescription(),
           project.getStartDate(),
           project.getEndDate(),
-          memberNoList,
           project.getNo()));
       return count > 0;
     }
@@ -147,6 +124,36 @@ public class ProjectDaoImpl implements ProjectDao {
             user.getNo()));
       }
       return true;
+    }
+  }
+
+  @Override
+  public List<User> getMembers(int projectNo) throws Exception {
+    try (Statement stmt = con.createStatement();
+        ResultSet rs = stmt.executeQuery(
+            "select "
+                + " pm.user_id,"
+                + " u.name"
+                + " from myapp_project_members pm"
+                + "  inner join myapp_users u on pm.user_id=u.user_id"
+                + " where pm.project_id=" + projectNo)) {
+      ArrayList<User> list = new ArrayList<>();
+      while (rs.next()) {
+        User user = new User();
+        user.setNo(rs.getInt("user_id"));
+        user.setName(rs.getString("name"));
+        list.add(user);
+      }
+      return list;
+    }
+  }
+
+  @Override
+  public boolean deleteMembers(int projectNo) throws Exception {
+    try (Statement stmt = con.createStatement()) {
+      int count = stmt.executeUpdate(
+          String.format("delete from myapp_project_members where project_id=%d", projectNo));
+      return count > 0;
     }
   }
 }
