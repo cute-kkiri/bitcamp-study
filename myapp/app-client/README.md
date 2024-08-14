@@ -1,13 +1,13 @@
-# 41. 외부키(Foreign Key) 사용하기
+# 42. 로그인/로그아웃 적용하기
 
 ## 학습목표
 
-- 외부 키를 이용하여 테이블 데이터 간의 관계를 설정할 수 있다.
-- 부모/자식 테이블의 데이터를 다룰 수 있다.
+- .properties 파일의 프로퍼티 값을 읽을 수 있다.
+- 로그인/로그아웃을 구현할 수 있다.
 
 ## 요구사항
 
-- 프로젝트의 멤버를 별도의 테이블로 분리하여 저장하라.
+- 애플리케이션의 설정 정보를 .properties 파일에 보관하라.
 
 ## 실행 결과
 
@@ -15,14 +15,10 @@
 
 ## 작업
 
-- DDL 및 예제 데이터 입력
-  - 프로젝트 테이블 정의 변경(myapp_projects)
-  - 프로젝트 멤버 테이블 추가(myapp_project_members)
-- ProjectDao 인터페이스 변경
-  - insertMembers() 메서드 규칙 추가
-- ProjectDaoImpl 클래스 변경
-  - insertMembers() 메서드 구현
-- ProjectAddCommand 클래스 변경
+- JDBC 접속 정보를 .properties 파일에 저장
+  - app.properties 파일 생성
+  - InitApplicationListener에서 app.properties 파일의 설정 정보를 로딩하여 사용
+
 
 
 ## 소스 파일
