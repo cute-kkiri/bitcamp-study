@@ -42,7 +42,10 @@
 ## 40. DBMS 도입하기
 ## 41. 외부키(Foreign Key) 사용하기
 ## 42. 로그인/로그아웃 적용하기
+## 43. SQL 삽입 공격 차단하기
 
+- SQL 삽입 공격의 원리 이해
+- PreparedStatement 사용법
 
 ## 42. DAO 프록시 객체(스텁 객체)를 자동 생성하기
 
@@ -62,10 +65,7 @@
 
 
 
-## 48. SQL 삽입 공격 차단하기
 
-- SQL 삽입 공격의 원리 이해
-- PreparedStatement 사용법
 
 ## 49. Application Server 아키텍처로 전환하기
 
