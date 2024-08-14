@@ -12,14 +12,14 @@ insert into myapp_users(user_id, name, email, pwd) values
   (10, 'user10', 'user10@test.com', sha1('1111'));
 
 -- 게시글 데이터
-insert into myapp_boards(board_id, title, content) values
-  (1, '제목1', '내용'),
-  (2, '제목2', '내용'),
-  (3, '제목3', '내용'),
-  (4, '제목4', '내용'),
-  (5, '제목5', '내용'),
-  (6, '제목6', '내용'),
-  (7, '제목7', '내용');
+insert into myapp_boards(board_id, title, content, user_id) values
+  (1, '제목1', '내용', 1),
+  (2, '제목2', '내용', 1),
+  (3, '제목3', '내용', 3),
+  (4, '제목4', '내용', 6),
+  (5, '제목5', '내용', 9),
+  (6, '제목6', '내용', 10),
+  (7, '제목7', '내용', 10);
 
 -- 프로젝트 데이터
 insert into myapp_projects(project_id, title, description, start_date, end_date) values

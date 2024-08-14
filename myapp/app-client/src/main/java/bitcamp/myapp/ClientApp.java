@@ -37,7 +37,10 @@ public class ClientApp {
       // 애플리케이션이 시작될 때 리스너에게 알린다.
       for (ApplicationListener listener : listeners) {
         try {
-          listener.onStart(appCtx);
+          if (!listener.onStart(appCtx)) {
+            System.out.println("종료합니다.");
+            return;
+          }
         } catch (Exception e) {
           System.out.println("리스너 실행 중 오류 발생!");
         }

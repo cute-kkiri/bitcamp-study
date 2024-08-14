@@ -38,7 +38,7 @@ public class InitApplicationListener implements ApplicationListener {
   Connection con;
 
   @Override
-  public void onStart(ApplicationContext ctx) throws Exception {
+  public boolean onStart(ApplicationContext ctx) throws Exception {
 
     Properties props = new Properties();
     props.load(new FileReader("app.properties"));
@@ -91,6 +91,8 @@ public class InitApplicationListener implements ApplicationListener {
     mainMenu.add(new MenuItem("명령내역", new HistoryCommand()));
 
     mainMenu.setExitMenuTitle("종료");
+
+    return true;
   }
 
   @Override
