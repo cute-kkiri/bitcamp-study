@@ -80,11 +80,11 @@ public class InitApplicationListener implements ApplicationListener {
     mainMenu.add(projectMenu);
 
     MenuGroup boardMenu = new MenuGroup("게시판");
-    boardMenu.add(new MenuItem("등록", new BoardAddCommand(boardDao)));
+    boardMenu.add(new MenuItem("등록", new BoardAddCommand(boardDao, ctx)));
     boardMenu.add(new MenuItem("목록", new BoardListCommand(boardDao)));
     boardMenu.add(new MenuItem("조회", new BoardViewCommand(boardDao)));
-    boardMenu.add(new MenuItem("변경", new BoardUpdateCommand(boardDao)));
-    boardMenu.add(new MenuItem("삭제", new BoardDeleteCommand(boardDao)));
+    boardMenu.add(new MenuItem("변경", new BoardUpdateCommand(boardDao, ctx)));
+    boardMenu.add(new MenuItem("삭제", new BoardDeleteCommand(boardDao, ctx)));
     mainMenu.add(boardMenu);
 
     mainMenu.add(new MenuItem("도움말", new HelpCommand()));

@@ -28,6 +28,10 @@
   - Board 클래스 변경
   - BoardDaoImpl 클래스 변경
   - BoardListCommand 클래스 변경
+  - BoardViewCommand 클래스 변경
+  - BoardAddCommand 클래스 변경
+  - BoardUpdateCommand 클래스 변경
+  - BoardDeleteCommand 클래스 변경
 
 ## 소스 파일
 
