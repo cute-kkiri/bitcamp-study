@@ -15,7 +15,9 @@
 ## 작업
 
 - JDBC 코드를 캡슐화 하기
-  - BitBatis 라이브러리 생성
+  - SqlSession 클래스 정의 
+- BoardDaoImpl, UserDaoImpl, ProjectDaoImpl 클래스 변경
+- InitApplicationListener 클래스 변경
 
 ## 소스 파일
 
