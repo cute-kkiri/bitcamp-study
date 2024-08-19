@@ -1,5 +1,6 @@
 package bitcamp.myapp.listener;
 
+import bitcamp.bitbatis.SqlSession;
 import bitcamp.context.ApplicationContext;
 import bitcamp.listener.ApplicationListener;
 import bitcamp.menu.MenuGroup;
@@ -51,7 +52,9 @@ public class InitApplicationListener implements ApplicationListener {
     // => DBMS에 연결
     con = DriverManager.getConnection(url, username, password);
 
-    UserDao userDao = new UserDaoImpl(con);
+    SqlSession sqlSession = new SqlSession(con);
+
+    UserDao userDao = new UserDaoImpl(con, sqlSession);
     BoardDao boardDao = new BoardDaoImpl(con);
     ProjectDao projectDao = new ProjectDaoImpl(con);
 

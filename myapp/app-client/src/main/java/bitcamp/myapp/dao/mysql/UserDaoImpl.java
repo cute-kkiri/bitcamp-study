@@ -1,5 +1,6 @@
 package bitcamp.myapp.dao.mysql;
 
+import bitcamp.bitbatis.SqlSession;
 import bitcamp.myapp.dao.UserDao;
 import bitcamp.myapp.vo.User;
 import java.sql.Connection;
@@ -11,25 +12,22 @@ import java.util.List;
 public class UserDaoImpl implements UserDao {
 
   private Connection con;
+  private SqlSession sqlSession;
 
-  public UserDaoImpl(Connection con) {
+  public UserDaoImpl(Connection con, SqlSession sqlSession) {
     this.con = con;
+    this.sqlSession = sqlSession;
   }
 
   @Override
   public boolean insert(User user) throws Exception {
-    try (PreparedStatement stmt = con.prepareStatement(
-        "insert into myapp_users(name, email, pwd, tel) values (?, ?, sha1(?), ?)")) {
-
-      stmt.setString(1, user.getName());
-      stmt.setString(2, user.getEmail());
-      stmt.setString(3, user.getPassword());
-      stmt.setString(4, user.getTel());
-
-      stmt.executeUpdate();
-
-      return true;
-    }
+    sqlSession.insert(
+        "insert into myapp_users(name, email, pwd, tel) values (?, ?, sha1(?), ?)",
+        user.getName(),
+        user.getEmail(),
+        user.getPassword(),
+        user.getTel())
+    return true;
   }
 
   @Override
