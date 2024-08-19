@@ -6,7 +6,6 @@ import bitcamp.myapp.vo.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.List;
 
 public class UserDaoImpl implements UserDao {
@@ -26,46 +25,26 @@ public class UserDaoImpl implements UserDao {
         user.getName(),
         user.getEmail(),
         user.getPassword(),
-        user.getTel())
+        user.getTel());
     return true;
   }
 
   @Override
   public List<User> list() throws Exception {
-    try (PreparedStatement stmt = con.prepareStatement(
-        "select user_id, name, email from myapp_users order by user_id asc");
-        ResultSet rs = stmt.executeQuery()) {
-
-      ArrayList<User> list = new ArrayList<>();
-
-      while (rs.next()) {
-        User user = new User();
-        user.setNo(rs.getInt("user_id"));
-        user.setName(rs.getString("name"));
-        user.setEmail(rs.getString("email"));
-        list.add(user);
-      }
-      return list;
-    }
+    return sqlSession.selectList(
+        "select "
+            + " user_id as no,"
+            + " name,"
+            + " email"
+            + " from myapp_users order by user_id asc",
+        User.class);
   }
 
   @Override
   public User findBy(int no) throws Exception {
-    try (PreparedStatement stmt = con.prepareStatement(
-        "select user_id, name, email, tel from myapp_users where user_id=?")) {
-      stmt.setInt(1, no);
-      try (ResultSet rs = stmt.executeQuery()) {
-        if (rs.next()) {
-          User user = new User();
-          user.setNo(rs.getInt("user_id"));
-          user.setName(rs.getString("name"));
-          user.setEmail(rs.getString("email"));
-          user.setTel(rs.getString("tel"));
-          return user;
-        }
-        return null;
-      }
-    }
+    return sqlSession.selectOne(
+        "select user_id, name, email, tel from myapp_users where user_id=?",
+        no);
   }
 
   @Override
