@@ -46,18 +46,21 @@
 ## 44. JDBC 코드를 캡슐화하기 
 
 
-## 44. DAO 객체를 자동 생성하기
+## 45. Mybatis SQL-mapper 프레임워크 사용하기
+
+- mybatis 프레임워크의 구동 원리 및 사용법
+- Spring Framework에 적용하는 방법
+- Mybatis의 Log4j 활성화 하기
+
+
+## 46. DAO 객체를 자동 생성하기
 
 - java.lang.reflect.Proxy 클래스 사용법
 - Reflection API를 사용하여 메서드 정보를 추출하기
 - GoF의 Factory Method 패턴 활용 
 
 
-## 45. Mybatis SQL-mapper 프레임워크 사용하기
 
-- mybatis 프레임워크의 구동 원리 및 사용법
-- Spring Framework에 적용하는 방법
-- Mybatis의 Log4j 활성화 하기
 
 ## 46. Application Server 아키텍처로 전환하기
 
