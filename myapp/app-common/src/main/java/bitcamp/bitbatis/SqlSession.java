@@ -29,6 +29,27 @@ public class SqlSession {
     }
   }
 
+  public int insert(String sql, boolean generatedKey, Object... values) throws Exception {
+    if (!generatedKey) {
+      return insert(sql, values);
+    }
+
+    try (PreparedStatement stmt = con.prepareStatement(sql,
+        PreparedStatement.RETURN_GENERATED_KEYS)) {
+
+      int inparameterIndex = 1;
+      for (Object value : values) {
+        stmt.setString(inparameterIndex++, value.toString());
+      }
+
+      int count = stmt.executeUpdate();
+
+      ResultSet keyRs = stmt.getGeneratedKeys();
+      keyRs.next();
+      return keyRs.getInt(0);
+    }
+  }
+
   public int update(String sql, Object... values) throws Exception {
     return insert(sql, values);
   }

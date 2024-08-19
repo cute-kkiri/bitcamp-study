@@ -56,7 +56,7 @@ public class InitApplicationListener implements ApplicationListener {
 
     UserDao userDao = new UserDaoImpl(sqlSession);
     BoardDao boardDao = new BoardDaoImpl(sqlSession);
-    ProjectDao projectDao = new ProjectDaoImpl(con);
+    ProjectDao projectDao = new ProjectDaoImpl(sqlSession);
 
     ctx.setAttribute("userDao", userDao);
     ctx.setAttribute("boardDao", boardDao);
