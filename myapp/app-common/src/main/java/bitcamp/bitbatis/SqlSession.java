@@ -105,9 +105,19 @@ public class SqlSession {
     String[] names = columnName.split("_");
 
     if (names.length == 1) { // ex) name
-      callSetter(obj, rs, columnName);
-    } else { // ex) writer_name
+      callSetter(obj, rs, names[0]);
 
+    } else { // ex) writer_name
+      Method getter = findMethod(obj.getClass(), toGetterName(names[0])); // ex) User getWriter() {}
+      Object embeddedObject = getter.invoke(obj); // ex) board.getWriter()
+      if (embeddedObject == null) {
+        embeddedObject = getter.getReturnType().getConstructor()
+            .newInstance(); // ex) embeddedObject = new User();
+        Method setter = findMethod(obj.getClass(),
+            toSetterName(names[0])); // ex) Board의 void setWriter() {}
+        setter.invoke(obj, embeddedObject); // board.setWriter(embeddedObject);
+      }
+      callSetter(embeddedObject, names[1], rs, columnName); // ex) getWriter().setName()
     }
   }
 
@@ -118,6 +128,21 @@ public class SqlSession {
     }
     Class<?> parameterType = setter.getParameterTypes()[0];
     setter.invoke(obj, getColumnValue(rs, columnName, parameterType));
+  }
+
+  private void callSetter(Object obj, String propertyName, ResultSet rs, String columnName)
+      throws Exception {
+    Method setter = findMethod(obj.getClass(), toSetterName(propertyName));
+    if (setter == null) {
+      return;
+    }
+    Class<?> parameterType = setter.getParameterTypes()[0];
+    setter.invoke(obj, getColumnValue(rs, columnName, parameterType));
+  }
+
+  private String toGetterName(String name) {
+    return "get" + Character.toUpperCase(name.charAt(0)) +
+        name.substring(1);
   }
 
   private String toSetterName(String name) {
