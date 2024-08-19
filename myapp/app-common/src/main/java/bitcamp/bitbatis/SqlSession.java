@@ -60,6 +60,7 @@ public class SqlSession {
           T obj = createObject(type);
           for (String columnName : columnNames) {
             Method setter = setterMap.get(columnName);
+
             callSetter(obj, setter, rs, columnName);
           }
           list.add(obj);
@@ -109,11 +110,32 @@ public class SqlSession {
   }
 
   private <T> Method findSetter(Class<T> type, String columnName) {
-    String setterName = "set" + Character.toUpperCase(columnName.charAt(0)) +
-        columnName.substring(1);
+    String[] names = columnName.split("_");
+
+    Method setter = findMethod(type, toSetterName(names[0]));
+
+    if (names.length == 1) { // ex) columnName ==> "createdDate"
+      return setter;
+
+    } else { // ex) columnName ==> "writer_name"
+      // 셋터의 파라미터 타입을 알아낸다.
+      Class embeddedObjectType = setter.getParameterTypes()[0]; // ex) void setWriter(User writer) {}
+
+      // 해당 타입에서 다시 셋터를 찾는다.
+      Method setterOfEmbeddedObject = findMethod(embeddedObjectType, toSetterName(names[1]));
+      return setterOfEmbeddedObject;
+    }
+  }
+
+  private String toSetterName(String name) {
+    return "set" + Character.toUpperCase(name.charAt(0)) +
+        name.substring(1);
+  }
+
+  private <T> Method findMethod(Class<T> type, String name) {
     Method[] methods = type.getMethods();
     for (Method m : methods) {
-      if (m.getName().equals(setterName)) {
+      if (m.getName().equals(name)) {
         return m;
       }
     }
