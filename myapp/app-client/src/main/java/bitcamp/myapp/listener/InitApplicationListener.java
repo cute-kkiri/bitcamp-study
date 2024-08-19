@@ -54,7 +54,7 @@ public class InitApplicationListener implements ApplicationListener {
 
     SqlSession sqlSession = new SqlSession(con);
 
-    UserDao userDao = new UserDaoImpl(con, sqlSession);
+    UserDao userDao = new UserDaoImpl(sqlSession);
     BoardDao boardDao = new BoardDaoImpl(con);
     ProjectDao projectDao = new ProjectDaoImpl(con);
 

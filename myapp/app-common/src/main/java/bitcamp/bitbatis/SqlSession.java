@@ -34,6 +34,14 @@ public class SqlSession {
     }
   }
 
+  public int update(String sql, Object... values) throws Exception {
+    return insert(sql, values);
+  }
+
+  public int delete(String sql, Object... values) throws Exception {
+    return insert(sql, values);
+  }
+
   public <T> List<T> selectList(String sql, Class<T> type, Object... values) throws Exception {
     try (PreparedStatement stmt = con.prepareStatement(sql)) {
 
