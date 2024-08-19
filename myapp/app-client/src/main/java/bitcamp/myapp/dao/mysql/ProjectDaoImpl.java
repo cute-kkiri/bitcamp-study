@@ -16,9 +16,8 @@ public class ProjectDaoImpl implements ProjectDao {
 
   @Override
   public boolean insert(Project project) throws Exception {
-    int keyNo = sqlSession.insert(
+    int keyNo = sqlSession.insertReturningKey(
         "insert into myapp_projects(title,description,start_date,end_date) values (?, ?, ?, ?)",
-        true,
         project.getTitle(),
         project.getDescription(),
         project.getStartDate(),

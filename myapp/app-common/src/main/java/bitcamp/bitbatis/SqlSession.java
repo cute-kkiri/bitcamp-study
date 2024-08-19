@@ -29,11 +29,7 @@ public class SqlSession {
     }
   }
 
-  public int insert(String sql, boolean generatedKey, Object... values) throws Exception {
-    if (!generatedKey) {
-      return insert(sql, values);
-    }
-
+  public int insertReturningKey(String sql, Object... values) throws Exception {
     try (PreparedStatement stmt = con.prepareStatement(sql,
         PreparedStatement.RETURN_GENERATED_KEYS)) {
 
@@ -46,7 +42,7 @@ public class SqlSession {
 
       ResultSet keyRs = stmt.getGeneratedKeys();
       keyRs.next();
-      return keyRs.getInt(0);
+      return keyRs.getInt(1);
     }
   }
 
