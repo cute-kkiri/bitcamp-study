@@ -104,10 +104,11 @@ public class SqlSession {
       throws Exception {
     String[] names = columnName.split("_");
 
-    if (names.length == 1) { // ex) name
-      callSetter(obj, rs, names[0]);
+    // obj가 Board 클래스의 객체라고 가정하면,
+    if (names.length == 1) { // ex) 컬럼명 = title
+      callSetter(obj, rs, names[0]); // obj.setTitle()
 
-    } else { // ex) writer_name
+    } else { // ex) 컬럼명 = writer_name
       Method getter = findMethod(obj.getClass(), toGetterName(names[0])); // ex) User getWriter() {}
       Object embeddedObject = getter.invoke(obj); // ex) board.getWriter()
       if (embeddedObject == null) {
@@ -117,7 +118,7 @@ public class SqlSession {
             toSetterName(names[0])); // ex) Board의 void setWriter() {}
         setter.invoke(obj, embeddedObject); // board.setWriter(embeddedObject);
       }
-      callSetter(embeddedObject, names[1], rs, columnName); // ex) getWriter().setName()
+      callSetter(embeddedObject, names[1], rs, columnName); // ex) board.getWriter().setName()
     }
   }
 

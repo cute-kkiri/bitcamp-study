@@ -46,9 +46,9 @@ public class BoardDaoImpl implements BoardDao {
             + " b.title,"
             + " b.content,"
             + " b.created_date as createdDate,"
-            + " b.view_count,"
-            + " u.user_id as user_no,"
-            + " u.name as user_name"
+            + " b.view_count as viewCount,"
+            + " u.user_id as writer_no,"
+            + " u.name as writer_name"
             + " from myapp_boards b inner join myapp_users u on b.user_id=u.user_id"
             + " where b.board_id=?",
         Board.class,
