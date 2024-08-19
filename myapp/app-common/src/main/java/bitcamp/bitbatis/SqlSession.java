@@ -2,17 +2,12 @@ package bitcamp.bitbatis;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
-import java.lang.reflect.Type;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 public class SqlSession {
 
@@ -52,16 +47,13 @@ public class SqlSession {
 
       try (ResultSet rs = stmt.executeQuery()) {
 
-        Map<String, Method> setterMap = getSetterMap(type, rs);
-        Set<String> columnNames = setterMap.keySet();
+        List<String> columnNames = getColumnNames(rs);
 
         java.util.List<T> list = new ArrayList<>();
         while (rs.next()) {
           T obj = createObject(type);
           for (String columnName : columnNames) {
-            Method setter = setterMap.get(columnName);
-
-            callSetter(obj, setter, rs, columnName);
+            setPropertyValue(obj, rs, columnName);
           }
           list.add(obj);
         }
@@ -80,14 +72,12 @@ public class SqlSession {
 
       try (ResultSet rs = stmt.executeQuery()) {
 
-        Map<String, Method> setterMap = getSetterMap(type, rs);
-        Set<String> columnNames = setterMap.keySet();
+        List<String> columnNames = getColumnNames(rs);
 
         if (rs.next()) {
           T obj = createObject(type);
           for (String columnName : columnNames) {
-            Method setter = setterMap.get(columnName);
-            callSetter(obj, setter, rs, columnName);
+            setPropertyValue(obj, rs, columnName);
           }
           return obj;
         }
@@ -96,35 +86,38 @@ public class SqlSession {
     }
   }
 
-  private <T> Map<String, Method> getSetterMap(Class<T> type, ResultSet rs) throws Exception {
+  private List<String> getColumnNames(ResultSet rs) throws Exception {
     ResultSetMetaData metaData = rs.getMetaData();
-
-    Map<String, Method> setterMap = new HashMap<>();
-
+    List<String> names = new ArrayList<>();
     for (int i = 1; i <= metaData.getColumnCount(); i++) {
-      String columnName = metaData.getColumnLabel(i);
-      setterMap.put(columnName, findSetter(type, columnName));
+      names.add(metaData.getColumnLabel(i));
     }
-
-    return setterMap;
+    return names;
   }
 
-  private <T> Method findSetter(Class<T> type, String columnName) {
+  private <T> T createObject(Class<T> type) throws Exception {
+    Constructor<T> constructor = type.getConstructor();
+    return constructor.newInstance();
+  }
+
+  private void setPropertyValue(Object obj, ResultSet rs, String columnName)
+      throws Exception {
     String[] names = columnName.split("_");
 
-    Method setter = findMethod(type, toSetterName(names[0]));
+    if (names.length == 1) { // ex) name
+      callSetter(obj, rs, columnName);
+    } else { // ex) writer_name
 
-    if (names.length == 1) { // ex) columnName ==> "createdDate"
-      return setter;
-
-    } else { // ex) columnName ==> "writer_name"
-      // 셋터의 파라미터 타입을 알아낸다.
-      Class embeddedObjectType = setter.getParameterTypes()[0]; // ex) void setWriter(User writer) {}
-
-      // 해당 타입에서 다시 셋터를 찾는다.
-      Method setterOfEmbeddedObject = findMethod(embeddedObjectType, toSetterName(names[1]));
-      return setterOfEmbeddedObject;
     }
+  }
+
+  private void callSetter(Object obj, ResultSet rs, String columnName) throws Exception {
+    Method setter = findMethod(obj.getClass(), toSetterName(columnName));
+    if (setter == null) {
+      return;
+    }
+    Class<?> parameterType = setter.getParameterTypes()[0];
+    setter.invoke(obj, getColumnValue(rs, columnName, parameterType));
   }
 
   private String toSetterName(String name) {
@@ -142,24 +135,18 @@ public class SqlSession {
     return null;
   }
 
-  private <T> T createObject(Class<T> type) throws Exception {
-    Constructor<T> constructor = type.getConstructor();
-    return constructor.newInstance();
+  private <T> Object getColumnValue(ResultSet rs, String columnName, Class<T> type)
+      throws Exception {
+    if (type == int.class) {
+      return rs.getInt(columnName);
+    } else if (type == String.class) {
+      return rs.getString(columnName);
+    } else if (type == java.util.Date.class || type == java.sql.Date.class) {
+      return rs.getDate(columnName);
+    } else {
+      return null;
+    }
   }
 
-  private void callSetter(Object obj, Method setter, ResultSet rs, String columnName)
-      throws Exception {
-    if (setter == null) {
-      return;
-    }
-    Type parameterType = setter.getParameterTypes()[0];
-    if (parameterType == int.class) {
-      setter.invoke(obj, rs.getInt(columnName));
-    } else if (parameterType == String.class) {
-      setter.invoke(obj, rs.getString(columnName));
-    } else if (parameterType == Date.class || parameterType == java.sql.Date.class) {
-      setter.invoke(obj, rs.getDate(columnName));
-    }
-  }
 
 }
