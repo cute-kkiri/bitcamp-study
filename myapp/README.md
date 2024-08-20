@@ -44,9 +44,7 @@
 ## 42. 로그인/로그아웃 적용하기
 ## 43. SQL 삽입 공격 차단하기
 ## 44. JDBC 코드를 캡슐화하기 
-
-
-## 45. Mybatis SQL-mapper 프레임워크 사용하기
+## 45. Mybatis 퍼시스턴스 프레임워크 사용하기
 
 - mybatis 프레임워크의 구동 원리 및 사용법
 - Spring Framework에 적용하는 방법
