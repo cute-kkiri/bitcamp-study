@@ -2,8 +2,8 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="aaa">
-    <select id="sql1" resultType="bitcamp.myapp.vo.User">
+<mapper namespace="UserDao">
+    <select id="list" resultType="bitcamp.myapp.vo.User">
         select
             user_id as no,
             name,
@@ -14,12 +14,12 @@
             user_id asc
     </select>
 
-    <insert id="sql2" parameterType="bitcamp.myapp.vo.User">
+    <insert id="insert" parameterType="bitcamp.myapp.vo.User">
         insert into myapp_users(name, email, pwd, tel)
         values (#{name}, #{email}, sha1(#{password}), #{tel})
     </insert>
 
-    <select id="sql3" resultType="bitcamp.myapp.vo.User" parameterType="int">
+    <select id="findBy" resultType="bitcamp.myapp.vo.User" parameterType="int">
         select
             user_id as no,
             name,
@@ -31,7 +31,7 @@
             user_id=#{ok}
     </select>
 
-    <select id="sql4" resultType="bitcamp.myapp.vo.User" parameterType="map">
+    <select id="findByEmailAndPassword" resultType="bitcamp.myapp.vo.User" parameterType="map">
         select
             user_id as no,
             name,
@@ -43,7 +43,7 @@
             email=#{email} and pwd=sha1(#{password})
     </select>
 
-    <update id="sql5" parameterType="bitcamp.myapp.vo.User">
+    <update id="update" parameterType="bitcamp.myapp.vo.User">
         update myapp_users set
             name=#{name},
             email=#{email},
@@ -53,7 +53,7 @@
             user_id=#{no}
     </update>
 
-    <delete id="sql6" parameterType="int">
+    <delete id="delete" parameterType="int">
         delete from myapp_users
         where user_id=#{ok}
     </delete>

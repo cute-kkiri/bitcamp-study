@@ -18,18 +18,18 @@ public class UserDaoImpl implements UserDao {
 
   @Override
   public boolean insert(User user) throws Exception {
-    sqlSession.insert("aaa.sql2", user);
+    sqlSession.insert("UserDao.insert", user);
     return true;
   }
 
   @Override
   public List<User> list() throws Exception {
-    return sqlSession.selectList("aaa.sql1");
+    return sqlSession.selectList("UserDao.list");
   }
 
   @Override
   public User findBy(int no) throws Exception {
-    return sqlSession.selectOne("aaa.sql3", no);
+    return sqlSession.selectOne("UserDao.findBy", no);
   }
 
   @Override
@@ -38,18 +38,18 @@ public class UserDaoImpl implements UserDao {
     values.put("email", email);
     values.put("password", password);
 
-    return sqlSession.selectOne("aaa.sql4", values);
+    return sqlSession.selectOne("UserDao.findByEmailAndPassword", values);
   }
 
   @Override
   public boolean update(User user) throws Exception {
-    int count = sqlSession.update("aaa.sql5", user);
+    int count = sqlSession.update("UserDao.update", user);
     return count > 0;
   }
 
   @Override
   public boolean delete(int no) throws Exception {
-    int count = sqlSession.delete("aaa.sql6", no);
+    int count = sqlSession.delete("UserDao.delete", no);
     return count > 0;
   }
 }

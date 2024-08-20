@@ -28,6 +28,7 @@ public class BoardAddCommand implements Command {
       board.setWriter((User) ctx.getAttribute("loginUser"));
 
       boardDao.insert(board);
+
     } catch (Exception e) {
       System.out.println("등록 중 오류 발생!");
     }

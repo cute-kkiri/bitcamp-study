@@ -47,11 +47,11 @@ public class InitApplicationListener implements ApplicationListener {
     MenuGroup mainMenu = ctx.getMainMenu();
 
     MenuGroup userMenu = new MenuGroup("회원");
-    userMenu.add(new MenuItem("등록", new UserAddCommand(userDao)));
+    userMenu.add(new MenuItem("등록", new UserAddCommand(userDao, sqlSession)));
     userMenu.add(new MenuItem("목록", new UserListCommand(userDao)));
     userMenu.add(new MenuItem("조회", new UserViewCommand(userDao)));
-    userMenu.add(new MenuItem("변경", new UserUpdateCommand(userDao)));
-    userMenu.add(new MenuItem("삭제", new UserDeleteCommand(userDao)));
+    userMenu.add(new MenuItem("변경", new UserUpdateCommand(userDao, sqlSession)));
+    userMenu.add(new MenuItem("삭제", new UserDeleteCommand(userDao, sqlSession)));
     mainMenu.add(userMenu);
 
     MenuGroup projectMenu = new MenuGroup("프로젝트");
