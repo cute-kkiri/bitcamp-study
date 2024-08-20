@@ -37,7 +37,7 @@ public class InitApplicationListener implements ApplicationListener {
     System.out.println(sqlSession.getClass().getCanonicalName());
 
     UserDao userDao = new UserDaoImpl(sqlSession);
-    BoardDao boardDao = new BoardDaoImpl(null);
+    BoardDao boardDao = new BoardDaoImpl(sqlSession);
     ProjectDao projectDao = new ProjectDaoImpl(null);
 
     ctx.setAttribute("userDao", userDao);
@@ -65,11 +65,11 @@ public class InitApplicationListener implements ApplicationListener {
     mainMenu.add(projectMenu);
 
     MenuGroup boardMenu = new MenuGroup("게시판");
-    boardMenu.add(new MenuItem("등록", new BoardAddCommand(boardDao, ctx)));
+    boardMenu.add(new MenuItem("등록", new BoardAddCommand(boardDao, ctx, sqlSession)));
     boardMenu.add(new MenuItem("목록", new BoardListCommand(boardDao)));
-    boardMenu.add(new MenuItem("조회", new BoardViewCommand(boardDao)));
-    boardMenu.add(new MenuItem("변경", new BoardUpdateCommand(boardDao, ctx)));
-    boardMenu.add(new MenuItem("삭제", new BoardDeleteCommand(boardDao, ctx)));
+    boardMenu.add(new MenuItem("조회", new BoardViewCommand(boardDao, sqlSession)));
+    boardMenu.add(new MenuItem("변경", new BoardUpdateCommand(boardDao, ctx, sqlSession)));
+    boardMenu.add(new MenuItem("삭제", new BoardDeleteCommand(boardDao, ctx, sqlSession)));
     mainMenu.add(boardMenu);
 
     mainMenu.add(new MenuItem("도움말", new HelpCommand()));

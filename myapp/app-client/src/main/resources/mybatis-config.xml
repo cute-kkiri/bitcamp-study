@@ -27,5 +27,6 @@
   <!-- SQL문 파일 위치 -->
   <mappers>
     <mapper resource="UserDaoMapper.xml"/>
+    <mapper resource="BoardDaoMapper.xml"/>
   </mappers>
 </configuration>

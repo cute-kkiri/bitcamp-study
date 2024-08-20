@@ -4,13 +4,17 @@ import bitcamp.command.Command;
 import bitcamp.myapp.dao.BoardDao;
 import bitcamp.myapp.vo.Board;
 import bitcamp.util.Prompt;
+import org.apache.ibatis.session.SqlSession;
 
 public class BoardViewCommand implements Command {
 
   private BoardDao boardDao;
+  private SqlSession sqlSession;
 
-  public BoardViewCommand(BoardDao boardDao) {
+  public BoardViewCommand(BoardDao boardDao, SqlSession sqlSession) {
+
     this.boardDao = boardDao;
+    this.sqlSession = sqlSession;
   }
 
   @Override
@@ -27,6 +31,7 @@ public class BoardViewCommand implements Command {
 
       board.setViewCount(board.getViewCount() + 1);
       boardDao.updateViewCount(board.getNo(), board.getViewCount());
+      sqlSession.commit();
 
       System.out.printf("제목: %s\n", board.getTitle());
       System.out.printf("내용: %s\n", board.getContent());
@@ -35,6 +40,7 @@ public class BoardViewCommand implements Command {
       System.out.printf("작성자: %s\n", board.getWriter().getName());
 
     } catch (Exception e) {
+      sqlSession.rollback();
       System.out.println("조회 중 오류 발생!");
       e.printStackTrace();
     }

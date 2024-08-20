@@ -28,7 +28,7 @@
         from
             myapp_users
         where
-            user_id=#{ok}
+            user_id=#{no}
     </select>
 
     <select id="findByEmailAndPassword" resultType="bitcamp.myapp.vo.User" parameterType="map">
@@ -55,6 +55,6 @@
 
     <delete id="delete" parameterType="int">
         delete from myapp_users
-        where user_id=#{ok}
+        where user_id=#{no}
     </delete>
 </mapper>
