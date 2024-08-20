@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="aaa">
+    <select id="sql1" resultType="bitcamp.myapp.vo.User">
+        select
+            user_id as no,
+            name,
+            email
+        from
+            myapp_users
+        order by
+            user_id asc
+    </select>
+
+    <insert id="sql2" parameterType="bitcamp.myapp.vo.User">
+        insert into myapp_users(name, email, pwd, tel)
+        values (#{name}, #{email}, sha1(#{password}), #{tel})
+    </insert>
+
+    <select id="sql3" resultType="bitcamp.myapp.vo.User" parameterType="int">
+        select
+            user_id as no,
+            name,
+            email,
+            tel
+        from
+            myapp_users
+        where
+            user_id=#{ok}
+    </select>
+</mapper>
