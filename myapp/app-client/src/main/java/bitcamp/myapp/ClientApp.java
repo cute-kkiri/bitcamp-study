@@ -5,6 +5,7 @@ import bitcamp.listener.ApplicationListener;
 import bitcamp.myapp.listener.AuthApplicationListener;
 import bitcamp.myapp.listener.InitApplicationListener;
 import bitcamp.util.Prompt;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,6 +44,7 @@ public class ClientApp {
           }
         } catch (Exception e) {
           System.out.println("리스너 실행 중 오류 발생!");
+          e.printStackTrace();
         }
       }
 

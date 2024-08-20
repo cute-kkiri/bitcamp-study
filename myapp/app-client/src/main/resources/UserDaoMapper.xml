@@ -30,4 +30,31 @@
         where
             user_id=#{ok}
     </select>
+
+    <select id="sql4" resultType="bitcamp.myapp.vo.User" parameterType="map">
+        select
+            user_id as no,
+            name,
+            email,
+            tel
+        from
+            myapp_users
+        where
+            email=#{email} and pwd=sha1(#{password})
+    </select>
+
+    <update id="sql5" parameterType="bitcamp.myapp.vo.User">
+        update myapp_users set
+            name=#{name},
+            email=#{email},
+            pwd=sha1(#{password}),
+            tel=#{tel}
+        where
+            user_id=#{no}
+    </update>
+
+    <delete id="sql6" parameterType="int">
+        delete from myapp_users
+        where user_id=#{ok}
+    </delete>
 </mapper>

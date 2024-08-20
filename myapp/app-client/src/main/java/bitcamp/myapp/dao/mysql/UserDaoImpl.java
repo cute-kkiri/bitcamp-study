@@ -4,7 +4,9 @@ import bitcamp.myapp.dao.UserDao;
 import bitcamp.myapp.vo.User;
 import org.apache.ibatis.session.SqlSession;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class UserDaoImpl implements UserDao {
 
@@ -27,36 +29,27 @@ public class UserDaoImpl implements UserDao {
 
   @Override
   public User findBy(int no) throws Exception {
-    return sqlSession.selectOne(
-            "select user_id as no, name, email, tel from myapp_users where user_id=?",
-            User.class,
-            no);
+    return sqlSession.selectOne("aaa.sql3", no);
   }
 
   @Override
   public User findByEmailAndPassword(String email, String password) throws Exception {
-    return sqlSession.selectOne(
-            "select user_id as no, name, email, tel from myapp_users where email=? and pwd=sha1(?)",
-            User.class,
-            email,
-            password);
+    Map<String, Object> values = new HashMap<>();
+    values.put("email", email);
+    values.put("password", password);
+
+    return sqlSession.selectOne("aaa.sql4", values);
   }
 
   @Override
   public boolean update(User user) throws Exception {
-    int count = sqlSession.update(
-            "update myapp_users set name=?, email=?, pwd=sha1(?), tel=? where user_id=?",
-            user.getName(),
-            user.getEmail(),
-            user.getPassword(),
-            user.getTel(),
-            user.getNo());
+    int count = sqlSession.update("aaa.sql5", user);
     return count > 0;
   }
 
   @Override
   public boolean delete(int no) throws Exception {
-    int count = sqlSession.delete("delete from myapp_users where user_id=?", no);
+    int count = sqlSession.delete("aaa.sql6", no);
     return count > 0;
   }
 }

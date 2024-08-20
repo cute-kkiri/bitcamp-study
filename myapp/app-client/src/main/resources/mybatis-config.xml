@@ -4,10 +4,10 @@
   "https://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 
-  <!-- DBMS 접속정보 -->
+  <!-- .properties 파일 로딩 -->
   <properties resource="jdbc.properties"/>
 
-  <!-- SQL문 파일 위치 -->
+  <!-- DBMS 접속정보 -->
   <environments default="development-local">
 
     <!-- 개발하는 동안 사용할 DBMS 접속 정보 -->
@@ -23,10 +23,9 @@
 
   </environments>
 
-  <!-- .properties 파일 로딩 -->
+
+  <!-- SQL문 파일 위치 -->
   <mappers>
-    <!--
-    <mapper resource="org/mybatis/example/BlogMapper.xml"/>
-    -->
+    <mapper resource="UserDaoMapper.xml"/>
   </mappers>
 </configuration>
