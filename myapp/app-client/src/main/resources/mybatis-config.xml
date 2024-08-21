@@ -28,5 +28,6 @@
   <mappers>
     <mapper resource="UserDaoMapper.xml"/>
     <mapper resource="BoardDaoMapper.xml"/>
+    <mapper resource="ProjectDaoMapper.xml"/>
   </mappers>
 </configuration>

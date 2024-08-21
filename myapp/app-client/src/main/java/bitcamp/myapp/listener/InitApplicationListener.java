@@ -21,11 +21,8 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import java.io.InputStream;
-import java.sql.Connection;
 
 public class InitApplicationListener implements ApplicationListener {
-
-  Connection con;
 
   @Override
   public boolean onStart(ApplicationContext ctx) throws Exception {
@@ -34,11 +31,10 @@ public class InitApplicationListener implements ApplicationListener {
     SqlSessionFactoryBuilder sqlSessionFactoryBuilder = new SqlSessionFactoryBuilder();
     SqlSessionFactory sqlSessionFactory = sqlSessionFactoryBuilder.build(inputStream);
     SqlSession sqlSession = sqlSessionFactory.openSession(false);
-    System.out.println(sqlSession.getClass().getCanonicalName());
 
     UserDao userDao = new UserDaoImpl(sqlSession);
     BoardDao boardDao = new BoardDaoImpl(sqlSession);
-    ProjectDao projectDao = new ProjectDaoImpl(null);
+    ProjectDao projectDao = new ProjectDaoImpl(sqlSession);
 
     ctx.setAttribute("userDao", userDao);
     ctx.setAttribute("boardDao", boardDao);
@@ -57,11 +53,11 @@ public class InitApplicationListener implements ApplicationListener {
     MenuGroup projectMenu = new MenuGroup("프로젝트");
     ProjectMemberHandler memberHandler = new ProjectMemberHandler(userDao);
     projectMenu.add(
-            new MenuItem("등록", new ProjectAddCommand(projectDao, memberHandler, con)));
+            new MenuItem("등록", new ProjectAddCommand(projectDao, memberHandler, sqlSession)));
     projectMenu.add(new MenuItem("목록", new ProjectListCommand(projectDao)));
     projectMenu.add(new MenuItem("조회", new ProjectViewCommand(projectDao)));
-    projectMenu.add(new MenuItem("변경", new ProjectUpdateCommand(projectDao, memberHandler, con)));
-    projectMenu.add(new MenuItem("삭제", new ProjectDeleteCommand(projectDao, con)));
+    projectMenu.add(new MenuItem("변경", new ProjectUpdateCommand(projectDao, memberHandler, sqlSession)));
+    projectMenu.add(new MenuItem("삭제", new ProjectDeleteCommand(projectDao, sqlSession)));
     mainMenu.add(projectMenu);
 
     MenuGroup boardMenu = new MenuGroup("게시판");
