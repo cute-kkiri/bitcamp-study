@@ -10,6 +10,11 @@
         <result column="description" property="description"/>
         <result column="start_date" property="startDate"/>
         <result column="end_date" property="endDate"/>
+        
+        <collection property="members" ofType="bitcamp.myapp.vo.User">
+            <id column="user_id" property="no"/>
+            <result column="name" property="name"/>
+        </collection>
     </resultMap>
 
     <select id="list" resultMap="ProjectMap">
@@ -32,15 +37,21 @@
 
     <select id="findBy" resultMap="ProjectMap" parameterType="int">
         select
-            project_id,
-            title,
-            description,
-            start_date,
-            end_date
+            p.project_id,
+            p.title,
+            p.description,
+            p.start_date,
+            p.end_date,
+            pm.user_id,
+            u.name
         from
-            myapp_projects
+            myapp_projects p
+            left outer join myapp_project_members pm
+                on p.project_id=pm.project_id
+            left outer join myapp_users u
+                on pm.user_id=u.user_id
         where
-            project_id=#{no}
+            p.project_id=#{no}
     </select>
 
     <update id="update" parameterType="bitcamp.myapp.vo.Project">
