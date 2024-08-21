@@ -16,7 +16,19 @@
 
 - Mybatis 라이브러리를 프로젝트에 추가
   - build.gradle(Gradle 빌드 스크립트 파일) 변경
-- 
+- Mybatis 설정 파일 준비
+  - mybatis-config.xml 파일 생성
+  - jdbc.properties 파일 생성
+- SQL Mapper 파일 준비
+  - UserDaoMapper.xml
+  - BoardDaoMapper.xml
+  - ProjectDaoMapper.xml
+- DAO에 Mybatis 적용
+  - UserDaoImpl 클래스 변경 
+  - BoardDaoImpl 클래스 변경
+  - ProjectDaoImpl 클래스 변경
+- InitApplicationListener 변경
+  - Mybatis 객체 준비
 
 
 ## 소스 파일

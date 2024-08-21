@@ -37,7 +37,6 @@ public class ProjectUpdateCommand implements Command {
       project.setDescription(Prompt.input("설명(%s)?", project.getDescription()));
       project.setStartDate(Prompt.inputDate("시작일(%s)?(예: 2024-01-24)", project.getStartDate()));
       project.setEndDate(Prompt.inputDate("종료일(%s)?(예: 2024-02-15)", project.getEndDate()));
-      project.getMembers().addAll(projectDao.getMembers(projectNo));
 
       System.out.println("팀원:");
       memberHandler.deleteMembers(project);
@@ -45,7 +44,9 @@ public class ProjectUpdateCommand implements Command {
 
       projectDao.update(project);
       projectDao.deleteMembers(projectNo);
-      projectDao.insertMembers(projectNo, project.getMembers());
+      if (project.getMembers() != null && project.getMembers().size() > 0) {
+        projectDao.insertMembers(projectNo, project.getMembers());
+      }
       sqlSession.commit();
       System.out.println("변경 했습니다.");
 
