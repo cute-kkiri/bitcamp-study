@@ -2,7 +2,6 @@ package bitcamp.myapp;
 
 import bitcamp.context.ApplicationContext;
 import bitcamp.listener.ApplicationListener;
-import bitcamp.myapp.listener.AuthApplicationListener;
 import bitcamp.myapp.listener.InitApplicationListener;
 import bitcamp.net.Prompt;
 
@@ -21,7 +20,7 @@ public class ServerApp {
 
     // 애플리케이션이 시작되거나 종료될 때 알림 받을 객체의 연락처를 등록한다.
     app.addApplicationListener(new InitApplicationListener());
-    app.addApplicationListener(new AuthApplicationListener());
+//    app.addApplicationListener(new AuthApplicationListener());
 
     app.execute();
   }
@@ -51,12 +50,16 @@ public class ServerApp {
       }
 
       ServerSocket serverSocket = new ServerSocket(8888);
+      System.out.println("서버 실행 중...");
 
       while (true) {
         Socket socket = serverSocket.accept();
         Prompt prompt = new Prompt(socket);
         prompt.println("[프로젝트 관리 시스템]");
-        appCtx.getMainMenu().execute();
+        appCtx.getMainMenu().execute(prompt);
+        prompt.print("<[goodbye!]>");
+        prompt.end();
+        prompt.close();
       }
 
 
@@ -66,8 +69,6 @@ public class ServerApp {
     }
 
     System.out.println("종료합니다.");
-
-    Prompt.close();
 
     // 애플리케이션이 종료될 때 리스너에게 알린다.
     for (ApplicationListener listener : listeners) {

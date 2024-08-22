@@ -3,7 +3,7 @@ package bitcamp.myapp.command.user;
 import bitcamp.command.Command;
 import bitcamp.myapp.dao.UserDao;
 import bitcamp.myapp.vo.User;
-import bitcamp.util.Prompt;
+import bitcamp.net.Prompt;
 import org.apache.ibatis.session.SqlSession;
 
 public class UserAddCommand implements Command {
@@ -18,21 +18,21 @@ public class UserAddCommand implements Command {
   }
 
   @Override
-  public void execute(String menuName) {
-    System.out.printf("[%s]\n", menuName);
+  public void execute(String menuName, Prompt prompt) {
     try {
+      prompt.printf("[%s]\n", menuName);
       User user = new User();
-      user.setName(Prompt.input("이름?"));
-      user.setEmail(Prompt.input("이메일?"));
-      user.setPassword(Prompt.input("암호?"));
-      user.setTel(Prompt.input("연락처?"));
+      user.setName(prompt.input("이름?"));
+      user.setEmail(prompt.input("이메일?"));
+      user.setPassword(prompt.input("암호?"));
+      user.setTel(prompt.input("연락처?"));
 
       userDao.insert(user);
       sqlSession.commit();
 
     } catch (Exception e) {
       sqlSession.rollback();
-      System.out.println("등록 중 오류 발생!");
+      prompt.println("등록 중 오류 발생!");
     }
   }
 }

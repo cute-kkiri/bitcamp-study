@@ -5,7 +5,7 @@ import bitcamp.context.ApplicationContext;
 import bitcamp.myapp.dao.BoardDao;
 import bitcamp.myapp.vo.Board;
 import bitcamp.myapp.vo.User;
-import bitcamp.util.Prompt;
+import bitcamp.net.Prompt;
 import org.apache.ibatis.session.SqlSession;
 
 public class BoardAddCommand implements Command {
@@ -22,12 +22,12 @@ public class BoardAddCommand implements Command {
   }
 
   @Override
-  public void execute(String menuName) {
-    System.out.printf("[%s]\n", menuName);
+  public void execute(String menuName, Prompt prompt) {
     try {
+      prompt.printf("[%s]\n", menuName);
       Board board = new Board();
-      board.setTitle(Prompt.input("제목?"));
-      board.setContent(Prompt.input("내용?"));
+      board.setTitle(prompt.input("제목?"));
+      board.setContent(prompt.input("내용?"));
       board.setWriter((User) ctx.getAttribute("loginUser"));
 
       boardDao.insert(board);
@@ -35,7 +35,7 @@ public class BoardAddCommand implements Command {
 
     } catch (Exception e) {
       sqlSession.rollback();
-      System.out.println("등록 중 오류 발생!");
+      prompt.println("등록 중 오류 발생!");
       e.printStackTrace();
     }
   }

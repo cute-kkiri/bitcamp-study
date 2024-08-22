@@ -3,6 +3,7 @@ package bitcamp.myapp.command.board;
 import bitcamp.command.Command;
 import bitcamp.myapp.dao.BoardDao;
 import bitcamp.myapp.vo.Board;
+import bitcamp.net.Prompt;
 
 public class BoardListCommand implements Command {
 
@@ -13,13 +14,13 @@ public class BoardListCommand implements Command {
   }
 
   @Override
-  public void execute(String menuName) {
-    System.out.printf("[%s]\n", menuName);
+  public void execute(String menuName, Prompt prompt) {
     try {
-      System.out.println("번호 제목 작성자 작성일 조회수");
+      prompt.printf("[%s]\n", menuName);
+      prompt.println("번호 제목 작성자 작성일 조회수");
 
       for (Board board : boardDao.list()) {
-        System.out.printf("%d %s %s %tY-%4$tm-%4$td %d\n",
+        prompt.printf("%d %s %s %tY-%4$tm-%4$td %d\n",
                 board.getNo(),
                 board.getTitle(),
                 board.getWriter().getName(),
@@ -27,7 +28,7 @@ public class BoardListCommand implements Command {
                 board.getViewCount());
       }
     } catch (Exception e) {
-      System.out.println("목록 조회 중 오류 발생!");
+      prompt.println("목록 조회 중 오류 발생!");
       e.printStackTrace();
     }
   }

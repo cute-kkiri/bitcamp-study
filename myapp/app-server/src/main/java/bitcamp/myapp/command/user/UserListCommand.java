@@ -3,6 +3,7 @@ package bitcamp.myapp.command.user;
 import bitcamp.command.Command;
 import bitcamp.myapp.dao.UserDao;
 import bitcamp.myapp.vo.User;
+import bitcamp.net.Prompt;
 
 public class UserListCommand implements Command {
 
@@ -13,18 +14,18 @@ public class UserListCommand implements Command {
   }
 
   @Override
-  public void execute(String menuName) {
-    System.out.printf("[%s]\n", menuName);
-
+  public void execute(String menuName, Prompt prompt) {
     try {
-      System.out.println("번호 이름 이메일");
+      prompt.printf("[%s]\n", menuName);
+
+      prompt.println("번호 이름 이메일");
 
       for (User user : userDao.list()) {
-        System.out.printf("%d %s %s\n", user.getNo(), user.getName(), user.getEmail());
+        prompt.printf("%d %s %s\n", user.getNo(), user.getName(), user.getEmail());
       }
 
     } catch (Exception e) {
-      System.out.println("목록 조회 중 오류 발생!");
+      prompt.println("목록 조회 중 오류 발생!");
     }
   }
 }

@@ -14,34 +14,30 @@ public class ClientApp {
   }
 
   void execute() {
-    String host = Prompt.input("서버?");
-    int port = Prompt.inputInt("포트번호?");
+    String host = Prompt.input("서버? ");
+    int port = Prompt.inputInt("포트번호? ");
 
     try (Socket socket = new Socket(host, port);
          DataInputStream in = new DataInputStream(socket.getInputStream());
          DataOutputStream out = new DataOutputStream(socket.getOutputStream())) {
 
-      System.out.println(in.readUTF());
-
       while (true) {
-        String input = Prompt.input(">");
-        out.writeUTF(input);
-        out.flush();
-        if (input.equals("quit")) {
+        String message = in.readUTF();
+        if (message.equals("<[goodbye!]>")) {
+          System.out.println("종료합니다!");
           break;
         }
+        System.out.print(message);
 
-        String message = in.readUTF();
-        System.out.println(message);
+        String input = Prompt.input("");
+        out.writeUTF(input);
+        out.flush();
       }
-
-
     } catch (Exception ex) {
       System.out.println("실행 오류!");
       ex.printStackTrace();
     }
 
-    System.out.println("종료합니다.");
     Prompt.close();
   }
 }

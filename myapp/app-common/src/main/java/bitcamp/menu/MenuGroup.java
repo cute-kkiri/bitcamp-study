@@ -21,13 +21,11 @@ public class MenuGroup extends AbstractMenu {
       String menuPath = getMenuPath();
 
       printMenus(prompt);
-      prompt.end();
 
       while (true) {
         String command = prompt.input("%s>", menuPath);
         if (command.equals("menu")) {
           printMenus(prompt);
-          prompt.end();
           continue;
         } else if (command.equals("0")) { // 이전 메뉴 선택
           return;
@@ -38,7 +36,6 @@ public class MenuGroup extends AbstractMenu {
           Menu menu = getMenu(menuNo - 1);
           if (menu == null) {
             prompt.println("유효한 메뉴 번호가 아닙니다.");
-            prompt.end();
             continue;
           }
 
@@ -46,16 +43,11 @@ public class MenuGroup extends AbstractMenu {
 
         } catch (NumberFormatException ex) {
           prompt.println("숫자로 메뉴 번호를 입력하세요.");
-          prompt.end();
         }
       }
     } catch (Exception e) {
       e.printStackTrace();
-      try {
-        prompt.println("실행 오류!");
-        prompt.end();
-      } catch (Exception e2) {
-      }
+      prompt.println("실행 오류!");
     }
   }
 

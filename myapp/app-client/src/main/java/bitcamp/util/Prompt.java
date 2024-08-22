@@ -11,7 +11,7 @@ public class Prompt {
   static Queue<String> inputQueue = new LinkedList<>();
 
   public static String input(String format, Object... args) {
-    String promptTitle = String.format(format + " ", args);
+    String promptTitle = String.format(format, args);
     System.out.print(promptTitle);
 
     String input = keyboardScanner.nextLine();
