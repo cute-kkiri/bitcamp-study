@@ -95,7 +95,7 @@ BUILD SUCCESSFUL in 2s
 - build.gradle
 ```
 application {
-    mainClass = 'bitcamp.myapp.ClientApp'
+    mainClass = 'bitcamp.myapp.ServerApp'
 }
 ```
 - App.java

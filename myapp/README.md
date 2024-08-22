@@ -46,16 +46,7 @@
 ## 44. JDBC 코드를 캡슐화하기 
 ## 45. Mybatis 퍼시스턴스 프레임워크 사용하기
 ## 46. DAO 객체를 자동 생성하기
-
-
-- java.lang.reflect.Proxy 클래스 사용법
-- Reflection API를 사용하여 메서드 정보를 추출하기
-- GoF의 Factory Method 패턴 활용 
-
-
-
-
-## 46. Application Server 아키텍처로 전환하기
+## 47. Application Server 아키텍처로 전환하기
 
 - 애플리케이션 서버 아키텍처의 특징과 구현
 - Executor를 이용하여 스레드를 풀링하기
