@@ -10,9 +10,9 @@ import bitcamp.myapp.command.board.*;
 import bitcamp.myapp.command.project.*;
 import bitcamp.myapp.command.user.*;
 import bitcamp.myapp.dao.BoardDao;
+import bitcamp.myapp.dao.DaoFactory;
 import bitcamp.myapp.dao.ProjectDao;
 import bitcamp.myapp.dao.UserDao;
-import bitcamp.myapp.dao.mysql.BoardDaoImpl;
 import bitcamp.myapp.dao.mysql.ProjectDaoImpl;
 import bitcamp.myapp.dao.mysql.UserDaoImpl;
 import org.apache.ibatis.io.Resources;
@@ -32,8 +32,10 @@ public class InitApplicationListener implements ApplicationListener {
     SqlSessionFactory sqlSessionFactory = sqlSessionFactoryBuilder.build(inputStream);
     SqlSession sqlSession = sqlSessionFactory.openSession(false);
 
+    DaoFactory daoFactory = new DaoFactory(sqlSession);
+
     UserDao userDao = new UserDaoImpl(sqlSession);
-    BoardDao boardDao = new BoardDaoImpl(sqlSession);
+    BoardDao boardDao = daoFactory.createObject(BoardDao.class);
     ProjectDao projectDao = new ProjectDaoImpl(sqlSession);
 
     ctx.setAttribute("userDao", userDao);
