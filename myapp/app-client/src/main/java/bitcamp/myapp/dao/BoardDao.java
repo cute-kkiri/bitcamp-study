@@ -1,6 +1,7 @@
 package bitcamp.myapp.dao;
 
 import bitcamp.myapp.vo.Board;
+
 import java.util.List;
 
 public interface BoardDao {
@@ -15,5 +16,5 @@ public interface BoardDao {
 
   boolean delete(int no) throws Exception;
 
-  void updateViewCount(int boardNo, int count) throws Exception;
+  void updateViewCount(@Param("no") int boardNo, @Param("count") int count) throws Exception;
 }

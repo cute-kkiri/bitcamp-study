@@ -36,6 +36,7 @@ public class BoardAddCommand implements Command {
     } catch (Exception e) {
       sqlSession.rollback();
       System.out.println("등록 중 오류 발생!");
+      e.printStackTrace();
     }
   }
 
