@@ -683,3 +683,11 @@
     - java.lang.reflect.Proxy 클래스 사용법 
 - 실습 프로젝트 
   - 46. DAO 객체를 자동 생성하기
+  - 47. Application Server 아키텍처로 전환하기
+
+## 62일차(2024-08-23,금)
+
+- 이론
+  - 자바 프로그래밍
+- 실습 프로젝트 
+  - 47. Application Server 아키텍처로 전환하기(계속)
