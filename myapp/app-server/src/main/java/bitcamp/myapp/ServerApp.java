@@ -2,7 +2,9 @@ package bitcamp.myapp;
 
 import bitcamp.context.ApplicationContext;
 import bitcamp.listener.ApplicationListener;
+import bitcamp.myapp.dao.UserDao;
 import bitcamp.myapp.listener.InitApplicationListener;
+import bitcamp.myapp.vo.User;
 import bitcamp.net.Prompt;
 
 import java.net.ServerSocket;
@@ -20,7 +22,6 @@ public class ServerApp {
 
     // 애플리케이션이 시작되거나 종료될 때 알림 받을 객체의 연락처를 등록한다.
     app.addApplicationListener(new InitApplicationListener());
-//    app.addApplicationListener(new AuthApplicationListener());
 
     app.execute();
   }
@@ -54,8 +55,25 @@ public class ServerApp {
 
       while (true) {
         Socket socket = serverSocket.accept();
-        Prompt prompt = new Prompt(socket);
+        Prompt prompt = new Prompt(socket, appCtx);
+
         prompt.println("[프로젝트 관리 시스템]");
+        String email = prompt.input("이메일?");
+        String password = prompt.input("암호?");
+
+        UserDao userDao = (UserDao) appCtx.getAttribute("userDao");
+        User loginUser = userDao.findByEmailAndPassword(email, password);
+        if (loginUser == null) {
+          prompt.println("이메일 또는 암호가 맞지 않습니다!");
+          prompt.print("<[goodbye!]>");
+          prompt.end();
+          prompt.close();
+          continue;
+        }
+
+        // 로그인 정보를 보관해 둔다.
+        prompt.setAttribute("loginUser", loginUser);
+
         appCtx.getMainMenu().execute(prompt);
         prompt.print("<[goodbye!]>");
         prompt.end();
