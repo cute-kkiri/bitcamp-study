@@ -30,7 +30,7 @@ public class UserListServlet implements Servlet {
     // 누가 호출하는가? 서블릿 컨테이너가 호출한다.
 
     // 출력할 콘텐트의 타입을 먼저 지정한 후 출력 스트림을 얻는다.
-    res.setContentType("text/plain;charset=UTF-8");
+    res.setContentType("text/html;charset=UTF-8");
 
     // 출력 콘텐트를 어떤 문자집합으로 인코딩 할 지 지정하지 않고 출력 스트림을 꺼내면
     // 출력 문자열(UTF-16BE)은 ISO-8859-1 문자집합에 맞춰 인코딩된다.
@@ -46,11 +46,20 @@ public class UserListServlet implements Servlet {
     out.println("<body>");
 
     try {
-      out.println("[게시글 목록]");
-      out.println("번호 이름 이메일");
+      out.println("<h1>회원 목록</h1>");
+      out.println("<table border='1'>");
+      out.println("  <thead>");
+      out.println("      <tr><th>번호</th><th>이름</th><th>이메일</th></tr>");
+      out.println("  </thead>");
+      out.println("  <tbody>");
+
       for (User user : userDao.list()) {
-        out.printf("%d %s %s\n", user.getNo(), user.getName(), user.getEmail());
+        out.printf("      <tr><td>%d</td><td>%s</td><td>%s</td></tr>\n",
+                user.getNo(), user.getName(), user.getEmail());
       }
+
+      out.println("  </tbody>");
+      out.println("</table>");
     } catch (Exception e) {
       out.println("목록 조회 중 오류 발생!");
     }
