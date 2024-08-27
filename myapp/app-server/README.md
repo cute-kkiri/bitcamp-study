@@ -23,6 +23,8 @@
   - src/main/webapp 폴더 생성 및 index.html 파일 생성
 - InitApplicationListener를 ServletContextListener 규격에 맞춰 변경한다.
   - 클래스명 변경: ContextLoaderListener
+- Command 구현체를 Servlet 규격에 맞춰 변경
+  - Servlet 인터페이스 구현
 
 
 ## 소스 파일
