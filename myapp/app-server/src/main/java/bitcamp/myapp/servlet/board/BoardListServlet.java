@@ -56,7 +56,7 @@ public class BoardListServlet implements Servlet {
       out.println("</table>");
 
     } catch (Exception e) {
-      out.println("목록 조회 중 오류 발생!");
+      out.println("<p>목록 조회 중 오류 발생!</p>");
       e.printStackTrace();
     }
 
