@@ -37,6 +37,7 @@ public class ContextLoaderListener implements ServletContextListener {
       ProjectDao projectDao = daoFactory.createObject(ProjectDao.class);
 
       ServletContext ctx = sce.getServletContext();
+      ctx.setAttribute("sqlSessionFactory", sqlSessionFactoryProxy);
       ctx.setAttribute("userDao", userDao);
       ctx.setAttribute("boardDao", boardDao);
       ctx.setAttribute("projectDao", projectDao);

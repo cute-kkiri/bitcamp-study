@@ -42,7 +42,7 @@ public class ProjectListServlet implements Servlet {
       out.println("  <tbody>");
 
       for (Project project : projectDao.list()) {
-        out.printf("      <tr><td>%d</td><td>%s</td><td>%s ~ %s</td></tr>\n",
+        out.printf("      <tr><td>%d</td><td><a href='/project/view?no=%1$d'>%s</a></td><td>%s ~ %s</td></tr>\n",
                 project.getNo(), project.getTitle(), project.getStartDate(), project.getEndDate());
       }
 
