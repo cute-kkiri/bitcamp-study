@@ -31,8 +31,19 @@ public class UserListServlet implements Servlet {
 
     // 출력할 콘텐트의 타입을 먼저 지정한 후 출력 스트림을 얻는다.
     res.setContentType("text/plain;charset=UTF-8");
-    
+
+    // 출력 콘텐트를 어떤 문자집합으로 인코딩 할 지 지정하지 않고 출력 스트림을 꺼내면
+    // 출력 문자열(UTF-16BE)은 ISO-8859-1 문자집합에 맞춰 인코딩된다.
+    // 만약 UTF-16BE 에 있는 문자가 ISO-8859-1에 정의되어 있지 않다면,
+    // '?' 문자로 변환된다.
     PrintWriter out = res.getWriter();
+    out.println("<!DOCTYPE html>");
+    out.println("<html>");
+    out.println("<head>");
+    out.println("    <meta charset='UTF-8'>");
+    out.println("    <title>Title</title>");
+    out.println("</head>");
+    out.println("<body>");
 
     try {
       out.println("[게시글 목록]");
@@ -40,10 +51,12 @@ public class UserListServlet implements Servlet {
       for (User user : userDao.list()) {
         out.printf("%d %s %s\n", user.getNo(), user.getName(), user.getEmail());
       }
-
     } catch (Exception e) {
       out.println("목록 조회 중 오류 발생!");
     }
+
+    out.println("</body>");
+    out.println("</html>");
   }
 
   @Override
