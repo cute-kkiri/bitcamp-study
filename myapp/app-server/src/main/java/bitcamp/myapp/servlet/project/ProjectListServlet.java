@@ -35,6 +35,10 @@ public class ProjectListServlet implements Servlet {
     out.println("<body>");
 
     try {
+      out.println("<header>");
+      out.println("  <a href='/'><img src='/images/home.png'></a>");
+      out.println("        프로젝트 관리 시스템");
+      out.println("</header>");
       out.println("<h1>프로젝트 목록</h1>");
       out.println("<p><a href='/project/form.html'>새 프로젝트</a></p>");
       out.println("<table border='1'>");

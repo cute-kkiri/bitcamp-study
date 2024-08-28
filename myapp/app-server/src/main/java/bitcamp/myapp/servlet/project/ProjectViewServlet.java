@@ -38,6 +38,10 @@ public class ProjectViewServlet extends GenericServlet {
     out.println("<body>");
 
     try {
+      out.println("<header>");
+      out.println("  <a href='/'><img src='/images/home.png'></a>");
+      out.println("        프로젝트 관리 시스템");
+      out.println("</header>");
       out.println("<h1>프로젝트 조회</h1>");
 
       int projectNo = Integer.parseInt(req.getParameter("no"));
@@ -45,6 +49,8 @@ public class ProjectViewServlet extends GenericServlet {
       Project project = projectDao.findBy(projectNo);
       if (project == null) {
         out.println("<p>없는 프로젝트입니다.</p>");
+        out.println("</body>");
+        out.println("</html>");
         return;
       }
 

@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -39,12 +40,19 @@ public class BoardAddServlet extends GenericServlet {
     out.println("<body>");
 
     try {
+      out.println("<header>");
+      out.println("  <a href='/'><img src='/images/home.png'></a>");
+      out.println("        프로젝트 관리 시스템");
+      out.println("</header>");
       out.println("<h1>게시글 등록 결과</h1>");
 
       Board board = new Board();
       board.setTitle(req.getParameter("title"));
       board.setContent(req.getParameter("content"));
-      board.setWriter(new User(11));
+
+      // 클라이언트 전용 보관소에서 로그인 사용자 정보를 꺼낸다.
+      User loginUser = (User) ((HttpServletRequest) req).getSession().getAttribute("loginUser");
+      board.setWriter(loginUser);
 
       boardDao.insert(board);
       sqlSessionFactory.openSession(false).commit();

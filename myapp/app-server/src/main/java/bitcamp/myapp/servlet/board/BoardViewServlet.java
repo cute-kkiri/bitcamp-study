@@ -40,6 +40,10 @@ public class BoardViewServlet extends GenericServlet {
     out.println("<body>");
 
     try {
+      out.println("<header>");
+      out.println("  <a href='/'><img src='/images/home.png'></a>");
+      out.println("        프로젝트 관리 시스템");
+      out.println("</header>");
       out.println("<h1>게시글 조회</h1>");
 
       int boardNo = Integer.parseInt(req.getParameter("no"));
@@ -47,6 +51,8 @@ public class BoardViewServlet extends GenericServlet {
       Board board = boardDao.findBy(boardNo);
       if (board == null) {
         out.println("<p>없는 게시글입니다.</p>");
+        out.println("</body>");
+        out.println("</html>");
         return;
       }
 
