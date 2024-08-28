@@ -36,6 +36,7 @@ public class ProjectAddServlet extends GenericServlet {
     out.println("    <meta charset='UTF-8'>");
     out.println("    <meta http-equiv='refresh' content='1;url=/project/list'>");
     out.println("    <title>Title</title>");
+    out.println("    <link href='/css/common.css' rel='stylesheet'>");
     out.println("</head>");
     out.println("<body>");
 

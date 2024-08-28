@@ -33,12 +33,13 @@ public class UserAddServlet extends GenericServlet {
     out.println("    <meta charset='UTF-8'>");
     out.println("    <meta http-equiv='refresh' content='1;url=/user/list'>");
     out.println("    <title>Title</title>");
+    out.println("    <link href='/css/common.css' rel='stylesheet'>");
     out.println("</head>");
     out.println("<body>");
 
     try {
       out.println("<h1>회원 등록 결과</h1>");
-      
+
       User user = new User();
       user.setName(req.getParameter("name"));
       user.setEmail(req.getParameter("email"));

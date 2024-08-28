@@ -32,6 +32,7 @@ public class UserViewServlet extends GenericServlet {
     out.println("<head>");
     out.println("    <meta charset='UTF-8'>");
     out.println("    <title>Title</title>");
+    out.println("    <link href='/css/common.css' rel='stylesheet'>");
     out.println("</head>");
     out.println("<body>");
 
