@@ -31,6 +31,7 @@ public class UserAddServlet extends GenericServlet {
     out.println("<html>");
     out.println("<head>");
     out.println("    <meta charset='UTF-8'>");
+    out.println("    <meta http-equiv='refresh' content='1;url=/user/list'>");
     out.println("    <title>Title</title>");
     out.println("</head>");
     out.println("<body>");
