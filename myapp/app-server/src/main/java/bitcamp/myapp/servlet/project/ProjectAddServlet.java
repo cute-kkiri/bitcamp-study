@@ -3,6 +3,7 @@ package bitcamp.myapp.servlet.project;
 import bitcamp.myapp.command.project.ProjectMemberHandler;
 import bitcamp.myapp.dao.ProjectDao;
 import bitcamp.myapp.vo.Project;
+import bitcamp.myapp.vo.User;
 import org.apache.ibatis.session.SqlSessionFactory;
 
 import javax.servlet.*;
@@ -10,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
+import java.util.ArrayList;
 
 @WebServlet("/project/add")
 public class ProjectAddServlet extends GenericServlet {
@@ -53,7 +55,14 @@ public class ProjectAddServlet extends GenericServlet {
       project.setStartDate(Date.valueOf(req.getParameter("startDate")));
       project.setEndDate(Date.valueOf(req.getParameter("endDate")));
 
-      //memberHandler.addMembers(project, prompt);
+      String[] memberNos = req.getParameterValues("member");
+      if (memberNos != null) {
+        ArrayList<User> members = new ArrayList<>();
+        for (String memberNo : memberNos) {
+          members.add(new User(Integer.parseInt(memberNo)));
+        }
+        project.setMembers(members);
+      }
 
       projectDao.insert(project);
 
