@@ -75,7 +75,8 @@ public class ProjectViewServlet extends GenericServlet {
       }
       out.println("        </ul>");
 
-      out.println("        <input type='submit' value='등록'>");
+      out.println("        <input type='submit' value='변경'>");
+      out.printf("        <button type='button' onclick='location.href=\"/project/delete?no=%d\"'>삭제</button>\n", project.getNo());
       out.println("</form>");
 
     } catch (Exception e) {
