@@ -30,7 +30,7 @@ public class BoardListServlet implements Servlet {
 
     try {
       out.println("<h1>게시글 목록</h1>");
-      out.println("<p><a href='/board/form.html'>새 글</a></p>");
+      out.println("<p><a href='/board/form'>새 글</a></p>");
       out.println("<table border='1'>");
       out.println("  <thead>");
       out.println("      <tr><th>번호</th><th>제목</th><th>작성자</th><th>작성일</th><th>조회수</th></tr>");

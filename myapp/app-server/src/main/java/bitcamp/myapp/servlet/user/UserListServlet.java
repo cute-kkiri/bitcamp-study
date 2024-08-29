@@ -45,7 +45,7 @@ public class UserListServlet implements Servlet {
 
     try {
       out.println("<h1>회원 목록</h1>");
-      out.println("<p><a href='/user/form.html'>새 회원</a></p>");
+      out.println("<p><a href='/user/form'>새 회원</a></p>");
       out.println("<table>");
       out.println("  <thead>");
       out.println("      <tr><th>번호</th><th>이름</th><th>이메일</th></tr>");

@@ -33,7 +33,7 @@ public class HeaderServlet extends GenericServlet {
     out.println("      <li class='btn btn-default'><a href='/board/list'>게시글</a></li>");
     out.println("    </ul>");
     out.println("  </nav>");
-    out.println("  <a href='/auth/form.html' class='btn btn-light pos-right'>로그인</a>");
+    out.println("  <a href='/auth/form' class='btn btn-light pos-right'>로그인</a>");
     out.println("</header>");
   }
 }
