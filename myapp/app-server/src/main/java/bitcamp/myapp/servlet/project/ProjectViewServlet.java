@@ -1,6 +1,7 @@
 package bitcamp.myapp.servlet.project;
 
 import bitcamp.myapp.dao.ProjectDao;
+import bitcamp.myapp.dao.UserDao;
 import bitcamp.myapp.vo.Project;
 import bitcamp.myapp.vo.User;
 
@@ -11,16 +12,18 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 @WebServlet("/project/view")
 public class ProjectViewServlet extends GenericServlet {
 
   private ProjectDao projectDao;
+  private UserDao userDao;
 
   @Override
   public void init() throws ServletException {
-    // 서블릿 컨테이너 ---> init(ServletConfig) ---> init() 호출한다.
     projectDao = (ProjectDao) this.getServletContext().getAttribute("projectDao");
+    userDao = (UserDao) this.getServletContext().getAttribute("userDao");
   }
 
   @Override
@@ -54,16 +57,26 @@ public class ProjectViewServlet extends GenericServlet {
         return;
       }
 
-      out.printf("<p>프로젝트명: %s</p>\n", project.getTitle());
-      out.printf("<p>설명: %s</p>\n", project.getDescription());
-      out.printf("<p>기간: %s ~ %s</p>\n", project.getStartDate(), project.getEndDate());
+      out.println("<form action='/project/update'>");
+      out.printf("        번호: <input readonly name='no' type='text' value='%d'><br>\n", project.getNo());
+      out.printf("        프로젝트명: <input name='title' type='text' value='%s'><br>\n", project.getTitle());
+      out.printf("        설명: <textarea name='description'>%s</textarea><br>\n", project.getDescription());
+      out.printf("        기간: <input name='startDate' type='date' value='%s'> ~", project.getStartDate());
+      out.printf("        <input name='endDate' type='date' value='%s'><br>\n", project.getEndDate());
+      out.println("        팀원: <br>");
 
-      out.println("<p>팀원:</p>");
-      out.println("<ul>");
-      for (User user : project.getMembers()) {
-        out.printf("<li>%s</li>\n", user.getName());
+      out.println("        <ul>");
+      List<User> users = userDao.list();
+      for (User user : users) {
+        out.printf("          <li><input %s name='member' value='%d' type='checkbox'> %s</li>\n",
+                isMember(project.getMembers(), user) ? "checked" : "",
+                user.getNo(),
+                user.getName());
       }
-      out.println("</ul>");
+      out.println("        </ul>");
+
+      out.println("        <input type='submit' value='등록'>");
+      out.println("</form>");
 
     } catch (Exception e) {
       out.println("<p>조회 중 오류 발생!</p>");
@@ -71,5 +84,14 @@ public class ProjectViewServlet extends GenericServlet {
 
     out.println("</body>");
     out.println("</html>");
+  }
+
+  private boolean isMember(List<User> members, User user) {
+    for (User member : members) {
+      if (member.getNo() == user.getNo()) {
+        return true;
+      }
+    }
+    return false;
   }
 }
