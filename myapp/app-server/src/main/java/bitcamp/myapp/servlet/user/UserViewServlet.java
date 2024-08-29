@@ -60,6 +60,7 @@ public class UserViewServlet extends GenericServlet {
       out.println("        암호: <input name='password' type='password'><br>");
       out.printf("        연락처: <input name='tel' type='tel' value='%s'><br>\n", user.getTel());
       out.println("        <button>변경</button>");
+      out.printf("        <button type='button' onclick='location.href=\"/user/delete?no=%d\"'>삭제</button>\n", user.getNo());
       out.println("</form>");
 
     } catch (Exception e) {
