@@ -1,10 +1,13 @@
 package bitcamp.myapp.servlet;
 
+import bitcamp.myapp.vo.User;
+
 import javax.servlet.GenericServlet;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -33,7 +36,13 @@ public class HeaderServlet extends GenericServlet {
     out.println("      <li class='btn btn-default'><a href='/board/list'>게시글</a></li>");
     out.println("    </ul>");
     out.println("  </nav>");
-    out.println("  <a href='/auth/form' class='btn btn-light pos-right'>로그인</a>");
+
+    User loginUser = (User) ((HttpServletRequest) req).getSession().getAttribute("loginUser");
+    if (loginUser == null) {
+      out.println("  <a href='/auth/form' class='btn btn-light pos-right'>로그인</a>");
+    } else {
+      out.println("  <a href='/auth/logout' class='btn btn-light pos-right'>로그아웃</a>");
+    }
     out.println("</header>");
   }
 }
