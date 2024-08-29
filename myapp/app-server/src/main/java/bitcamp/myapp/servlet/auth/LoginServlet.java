@@ -9,6 +9,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -26,22 +27,11 @@ public class LoginServlet extends GenericServlet {
   @Override
   public void service(ServletRequest req, ServletResponse res) throws ServletException, IOException {
     res.setContentType("text/html;charset=UTF-8");
-
     PrintWriter out = res.getWriter();
-    out.println("<!DOCTYPE html>");
-    out.println("<html>");
-    out.println("<head>");
-    out.println("    <meta charset='UTF-8'>");
-    out.println("    <title>Title</title>");
-    out.println("    <link href='/css/common.css' rel='stylesheet'>");
-    out.println("</head>");
-    out.println("<body>");
+
+    req.getRequestDispatcher("/header").include(req, res);
 
     try {
-      out.println("<header>");
-      out.println("  <a href='/'><img src='/images/home.png'></a>");
-      out.println("        프로젝트 관리 시스템");
-      out.println("</header>");
       out.println("<h1>로그인 결과</h1>");
 
       String email = req.getParameter("email");
@@ -74,5 +64,7 @@ public class LoginServlet extends GenericServlet {
 
     out.println("</body>");
     out.println("</html>");
+
+    ((HttpServletResponse) res).setHeader("Refresh", "1;url=/");
   }
 }

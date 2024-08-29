@@ -25,23 +25,11 @@ public class ProjectFormServlet extends GenericServlet {
   @Override
   public void service(ServletRequest req, ServletResponse res) throws ServletException, IOException {
     res.setContentType("text/html;charset=UTF-8");
-
     PrintWriter out = res.getWriter();
-    out.println("<!DOCTYPE html>");
-    out.println("<html>");
-    out.println("<head>");
-    out.println("    <meta charset='UTF-8'>");
-    out.println("    <title>Title</title>");
-    out.println("    <link href='/css/common.css' rel='stylesheet'>");
-    out.println("</head>");
-    out.println("<body>");
+
+    req.getRequestDispatcher("/header").include(req, res);
 
     try {
-      out.println("<header>");
-      out.println("  <a href='/'><img src='/images/home.png'></a>");
-      out.println("        프로젝트 관리 시스템");
-      out.println("</header>");
-
       out.println("<h1>프로젝트 등록</h1>");
       out.println("<form action='/project/add'>");
       out.println("        프로젝트명: <input name='title' type='text'><br>");
