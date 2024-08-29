@@ -2,6 +2,7 @@ package bitcamp.myapp.servlet.user;
 
 import bitcamp.myapp.dao.UserDao;
 import bitcamp.myapp.vo.User;
+import org.apache.ibatis.session.SqlSessionFactory;
 
 import javax.servlet.GenericServlet;
 import javax.servlet.ServletException;
@@ -11,16 +12,18 @@ import javax.servlet.annotation.WebServlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet("/user/view")
-public class UserViewServlet extends GenericServlet {
+@WebServlet("/user/update")
+public class UserUpdateServlet extends GenericServlet {
 
   private UserDao userDao;
+  private SqlSessionFactory sqlSessionFactory;
 
   @Override
   public void init() throws ServletException {
-    // 서블릿 컨테이너 ---> init(ServletConfig) ---> init() 호출한다.
-    userDao = (UserDao) this.getServletContext().getAttribute("userDao");
+    this.userDao = (UserDao) this.getServletContext().getAttribute("userDao");
+    this.sqlSessionFactory = (SqlSessionFactory) this.getServletContext().getAttribute("sqlSessionFactory");
   }
+
 
   @Override
   public void service(ServletRequest req, ServletResponse res) throws ServletException, IOException {
@@ -31,6 +34,7 @@ public class UserViewServlet extends GenericServlet {
     out.println("<html>");
     out.println("<head>");
     out.println("    <meta charset='UTF-8'>");
+    out.println("    <meta http-equiv='refresh' content='1;url=/user/list'>");
     out.println("    <title>Title</title>");
     out.println("    <link href='/css/common.css' rel='stylesheet'>");
     out.println("</head>");
@@ -41,32 +45,30 @@ public class UserViewServlet extends GenericServlet {
       out.println("  <a href='/'><img src='/images/home.png'></a>");
       out.println("        프로젝트 관리 시스템");
       out.println("</header>");
-      out.println("<h1>회원 조회</h1>");
+      out.println("<h1>회원 변경 결과</h1>");
 
-      int userNo = Integer.parseInt(req.getParameter("no"));
+      User user = new User();
+      user.setNo(Integer.parseInt(req.getParameter("no")));
+      user.setName(req.getParameter("name"));
+      user.setEmail(req.getParameter("email"));
+      user.setPassword(req.getParameter("password"));
+      user.setTel(req.getParameter("tel"));
 
-      User user = userDao.findBy(userNo);
-      if (user == null) {
+      if (userDao.update(user)) {
+        sqlSessionFactory.openSession(false).commit();
+        out.println("<p>변경 했습니다.</p>");
+      } else {
         out.println("<p>없는 회원입니다.</p>");
-        out.println("</body>");
-        out.println("</html>");
-        return;
       }
 
-      out.println("<form action='/user/update'>");
-      out.printf("        번호: <input name='no' readonly type='text' value='%d'><br>\n", user.getNo());
-      out.printf("        이름: <input name='name' type='text' value='%s'><br>\n", user.getName());
-      out.printf("        이메일: <input name='email' type='email' value='%s'><br>\n", user.getEmail());
-      out.println("        암호: <input name='password' type='password'><br>");
-      out.printf("        연락처: <input name='tel' type='tel' value='%s'><br>\n", user.getTel());
-      out.println("        <button>변경</button>");
-      out.println("</form>");
-
     } catch (Exception e) {
-      out.println("<p>조회 중 오류 발생!</p>");
+      sqlSessionFactory.openSession(false).rollback();
+      out.println("<p>변경 중 오류 발생!</p>");
+      e.printStackTrace();
     }
 
     out.println("</body>");
     out.println("</html>");
   }
+
 }

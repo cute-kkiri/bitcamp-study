@@ -1,6 +1,5 @@
 package bitcamp.myapp.servlet.project;
 
-import bitcamp.myapp.command.project.ProjectMemberHandler;
 import bitcamp.myapp.dao.ProjectDao;
 import bitcamp.myapp.vo.Project;
 import bitcamp.myapp.vo.User;
@@ -17,7 +16,6 @@ import java.util.ArrayList;
 public class ProjectAddServlet extends GenericServlet {
 
   private ProjectDao projectDao;
-  private ProjectMemberHandler memberHandler;
   private SqlSessionFactory sqlSessionFactory;
 
   @Override

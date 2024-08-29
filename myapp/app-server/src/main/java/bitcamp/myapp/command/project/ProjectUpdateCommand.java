@@ -9,15 +9,12 @@ import org.apache.ibatis.session.SqlSessionFactory;
 public class ProjectUpdateCommand implements Command {
 
   private ProjectDao projectDao;
-  private ProjectMemberHandler memberHandler;
   private SqlSessionFactory sqlSessionFactory;
 
   public ProjectUpdateCommand(ProjectDao projectDao,
-                              ProjectMemberHandler memberHandler,
                               SqlSessionFactory sqlSessionFactory) {
 
     this.projectDao = projectDao;
-    this.memberHandler = memberHandler;
     this.sqlSessionFactory = sqlSessionFactory;
   }
 
@@ -39,8 +36,8 @@ public class ProjectUpdateCommand implements Command {
       project.setEndDate(prompt.inputDate("종료일(%s)?(예: 2024-02-15)", project.getEndDate()));
 
       prompt.println("팀원:");
-      memberHandler.deleteMembers(project, prompt);
-      memberHandler.addMembers(project, prompt);
+//      memberHandler.deleteMembers(project, prompt);
+//      memberHandler.addMembers(project, prompt);
 
       projectDao.update(project);
       projectDao.deleteMembers(projectNo);
