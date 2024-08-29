@@ -42,6 +42,7 @@ public class LoginServlet extends GenericServlet {
         out.println("<p>이메일 또는 암호가 맞지 않습니다.</p>");
         out.println("</body>");
         out.println("</html>");
+        ((HttpServletResponse) res).setHeader("Refresh", "1;url=/auth/form");
         return;
       }
 
@@ -65,6 +66,6 @@ public class LoginServlet extends GenericServlet {
     out.println("</body>");
     out.println("</html>");
 
-    ((HttpServletResponse) res).setHeader("Refresh", "1;url=/");
+    ((HttpServletResponse) res).sendRedirect("/");
   }
 }
