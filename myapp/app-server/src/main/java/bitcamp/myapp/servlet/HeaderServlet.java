@@ -38,11 +38,16 @@ public class HeaderServlet extends GenericServlet {
     out.println("  </nav>");
 
     User loginUser = (User) ((HttpServletRequest) req).getSession().getAttribute("loginUser");
+
+    out.println("  <div class='login-state pos-right'>");
     if (loginUser == null) {
-      out.println("  <a href='/auth/form' class='btn btn-light pos-right'>로그인</a>");
+      out.println("  <a href='/auth/form' class='btn btn-primary'>로그인</a>");
     } else {
-      out.println("  <a href='/auth/logout' class='btn btn-light pos-right'>로그아웃</a>");
+      out.printf("  <a href='/user/view?no=%d' class='btn btn-light'>%s</a>\n", loginUser.getNo(), loginUser.getName());
+      out.println("  <a href='/auth/logout' class='btn btn-secondary'>로그아웃</a>");
     }
+    out.println("  </div>");
+
     out.println("</header>");
   }
 }

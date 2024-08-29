@@ -88,7 +88,21 @@ header a {
     background-color: white;
 }
 
+.btn-primary {
+    background-color: navy;
+    color: white;
+}
+
+.btn-secondary {
+    background-color: darkgreen;
+    color: white;
+}
+
 .pos-right {
     position: absolute;
     right: 0px;
+}
+
+.login-state {
+    display: inline;
 }
