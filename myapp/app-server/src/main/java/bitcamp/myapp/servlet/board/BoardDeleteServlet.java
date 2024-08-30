@@ -13,7 +13,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 @WebServlet("/board/delete")
 public class BoardDeleteServlet extends GenericServlet {
@@ -29,44 +28,25 @@ public class BoardDeleteServlet extends GenericServlet {
 
   @Override
   public void service(ServletRequest req, ServletResponse res) throws ServletException, IOException {
-    res.setContentType("text/html;charset=UTF-8");
-    PrintWriter out = res.getWriter();
-
-    req.getRequestDispatcher("/header").include(req, res);
-
     try {
-      out.println("<h1>게시글 삭제 결과</h1>");
-
       User loginUser = (User) ((HttpServletRequest) req).getSession().getAttribute("loginUser");
-
       int boardNo = Integer.parseInt(req.getParameter("no"));
-
       Board board = boardDao.findBy(boardNo);
+
       if (board == null) {
-        out.println("<p>없는 게시글입니다.</p>");
-        out.println("</body>");
-        out.println("</html>");
-        return;
+        throw new Exception("없는 게시글입니다.");
       } else if (loginUser == null || loginUser.getNo() > 10 && board.getWriter().getNo() != loginUser.getNo()) {
-        out.println("<p>삭제 권한이 없습니다.</p>");
-        out.println("</body>");
-        out.println("</html>");
-        return;
+        throw new Exception("삭제 권한이 없습니다.");
       }
 
       boardDao.delete(boardNo);
       sqlSessionFactory.openSession(false).commit();
-      out.println("<p>삭제 했습니다.</p>");
+      ((HttpServletResponse) res).sendRedirect("/board/list");
 
     } catch (Exception e) {
       sqlSessionFactory.openSession(false).rollback();
-      out.println("<p>삭제 중 오류 발생!</p>");
-      e.printStackTrace();
+      req.setAttribute("exception", e);
+      req.getRequestDispatcher("/error.jsp").forward(req, res);
     }
-
-    out.println("</body>");
-    out.println("</html>");
-
-    ((HttpServletResponse) res).setHeader("Refresh", "1;url=/board/list");
   }
 }

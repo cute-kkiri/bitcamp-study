@@ -29,7 +29,7 @@ if (board == null) {
       조회수: <input readonly type='text' value='<%=board.getViewCount()%>'><br>
       작성자: <input readonly type='text' value='<%=board.getWriter().getName()%>'><br>
       <button>변경</button>
-      <button type='button' onclick='location.href=\"/board/delete?no=<%=board.getNo()%>\"'>삭제</button>
+      <button type='button' onclick='location.href="/board/delete?no=<%=board.getNo()%>"'>삭제</button>
 </form>
 
 <%
