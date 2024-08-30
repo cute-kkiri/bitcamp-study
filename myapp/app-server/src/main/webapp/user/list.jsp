@@ -1,7 +1,8 @@
 <%@ page
     language="java" 
     contentType="text/html;charset=UTF-8" 
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"
+    trimDirectiveWhitespaces="true"%>
 <%@ page import="bitcamp.myapp.vo.User"%>
 <%@ page import="java.util.List"%>
 
@@ -17,8 +18,13 @@
 <%
 List<User> list = (List<User>) request.getAttribute("list");
 for (User user : list) {
-out.println(String.format("      <tr><td>%d</td><td><a href='/user/view?no=%1$d'>%s</a></td><td>%s</td></tr>",
-        user.getNo(), user.getName(), user.getEmail()));
+%>
+<tr>
+  <td><%=user.getNo()%></td>
+  <td><a href='/user/view?no=<%=user.getNo()%>'><%=user.getName()%></a></td>
+  <td><%=user.getEmail()%></td>
+</tr>
+<%
 }
 %>
   </tbody>
