@@ -7,6 +7,10 @@
 - 회의실 번호 / 암호: 210 866 3081 / 111222
 - 회의링크: https://whaleon.us/o/CSrtk1/84888a51da9d4f939e63eee37248fb28
 
+## 구글 meet 접속 정보
+
+- https://meet.google.com/isn-fmjf-szz
+
 ## 강의자료
 
 - 실습(https://github.com/eomjinyoung/bitcamp-study)
