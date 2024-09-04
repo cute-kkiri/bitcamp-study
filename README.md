@@ -9,7 +9,7 @@
 
 ## 구글 meet 접속 정보
 
-- https://meet.google.com/isn-fmjf-szz
+- https://meet.google.com/zec-fijz-ftx
 
 ## 강의자료
 
