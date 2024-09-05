@@ -3,15 +3,15 @@ package bitcamp.myapp.servlet.user;
 import bitcamp.myapp.dao.UserDao;
 import bitcamp.myapp.vo.User;
 
-import javax.servlet.GenericServlet;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet("/user/view")
-public class UserViewServlet extends GenericServlet {
+public class UserViewServlet extends HttpServlet {
 
   private UserDao userDao;
 
@@ -22,12 +22,12 @@ public class UserViewServlet extends GenericServlet {
   }
 
   @Override
-  public void service(ServletRequest req, ServletResponse res) throws ServletException, IOException {
+  protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
     try {
       int userNo = Integer.parseInt(req.getParameter("no"));
       User user = userDao.findBy(userNo);
       req.setAttribute("user", user);
-      
+
       res.setContentType("text/html;charset=UTF-8");
       req.getRequestDispatcher("/user/view.jsp").include(req, res);
 

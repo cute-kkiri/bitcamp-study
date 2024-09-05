@@ -2,13 +2,14 @@
 package com.eomcs.web.ex06;
 
 import javax.servlet.ServletContext;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 
 // 서블릿의 DD 설정으로 지정한 초기화 파라미터 값은 그 서블릿에서만 사용할 수 있다.
 // 모든 서블릿에서 사용할 값을 설정하려면 컨텍스트 파라미터로 설정해야 한다.
 // => web.xml 에 지정하였다.
 //
-//@WebServlet(value="/ex06/s5", loadOnStartup=1)
+@WebServlet(value="/ex06/s5", loadOnStartup=1)
 @SuppressWarnings("serial")
 public class Servlet05 extends HttpServlet {
 

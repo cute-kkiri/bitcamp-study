@@ -20,7 +20,7 @@ if (user == null) {
 } else {
 %>
 
-<form action='/user/update'>
+<form action='/user/update' method="post">
     번호: <input name='no' readonly type='text' value='<%=user.getNo()%>'><br>
     이름: <input name='name' type='text' value='<%=user.getName()%>'><br>
     이메일: <input name='email' type='email' value='<%=user.getEmail()%>'><br>

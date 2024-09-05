@@ -9,7 +9,7 @@
 
 ## 구글 meet 접속 정보
 
-- https://meet.google.com/zec-fijz-ftx
+- https://meet.google.com/vjx-mubh-jtk
 
 ## 강의자료
 
@@ -774,4 +774,23 @@
       - 클라이언트가 보낸 데이터 처리
       - GET 요청과 POST 요청 비교
       - HTTP 요청 프로토콜 분석
+      - 파일 업로드 처리: multipart/form-data 
 - 실습 프로젝트 
+
+## 71일차(2024-09-05,목)
+
+- NCP 실습 계정 발급
+- 이론
+  - 웹 프로그래밍
+    - 서블릿 기술 사용법(계속)
+      - 
+- 실습 프로젝트 
+
+## 웨일온 접속 정보
+
+- 회의실 번호 / 암호: 210 866 3081 / 111222
+- 회의링크: https://whaleon.us/o/CSrtk1/84888a51da9d4f939e63eee37248fb28
+
+## 구글 meet 접속 정보
+
+- https://meet.google.com/yud-rfar-zqg
