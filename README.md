@@ -783,8 +783,14 @@
 - 이론
   - 웹 프로그래밍
     - 서블릿 기술 사용법(계속)
-      - 
+      - HttpServlet 클래스의 역할
+      - loadOnStartup 옵션 사용법
+      - init-param과 context-param 사용법
+        - ServletConfig.getInitParameter()와 ServletContext.getInitParameter()
+      - 인클루드와 포워드 사용법
+      - 리프래시와 리다이렉트 사용법
 - 실습 프로젝트 
+  - 51. GET/POST 요청을 구분하기
 
 ## 웨일온 접속 정보
 
