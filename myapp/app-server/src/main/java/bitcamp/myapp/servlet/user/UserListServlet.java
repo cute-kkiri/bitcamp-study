@@ -22,7 +22,7 @@ public class UserListServlet extends HttpServlet {
   }
 
   @Override
-  protected void service(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+  protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
     try {
       List<User> list = userDao.list();
 
