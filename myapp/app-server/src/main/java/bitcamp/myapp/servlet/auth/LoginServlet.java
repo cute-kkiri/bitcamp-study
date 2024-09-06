@@ -5,10 +5,7 @@ import bitcamp.myapp.vo.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
 import java.io.IOException;
 
 @WebServlet("/auth/login")
@@ -39,6 +36,16 @@ public class LoginServlet extends HttpServlet {
         res.setContentType("text/html;charset=UTF-8");
         req.getRequestDispatcher("/auth/fail.jsp").include(req, res);
         return;
+      }
+
+      if (req.getParameter("saveEmail") != null) {
+        Cookie cookie = new Cookie("email", email);
+        cookie.setMaxAge(60 * 60 * 24 * 7);
+        res.addCookie(cookie);
+      } else {
+        Cookie cookie = new Cookie("email", "test@test.com");
+        cookie.setMaxAge(0);
+        res.addCookie(cookie);
       }
 
       HttpServletRequest httpReq = (HttpServletRequest) req;
