@@ -24,8 +24,23 @@
   - Board 클래스에 첨부파일 필드 추가
 - BoardDao 클래스 변경
   - insertFiles() 메서드 추가
+  - getFile() 메서드 추가
+  - deleteFile() 메서드 추가
+  - deleteFiles() 메서드 추가
 - BoardDaoMapper 파일 변경
+  - resultMap "BoardMap" 변경
+  - resultMap "AttachedFileMap" 추가 
+  - "findBy" SQL 문 변경
   - "insertFiles" SQL 문 추가
-
+  - "getFile" SQL 문 추가
+  - "deleteFile" SQL 문 추가
+  - "deleteFiles" SQL 문 추가
+- 서블릿 파일 변경 
+  - BoardAddServlet 변경
+  - BoardViewServlet 변경
+  - DownloadServlet 추가
+  - BoardUpdateServlet 변경
+  - BoardDeleteFileServlet 추가
+  - BoardDeleteServlet 변경
 ## 소스 파일
 

@@ -24,4 +24,6 @@ public interface BoardDao {
   AttachedFile getFile(int fileNo) throws Exception;
 
   boolean deleteFile(int fileNo) throws Exception;
+
+  boolean deleteFiles(int boardNo) throws Exception;
 }
