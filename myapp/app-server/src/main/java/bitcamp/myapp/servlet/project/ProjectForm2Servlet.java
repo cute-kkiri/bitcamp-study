@@ -26,8 +26,6 @@ public class ProjectForm2Servlet extends HttpServlet {
 
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-    req.setCharacterEncoding("UTF-8");
-
     try {
       // form1 페이지에서 입력한 값을 Project 객체에 담은 후 세션에 보관
       Project project = new Project();
