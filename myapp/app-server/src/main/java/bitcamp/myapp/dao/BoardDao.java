@@ -22,4 +22,6 @@ public interface BoardDao {
   void insertFiles(Board board) throws Exception;
 
   AttachedFile getFile(int fileNo) throws Exception;
+
+  boolean deleteFile(int fileNo) throws Exception;
 }

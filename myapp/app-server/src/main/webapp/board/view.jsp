@@ -33,7 +33,10 @@ if (board == null) {
 <% if (board.getAttachedFiles().size() > 0) { %>
       <ul>
 <%    for (AttachedFile attachedFile : board.getAttachedFiles()) { %>
-        <li><a href="/download?path=board&fileNo=<%=attachedFile.getFileNo()%>"><%=attachedFile.getOriginFilename()%></a></li>
+        <li>
+            <a href="/download?path=board&fileNo=<%=attachedFile.getFileNo()%>"><%=attachedFile.getOriginFilename()%></a>
+            <a href="/board/file/delete?boardNo=<%=board.getNo()%>&fileNo=<%=attachedFile.getFileNo()%>">[삭제]</a>
+        </li>
 <%    } %>
       </ul>
 <% } %>

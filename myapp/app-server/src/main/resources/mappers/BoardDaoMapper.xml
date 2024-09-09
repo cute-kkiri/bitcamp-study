@@ -108,4 +108,9 @@
         where
             board_file_id = #{fileNo}
     </select>
+
+    <delete id="deleteFile" parameterType="int">
+        delete from myapp_board_files
+        where board_file_id = #{fileNo}
+    </delete>
 </mapper>
