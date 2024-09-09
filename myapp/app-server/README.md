@@ -14,7 +14,18 @@
 
 ## 작업
 
-- 첨부 파일 데이터를 저장할 테이블을 정의한다.
+- 첨부 파일 데이터를 저장할 테이블 정의
+  - myapp_board_files 테이블 정의
+- 게시글 입력폼에 첨부파일 선택 기능 추가
+  - /board/form.jsp 변경
+  - /board/view.jsp 변경
+- 첨부파일 도메인 클래스 추가
+  - AttachedFile 클래스 생성
+  - Board 클래스에 첨부파일 필드 추가
+- BoardDao 클래스 변경
+  - insertFiles() 메서드 추가
+- BoardDaoMapper 파일 변경
+  - "insertFiles" SQL 문 추가
 
 ## 소스 파일
 

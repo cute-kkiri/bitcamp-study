@@ -17,4 +17,6 @@ public interface BoardDao {
   boolean delete(int no) throws Exception;
 
   void updateViewCount(@Param("no") int boardNo, @Param("count") int count) throws Exception;
+
+  void insertFiles(Board board) throws Exception;
 }

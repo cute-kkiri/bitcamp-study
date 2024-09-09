@@ -31,7 +31,8 @@
             b.board_id asc
     </select>
 
-    <insert id="insert" parameterType="board">
+    <insert id="insert" parameterType="board"
+            useGeneratedKeys="true" keyColumn="board_id" keyProperty="no">
         insert into myapp_boards(title, content, user_id)
         values (#{title}, #{content}, #{writer.no})
     </insert>
@@ -69,4 +70,12 @@
             view_count=#{count}
         where board_id=#{no}
     </update>
+
+    <insert id="insertFiles" parameterType="board">
+        insert into myapp_board_files(filename, origin_filename, board_id)
+        values
+        <foreach collection="attachedFiles" item="attachedFile" separator=",">
+            (#{attachedFile.filename}, #{attachedFile.originFilename}, #{no})
+        </foreach>
+    </insert>
 </mapper>
