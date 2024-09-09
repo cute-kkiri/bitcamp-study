@@ -21,7 +21,7 @@ if (board == null) {
 } else {
 %>
 
-<form action='/board/update' method="post">
+<form action='/board/update' method="post" enctype="multipart/form-data">
       번호: <input readonly name='no' type='text' value='<%=board.getNo()%>'><br>
       제목: <input name='title' type='text' value='<%=board.getTitle()%>'><br>
       내용: <textarea name='content'><%=board.getContent()%></textarea><br>
@@ -37,6 +37,7 @@ if (board == null) {
 <%    } %>
       </ul>
 <% } %>
+      <input name="files" type="file" multiple><br>
       <button>변경</button>
       <button type='button' onclick='location.href="/board/delete?no=<%=board.getNo()%>"'>삭제</button>
 </form>
