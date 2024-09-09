@@ -4,6 +4,7 @@
     pageEncoding="UTF-8"
     trimDirectiveWhitespaces="true"%>
 <%@ page import="bitcamp.myapp.vo.Board"%>
+<%@ page import="bitcamp.myapp.vo.AttachedFile"%>
 
 <jsp:include page="/header.jsp"/>
 
@@ -28,6 +29,16 @@ if (board == null) {
                      value='<%=String.format("%1$tY-%1$tm-%1$td %1$tH:%1$tM:%1$tS", board.getCreatedDate())%>'><br>
       조회수: <input readonly type='text' value='<%=board.getViewCount()%>'><br>
       작성자: <input readonly type='text' value='<%=board.getWriter().getName()%>'><br>
+      첨부파일: <br>
+      <ul>
+<%
+    for (AttachedFile attachedFile : board.getAttachedFiles()) {
+%>
+        <li><%=attachedFile.getOriginFilename()%></li>
+<%
+    }
+%>
+      </ul>
       <button>변경</button>
       <button type='button' onclick='location.href="/board/delete?no=<%=board.getNo()%>"'>삭제</button>
 </form>
