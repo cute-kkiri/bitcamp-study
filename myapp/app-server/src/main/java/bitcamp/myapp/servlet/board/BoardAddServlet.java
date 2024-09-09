@@ -20,8 +20,8 @@ import java.util.Collection;
 import java.util.UUID;
 
 @MultipartConfig(
-        maxFileSize = 1024 * 1024 * 10,
-        maxRequestSize = 1024 * 1024 * 30)
+        maxFileSize = 1024 * 1024 * 60,
+        maxRequestSize = 1024 * 1024 * 100)
 @WebServlet("/board/add")
 public class BoardAddServlet extends HttpServlet {
 

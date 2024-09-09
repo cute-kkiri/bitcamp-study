@@ -30,15 +30,13 @@ if (board == null) {
       조회수: <input readonly type='text' value='<%=board.getViewCount()%>'><br>
       작성자: <input readonly type='text' value='<%=board.getWriter().getName()%>'><br>
       첨부파일: <br>
+<% if (board.getAttachedFiles().size() > 0) { %>
       <ul>
-<%
-    for (AttachedFile attachedFile : board.getAttachedFiles()) {
-%>
-        <li><%=attachedFile.getOriginFilename()%></li>
-<%
-    }
-%>
+<%    for (AttachedFile attachedFile : board.getAttachedFiles()) { %>
+        <li><a href="/download?path=board&fileNo=<%=attachedFile.getFileNo()%>"><%=attachedFile.getOriginFilename()%></a></li>
+<%    } %>
       </ul>
+<% } %>
       <button>변경</button>
       <button type='button' onclick='location.href="/board/delete?no=<%=board.getNo()%>"'>삭제</button>
 </form>
