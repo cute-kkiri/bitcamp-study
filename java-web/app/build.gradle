@@ -1,7 +1,7 @@
 plugins {
     id 'java'
     id 'eclipse' // Eclipse IDE 관련 작업을 수행할 수 있는 플러그인
-}
+} 
 
 repositories {
     mavenCentral()
