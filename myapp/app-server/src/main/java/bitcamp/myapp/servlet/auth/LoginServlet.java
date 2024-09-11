@@ -1,6 +1,6 @@
 package bitcamp.myapp.servlet.auth;
 
-import bitcamp.myapp.dao.UserDao;
+import bitcamp.myapp.service.UserService;
 import bitcamp.myapp.vo.User;
 
 import javax.servlet.ServletException;
@@ -11,11 +11,11 @@ import java.io.IOException;
 @WebServlet("/auth/login")
 public class LoginServlet extends HttpServlet {
 
-  private UserDao userDao;
+  private UserService userService;
 
   @Override
   public void init() throws ServletException {
-    userDao = (UserDao) this.getServletContext().getAttribute("userDao");
+    userService = (UserService) this.getServletContext().getAttribute("userService");
   }
 
   @Override
@@ -30,7 +30,7 @@ public class LoginServlet extends HttpServlet {
       String email = req.getParameter("email");
       String password = req.getParameter("password");
 
-      User user = userDao.findByEmailAndPassword(email, password);
+      User user = userService.exists(email, password);
       if (user == null) {
         ((HttpServletResponse) res).setHeader("Refresh", "1;url=/auth/form");
         res.setContentType("text/html;charset=UTF-8");
