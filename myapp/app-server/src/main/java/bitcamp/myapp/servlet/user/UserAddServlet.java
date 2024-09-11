@@ -1,10 +1,8 @@
 package bitcamp.myapp.servlet.user;
 
-import bitcamp.myapp.dao.UserDao;
+import bitcamp.myapp.service.UserService;
 import bitcamp.myapp.vo.User;
-import org.apache.ibatis.session.SqlSessionFactory;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,14 +13,11 @@ import java.io.IOException;
 @WebServlet("/user/add")
 public class UserAddServlet extends HttpServlet {
 
-  private UserDao userDao;
-  private SqlSessionFactory sqlSessionFactory;
+  private UserService userService;
 
   @Override
   public void init() throws ServletException {
-    ServletContext ctx = this.getServletContext();
-    this.userDao = (UserDao) ctx.getAttribute("userDao");
-    this.sqlSessionFactory = (SqlSessionFactory) ctx.getAttribute("sqlSessionFactory");
+    this.userService = (UserService) this.getServletContext().getAttribute("userService");
   }
 
   @Override
@@ -40,12 +35,10 @@ public class UserAddServlet extends HttpServlet {
       user.setPassword(req.getParameter("password"));
       user.setTel(req.getParameter("tel"));
 
-      userDao.insert(user);
-      sqlSessionFactory.openSession(false).commit();
+      userService.add(user);
       res.sendRedirect("/user/list");
 
     } catch (Exception e) {
-      sqlSessionFactory.openSession(false).rollback();
       req.setAttribute("exception", e);
       req.getRequestDispatcher("/error.jsp").forward(req, res);
     }

@@ -55,9 +55,7 @@
 ## 53. 필터 활용하기
 ## 54. 파일 업로드 다루기 - multipart/form-data POST 요청 처리
 ## 55. EL 및 JSTL 활용하기
-
-- EL 사용법
-- JSTL 사용법
+## 56. 비즈니스 로직 분리하기 - 서비스 컴포넌트 도입
 
 ## 67. Front Controller 디자인 패턴 도입하기
 
