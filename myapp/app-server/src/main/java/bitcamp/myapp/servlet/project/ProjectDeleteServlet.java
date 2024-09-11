@@ -1,6 +1,6 @@
 package bitcamp.myapp.servlet.project;
 
-import bitcamp.myapp.dao.ProjectDao;
+import bitcamp.myapp.service.ProjectService;
 import org.apache.ibatis.session.SqlSessionFactory;
 
 import javax.servlet.ServletException;
@@ -13,13 +13,12 @@ import java.io.IOException;
 @WebServlet("/project/delete")
 public class ProjectDeleteServlet extends HttpServlet {
 
-  private ProjectDao projectDao;
+  private ProjectService projectService;
   private SqlSessionFactory sqlSessionFactory;
 
   @Override
   public void init() throws ServletException {
-    this.projectDao = (ProjectDao) this.getServletContext().getAttribute("projectDao");
-    this.sqlSessionFactory = (SqlSessionFactory) this.getServletContext().getAttribute("sqlSessionFactory");
+    this.projectService = (ProjectService) this.getServletContext().getAttribute("projectService");
   }
 
   @Override
@@ -27,16 +26,13 @@ public class ProjectDeleteServlet extends HttpServlet {
     try {
       int projectNo = Integer.parseInt(req.getParameter("no"));
 
-      projectDao.deleteMembers(projectNo);
-      if (projectDao.delete(projectNo)) {
-        sqlSessionFactory.openSession(false).commit();
+      if (projectService.delete(projectNo)) {
         res.sendRedirect("/project/list");
       } else {
         throw new Exception("없는 프로젝트입니다.");
       }
 
     } catch (Exception e) {
-      sqlSessionFactory.openSession(false).rollback();
       req.setAttribute("exception", e);
       req.getRequestDispatcher("/error.jsp").forward(req, res);
     }

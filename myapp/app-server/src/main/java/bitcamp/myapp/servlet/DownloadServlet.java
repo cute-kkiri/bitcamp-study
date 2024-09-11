@@ -1,6 +1,6 @@
 package bitcamp.myapp.servlet;
 
-import bitcamp.myapp.dao.BoardDao;
+import bitcamp.myapp.service.BoardService;
 import bitcamp.myapp.vo.AttachedFile;
 import bitcamp.myapp.vo.User;
 
@@ -19,12 +19,12 @@ import java.util.Map;
 @WebServlet("/download")
 public class DownloadServlet extends HttpServlet {
 
-  private BoardDao boardDao;
+  private BoardService boardService;
   private Map<String, String> downloadPathMap = new HashMap<>();
 
   @Override
   public void init() throws ServletException {
-    this.boardDao = (BoardDao) this.getServletContext().getAttribute("boardDao");
+    this.boardService = (BoardService) this.getServletContext().getAttribute("boardService");
     this.downloadPathMap.put("board", this.getServletContext().getRealPath("/upload/board"));
     this.downloadPathMap.put("user", this.getServletContext().getRealPath("/upload/user"));
     this.downloadPathMap.put("project", this.getServletContext().getRealPath("/upload/project"));
@@ -43,7 +43,7 @@ public class DownloadServlet extends HttpServlet {
 
       if (path.equals("board")) {
         int fileNo = Integer.parseInt(req.getParameter("fileNo"));
-        AttachedFile attachedFile = boardDao.getFile(fileNo);
+        AttachedFile attachedFile = boardService.getAttachedFile(fileNo);
 
         res.setHeader(
                 "Content-Disposition",

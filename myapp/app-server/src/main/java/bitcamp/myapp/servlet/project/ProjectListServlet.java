@@ -1,6 +1,6 @@
 package bitcamp.myapp.servlet.project;
 
-import bitcamp.myapp.dao.ProjectDao;
+import bitcamp.myapp.service.ProjectService;
 import bitcamp.myapp.vo.Project;
 
 import javax.servlet.ServletException;
@@ -14,17 +14,17 @@ import java.util.List;
 @WebServlet("/project/list")
 public class ProjectListServlet extends HttpServlet {
 
-  private ProjectDao projectDao;
+  private ProjectService projectService;
 
   @Override
   public void init() throws ServletException {
-    projectDao = (ProjectDao) this.getServletContext().getAttribute("projectDao");
+    projectService = (ProjectService) this.getServletContext().getAttribute("projectService");
   }
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
     try {
-      List<Project> list = projectDao.list();
+      List<Project> list = projectService.list();
       req.setAttribute("list", list);
 
       res.setContentType("text/html;charset=UTF-8");
