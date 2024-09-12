@@ -26,11 +26,10 @@ public class ProjectAddServlet extends HttpServlet {
       Project project = (Project) req.getSession().getAttribute("project");
       projectService.add(project);
       req.getSession().removeAttribute("project");
-      res.sendRedirect("/project/list");
+      req.setAttribute("viewName", "redirect:list");
 
     } catch (Exception e) {
       req.setAttribute("exception", e);
-      req.getRequestDispatcher("/error.jsp").forward(req, res);
     }
   }
 }

@@ -34,13 +34,10 @@ public class ProjectViewServlet extends HttpServlet {
 
       List<User> users = userService.list();
       req.setAttribute("users", users);
-
-      res.setContentType("text/html;charset=UTF-8");
-      req.getRequestDispatcher("/project/view.jsp").include(req, res);
+      req.setAttribute("viewName", "/project/view.jsp");
 
     } catch (Exception e) {
       req.setAttribute("exception", e);
-      req.getRequestDispatcher("/error.jsp").forward(req, res);
     }
   }
 }

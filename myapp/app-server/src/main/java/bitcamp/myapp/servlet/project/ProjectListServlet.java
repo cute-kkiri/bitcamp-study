@@ -26,13 +26,10 @@ public class ProjectListServlet extends HttpServlet {
     try {
       List<Project> list = projectService.list();
       req.setAttribute("list", list);
-
-      res.setContentType("text/html;charset=UTF-8");
-      req.getRequestDispatcher("/project/list.jsp").include(req, res);
+      req.setAttribute("viewName", "/project/list.jsp");
 
     } catch (Exception e) {
       req.setAttribute("exception", e);
-      req.getRequestDispatcher("/error.jsp").forward(req, res);
     }
   }
 }

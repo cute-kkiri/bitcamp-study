@@ -14,7 +14,7 @@
     <p>등록할 프로젝트 정보가 없습니다.</p>
 </c:if>
 <c:if test="${not empty project}">
-<form action='/project/add' method="post">
+<form action='add' method="post">
     프로젝트명: ${project.title}<br>
     설명: <textarea>${project.description}</textarea><br>
     기간: ${project.startDate} ~ ${project.endDate}<br>

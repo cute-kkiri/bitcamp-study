@@ -19,18 +19,18 @@
   <h1>프로젝트 관리 시스템</h1>
   <nav>
     <ul>
-      <li class='btn btn-default'><a href='/user/list'>회원</a></li>
-      <li class='btn btn-default'><a href='/project/list'>프로젝트</a></li>
-      <li class='btn btn-default'><a href='/board/list'>게시글</a></li>
+      <li class='btn btn-default'><a href='/app/user/list'>회원</a></li>
+      <li class='btn btn-default'><a href='/app/project/list'>프로젝트</a></li>
+      <li class='btn btn-default'><a href='/app/board/list'>게시글</a></li>
     </ul>
   </nav>
   <div class='login-state pos-right'>
 <c:if test="${empty loginUser}">
-    <a href='/auth/login' class='btn btn-primary'>로그인</a>
+    <a href='/app/auth/login' class='btn btn-primary'>로그인</a>
 </c:if>
 <c:if test="${not empty loginUser}">
-    <a href='/user/view?no=${loginUser.no}' class='btn btn-light'>${loginUser.name}</a>
-    <a href='/auth/logout' class='btn btn-secondary'>로그아웃</a>
+    <a href='/app/user/view?no=${loginUser.no}' class='btn btn-light'>${loginUser.name}</a>
+    <a href='/app/auth/logout' class='btn btn-secondary'>로그아웃</a>
 </c:if>
   </div>
 

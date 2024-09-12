@@ -8,7 +8,7 @@
 <jsp:include page="/header.jsp"/>
 
 <h1>프로젝트 등록 - 팀원</h1>
-<form action='/project/form3' method="post">
+<form action='form3' method="post">
   팀원:<br>
     <ul>
 
