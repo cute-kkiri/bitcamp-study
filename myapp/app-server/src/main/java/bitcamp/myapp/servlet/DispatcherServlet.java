@@ -2,10 +2,12 @@ package bitcamp.myapp.servlet;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Enumeration;
 
 @WebServlet("/app/*")
 public class DispatcherServlet extends HttpServlet {
@@ -21,12 +23,25 @@ public class DispatcherServlet extends HttpServlet {
         throw exception;
       }
 
+      // 쿠키 처리
+      Enumeration<String> attrNames = req.getAttributeNames();
+      while (attrNames.hasMoreElements()) {
+        Object attrValue = req.getAttribute(attrNames.nextElement());
+        if (attrValue instanceof Cookie) {
+          res.addCookie((Cookie) attrValue);
+        }
+      }
+
       // 페이지 컨트롤러가 정상적으로 실행했으면, viewName을 가져와서 포워딩 한다.
       String viewName = (String) req.getAttribute("viewName");
       if (viewName.startsWith("redirect:")) {
         res.sendRedirect(viewName.substring(9));
 
       } else {
+        String refresh = (String) req.getAttribute("refresh");
+        if (refresh != null) {
+          res.setHeader("Refresh", refresh);
+        }
         req.getRequestDispatcher(viewName).forward(req, res);
       }
 
