@@ -56,13 +56,8 @@
 ## 54. 파일 업로드 다루기 - multipart/form-data POST 요청 처리
 ## 55. EL 및 JSTL 활용하기
 ## 56. 비즈니스 로직 분리하기 - 서비스 컴포넌트 도입
-
-## 67. Front Controller 디자인 패턴 도입하기
-
-- Front Controller 디자인 패턴의 효과 및 적용 방법
-- 프론트 컨트롤러와 페이지 컨트롤러의 역할 이해
-
-## 68. 페이지 컨트롤러를 POJO로 전환하기
+## 57. Front Controller 디자인 패턴 도입하기
+## 58. 페이지 컨트롤러를 POJO로 전환하기
 
 - 페이지 컨트롤러를 POJO 클래스로 변경
   POJO? Plain Old Java Object (그냥 일반 자바 문법으로 만든 클래스)
