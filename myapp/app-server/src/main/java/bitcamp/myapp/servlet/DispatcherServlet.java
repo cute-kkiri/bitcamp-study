@@ -1,6 +1,7 @@
 package bitcamp.myapp.servlet;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
@@ -9,6 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Enumeration;
 
+@MultipartConfig(
+        maxFileSize = 1024 * 1024 * 60,
+        maxRequestSize = 1024 * 1024 * 100)
 @WebServlet("/app/*")
 public class DispatcherServlet extends HttpServlet {
 
@@ -34,7 +38,10 @@ public class DispatcherServlet extends HttpServlet {
 
       // 페이지 컨트롤러가 정상적으로 실행했으면, viewName을 가져와서 포워딩 한다.
       String viewName = (String) req.getAttribute("viewName");
-      if (viewName.startsWith("redirect:")) {
+      if (viewName == null) {
+        return;
+        
+      } else if (viewName.startsWith("redirect:")) {
         res.sendRedirect(viewName.substring(9));
 
       } else {

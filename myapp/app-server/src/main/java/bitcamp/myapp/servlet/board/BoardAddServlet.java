@@ -7,7 +7,6 @@ import bitcamp.myapp.vo.User;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,9 +17,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.UUID;
 
-@MultipartConfig(
-        maxFileSize = 1024 * 1024 * 60,
-        maxRequestSize = 1024 * 1024 * 100)
+
 @WebServlet("/board/add")
 public class BoardAddServlet extends HttpServlet {
 
@@ -36,8 +33,7 @@ public class BoardAddServlet extends HttpServlet {
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-    res.setContentType("text/html;charset=UTF-8");
-    req.getRequestDispatcher("/board/form.jsp").include(req, res);
+    req.setAttribute("viewName", "/board/form.jsp");
   }
 
   @Override
@@ -73,11 +69,10 @@ public class BoardAddServlet extends HttpServlet {
       board.setAttachedFiles(attachedFiles);
 
       boardService.add(board);
-      res.sendRedirect("/board/list");
+      req.setAttribute("viewName", "redirect:list");
 
     } catch (Exception e) {
       req.setAttribute("exception", e);
-      req.getRequestDispatcher("/error.jsp").forward(req, res);
     }
   }
 

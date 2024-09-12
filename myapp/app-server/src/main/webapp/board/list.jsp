@@ -9,7 +9,7 @@
 <jsp:include page="/header.jsp"/>
 
 <h1>게시글 목록</h1>
-<p><a href='/board/add'>새 글</a></p>
+<p><a href='add'>새 글</a></p>
 <table>
   <thead>
       <tr><th>번호</th><th>제목</th><th>작성자</th><th>작성일</th><th>조회수</th></tr>
@@ -18,7 +18,7 @@
 <c:forEach items="${list}" var="board">
     <tr>
       <td>${board.no}</td>
-      <td><a href='/board/view?no=${board.no}'>${board.title}</a></td>
+      <td><a href='view?no=${board.no}'>${board.title}</a></td>
       <td>${board.writer.name}</td>
       <td><fmt:formatDate value="${board.createdDate}" pattern="yyyy-MM-dd"/></td>
       <td>${board.viewCount}</td>
