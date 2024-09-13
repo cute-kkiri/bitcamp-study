@@ -3,13 +3,11 @@ package bitcamp.myapp.servlet;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.lang.reflect.Method;
-import java.util.Enumeration;
 import java.util.Map;
 
 @MultipartConfig(
@@ -40,19 +38,10 @@ public class DispatcherServlet extends HttpServlet {
               "execute",
               HttpServletRequest.class,
               HttpServletResponse.class);
-      requestHandler.invoke(pageController, req, res);
 
-      // 쿠키 처리
-      Enumeration<String> attrNames = req.getAttributeNames();
-      while (attrNames.hasMoreElements()) {
-        Object attrValue = req.getAttribute(attrNames.nextElement());
-        if (attrValue instanceof Cookie) {
-          res.addCookie((Cookie) attrValue);
-        }
-      }
+      String viewName = (String) requestHandler.invoke(pageController, req, res);
 
       // 페이지 컨트롤러가 정상적으로 실행했으면, viewName을 가져와서 포워딩 한다.
-      String viewName = (String) req.getAttribute("viewName");
       if (viewName == null) {
         return;
 

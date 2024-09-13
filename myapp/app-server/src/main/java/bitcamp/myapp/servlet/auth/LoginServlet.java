@@ -39,11 +39,11 @@ public class LoginServlet extends HttpServlet {
       if (req.getParameter("saveEmail") != null) {
         Cookie cookie = new Cookie("email", email);
         cookie.setMaxAge(60 * 60 * 24 * 7);
-        req.setAttribute("email", cookie);
+        res.addCookie(cookie);
       } else {
         Cookie cookie = new Cookie("email", "test@test.com");
         cookie.setMaxAge(0);
-        req.setAttribute("email", cookie);
+        res.addCookie(cookie);
       }
 
       HttpServletRequest httpReq = (HttpServletRequest) req;
