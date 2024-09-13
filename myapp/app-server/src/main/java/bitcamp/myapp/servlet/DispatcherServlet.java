@@ -52,13 +52,15 @@ public class DispatcherServlet extends HttpServlet {
         throw new Exception("해당 URL을 처리할 수 없습니다.");
       }
 
+      if (requestHandler.getReturnType() == void.class) {
+        requestHandler.invoke(pageController, req, res);
+        return;
+      }
+
       String viewName = (String) requestHandler.invoke(pageController, req, res);
 
       // 페이지 컨트롤러가 정상적으로 실행했으면, viewName을 가져와서 포워딩 한다.
-      if (viewName == null) {
-        return;
-
-      } else if (viewName.startsWith("redirect:")) {
+      if (viewName.startsWith("redirect:")) {
         res.sendRedirect(viewName.substring(9));
 
       } else {
