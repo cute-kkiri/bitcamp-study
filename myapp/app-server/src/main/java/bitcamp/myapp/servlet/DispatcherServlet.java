@@ -62,10 +62,6 @@ public class DispatcherServlet extends HttpServlet {
         res.sendRedirect(viewName.substring(9));
 
       } else {
-        String refresh = (String) req.getAttribute("refresh");
-        if (refresh != null) {
-          res.setHeader("Refresh", refresh);
-        }
         req.getRequestDispatcher(viewName).forward(req, res);
       }
 

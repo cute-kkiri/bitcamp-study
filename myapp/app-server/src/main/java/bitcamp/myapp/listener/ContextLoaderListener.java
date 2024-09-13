@@ -1,5 +1,6 @@
 package bitcamp.myapp.listener;
 
+import bitcamp.myapp.controller.AuthController;
 import bitcamp.myapp.controller.UserController;
 import bitcamp.myapp.dao.BoardDao;
 import bitcamp.myapp.dao.DaoFactory;
@@ -46,12 +47,10 @@ public class ContextLoaderListener implements ServletContextListener {
 
       ServletContext ctx = sce.getServletContext();
       ctx.setAttribute("sqlSessionFactory", sqlSessionFactoryProxy);
-      ctx.setAttribute("userService", userService);
-      ctx.setAttribute("boardService", boardService);
-      ctx.setAttribute("projectService", projectService);
 
       List<Object> controllers = new ArrayList<>();
       controllers.add(new UserController(userService));
+      controllers.add(new AuthController(userService));
 
       ctx.setAttribute("controllers", controllers);
 
