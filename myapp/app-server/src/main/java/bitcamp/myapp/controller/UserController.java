@@ -1,5 +1,6 @@
 package bitcamp.myapp.controller;
 
+import bitcamp.myapp.annotation.RequestMapping;
 import bitcamp.myapp.service.UserService;
 import bitcamp.myapp.vo.User;
 
@@ -15,6 +16,7 @@ public class UserController {
     this.userService = userService;
   }
 
+  @RequestMapping("/user/add")
   public String add(HttpServletRequest req, HttpServletResponse res) throws Exception {
     if (req.getMethod().equals("GET")) {
       return "/user/form.jsp";
@@ -31,12 +33,14 @@ public class UserController {
     }
   }
 
+  @RequestMapping("/user/list")
   public String list(HttpServletRequest req, HttpServletResponse res) throws Exception {
     List<User> list = userService.list();
     req.setAttribute("list", list);
     return "/user/list.jsp";
   }
 
+  @RequestMapping("/user/view")
   public String view(HttpServletRequest req, HttpServletResponse res) throws Exception {
     int userNo = Integer.parseInt(req.getParameter("no"));
     User user = userService.get(userNo);
@@ -44,6 +48,7 @@ public class UserController {
     return "/user/view.jsp";
   }
 
+  @RequestMapping("/user/update")
   public String update(HttpServletRequest req, HttpServletResponse res) throws Exception {
     User user = new User();
     user.setNo(Integer.parseInt(req.getParameter("no")));
@@ -59,6 +64,7 @@ public class UserController {
     }
   }
 
+  @RequestMapping("/user/delete")
   public String delete(HttpServletRequest req, HttpServletResponse res) throws Exception {
     int userNo = Integer.parseInt(req.getParameter("no"));
     if (userService.delete(userNo)) {

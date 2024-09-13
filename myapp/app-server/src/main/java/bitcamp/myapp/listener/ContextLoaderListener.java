@@ -1,6 +1,6 @@
 package bitcamp.myapp.listener;
 
-import bitcamp.myapp.controller.user.*;
+import bitcamp.myapp.controller.UserController;
 import bitcamp.myapp.dao.BoardDao;
 import bitcamp.myapp.dao.DaoFactory;
 import bitcamp.myapp.dao.ProjectDao;
@@ -16,8 +16,8 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 @WebListener // 서블릿 컨테이너에 이 클래스를 배치하는 태그다.
 public class ContextLoaderListener implements ServletContextListener {
@@ -50,14 +50,10 @@ public class ContextLoaderListener implements ServletContextListener {
       ctx.setAttribute("boardService", boardService);
       ctx.setAttribute("projectService", projectService);
 
-      Map<String, Object> controllerMap = new HashMap<>();
-      controllerMap.put("/user/list", new UserListController(userService));
-      controllerMap.put("/user/view", new UserViewController(userService));
-      controllerMap.put("/user/add", new UserAddController(userService));
-      controllerMap.put("/user/update", new UserUpdateController(userService));
-      controllerMap.put("/user/delete", new UserDeleteController(userService));
+      List<Object> controllers = new ArrayList<>();
+      controllers.add(new UserController(userService));
 
-      ctx.setAttribute("controllerMap", controllerMap);
+      ctx.setAttribute("controllers", controllers);
 
     } catch (Exception e) {
       System.out.println("서비스 객체 준비 중 오류 발생!");

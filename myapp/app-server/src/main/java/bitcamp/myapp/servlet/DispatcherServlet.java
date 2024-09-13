@@ -1,5 +1,7 @@
 package bitcamp.myapp.servlet;
 
+import bitcamp.myapp.annotation.RequestMapping;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -8,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.lang.reflect.Method;
-import java.util.Map;
+import java.util.List;
 
 @MultipartConfig(
         maxFileSize = 1024 * 1024 * 60,
@@ -16,28 +18,39 @@ import java.util.Map;
 @WebServlet("/app/*")
 public class DispatcherServlet extends HttpServlet {
 
-  private Map<String, Object> controllerMap;
+  private List<Object> controllers;
 
   @Override
   public void init() throws ServletException {
-    controllerMap = (Map<String, Object>) this.getServletContext().getAttribute("controllerMap");
+    controllers = (List<Object>) this.getServletContext().getAttribute("controllers");
   }
 
   @Override
   protected void service(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
     try {
-      // 클라이언트가 요청한 URL을 가지고 페이지 컨트롤러를 찾는다.
+      // 클라이언트가 요청한 URL을 가지고 페이지 컨트롤러와 요청핸들러(메서드)를 찾는다.
       String controllerPath = req.getPathInfo();
-      Object pageController = controllerMap.get(controllerPath);
+
+      Object pageController = null;
+      Method requestHandler = null;
+
+      loop:
+      for (Object controller : controllers) {
+        Method[] methods = controller.getClass().getDeclaredMethods();
+        for (Method m : methods) {
+          RequestMapping requestMapping = m.getAnnotation(RequestMapping.class);
+          if (requestMapping == null || !requestMapping.value().equals(controllerPath)) {
+            continue;
+          }
+          requestHandler = m;
+          pageController = controller;
+          break loop;
+        }
+      }
+
       if (pageController == null) {
         throw new Exception("해당 URL을 처리할 수 없습니다.");
       }
-
-      // 페이지 컨트롤러의 메서드를 호출한다.
-      Method requestHandler = pageController.getClass().getMethod(
-              "execute",
-              HttpServletRequest.class,
-              HttpServletResponse.class);
 
       String viewName = (String) requestHandler.invoke(pageController, req, res);
 
