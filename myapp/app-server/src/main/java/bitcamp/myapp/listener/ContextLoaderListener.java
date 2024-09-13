@@ -1,9 +1,6 @@
 package bitcamp.myapp.listener;
 
-import bitcamp.myapp.controller.user.UserAddController;
-import bitcamp.myapp.controller.user.UserListController;
-import bitcamp.myapp.controller.user.UserUpdateController;
-import bitcamp.myapp.controller.user.UserViewController;
+import bitcamp.myapp.controller.user.*;
 import bitcamp.myapp.dao.BoardDao;
 import bitcamp.myapp.dao.DaoFactory;
 import bitcamp.myapp.dao.ProjectDao;
@@ -58,6 +55,7 @@ public class ContextLoaderListener implements ServletContextListener {
       controllerMap.put("/user/view", new UserViewController(userService));
       controllerMap.put("/user/add", new UserAddController(userService));
       controllerMap.put("/user/update", new UserUpdateController(userService));
+      controllerMap.put("/user/delete", new UserDeleteController(userService));
 
       ctx.setAttribute("controllerMap", controllerMap);
 
