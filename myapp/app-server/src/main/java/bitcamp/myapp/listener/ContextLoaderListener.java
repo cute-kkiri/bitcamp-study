@@ -1,6 +1,7 @@
 package bitcamp.myapp.listener;
 
 import bitcamp.myapp.controller.AuthController;
+import bitcamp.myapp.controller.ProjectController;
 import bitcamp.myapp.controller.UserController;
 import bitcamp.myapp.dao.BoardDao;
 import bitcamp.myapp.dao.DaoFactory;
@@ -51,6 +52,7 @@ public class ContextLoaderListener implements ServletContextListener {
       List<Object> controllers = new ArrayList<>();
       controllers.add(new UserController(userService));
       controllers.add(new AuthController(userService));
+      controllers.add(new ProjectController(projectService, userService));
 
       ctx.setAttribute("controllers", controllers);
 
