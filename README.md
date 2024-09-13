@@ -853,7 +853,39 @@
 - 최종 프로젝트
   - 프로젝트 주제 선정(계속)
 
+## 77일차(2024-09-13,금)
+
+- NCP 실습 계정 발급
+- 이론
+  - 애노테이션과 Reflection API 활용법
+- 실습 프로젝트 
+  - 58. 페이지 컨트롤러를 POJO로 전환하기
+- 최종 프로젝트
+  - 프로젝트 주제 선정(계속)
+
 ## 웨일온 접속 정보
 
 - 회의실 번호 / 암호: 210 866 3081 / 111222
 - 회의링크: https://whaleon.us/o/CSrtk1/84888a51da9d4f939e63eee37248fb28
+
+## 최종 프로젝트
+
+### 1팀: 강슬기, 권준성, 임상우, 최동인, 정찬우
+
+- https://github.com/ClazzBridge
+- https://github.com/ClazzBridge/BackEnd
+- https://github.com/ClazzBridge/FrontEnd
+
+### 2팀: 강윤상, 김재우, 권기윤, 김민수, 이우성, 양지윤
+
+- https://github.com/j1yunn/final-project
+
+
+### 3팀: 신승민, 백현기, 김재정, 이민석, 이재욱,  이건학
+
+- https://github.com/devopsmin/bitcamp-final-team3
+
+
+### 4팀: 이선아, 장혜정, 황민지, 이태정, 이가람, 김주연
+
+- https://github.com/backnback/bitcamp-final

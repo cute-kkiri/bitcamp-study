@@ -8,7 +8,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.util.Enumeration;
+import java.util.Map;
 
 @MultipartConfig(
         maxFileSize = 1024 * 1024 * 60,
@@ -16,16 +18,29 @@ import java.util.Enumeration;
 @WebServlet("/app/*")
 public class DispatcherServlet extends HttpServlet {
 
+  private Map<String, Object> controllerMap;
+
+  @Override
+  public void init() throws ServletException {
+    controllerMap = (Map<String, Object>) this.getServletContext().getAttribute("controllerMap");
+  }
+
   @Override
   protected void service(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
     try {
-      req.getRequestDispatcher(req.getPathInfo()).include(req, res);
-
-      // 실행시킨 페이지 컨트롤러에서 예외가 발생했다면, 오류 페이지로 보낸다.
-      Exception exception = (Exception) req.getAttribute("exception");
-      if (exception != null) {
-        throw exception;
+      // 클라이언트가 요청한 URL을 가지고 페이지 컨트롤러를 찾는다.
+      String controllerPath = req.getPathInfo();
+      Object pageController = controllerMap.get(controllerPath);
+      if (pageController == null) {
+        throw new Exception("해당 URL을 처리할 수 없습니다.");
       }
+
+      // 페이지 컨트롤러의 메서드를 호출한다.
+      Method requestHandler = pageController.getClass().getMethod(
+              "execute",
+              HttpServletRequest.class,
+              HttpServletResponse.class);
+      requestHandler.invoke(pageController, req, res);
 
       // 쿠키 처리
       Enumeration<String> attrNames = req.getAttributeNames();
@@ -40,7 +55,7 @@ public class DispatcherServlet extends HttpServlet {
       String viewName = (String) req.getAttribute("viewName");
       if (viewName == null) {
         return;
-        
+
       } else if (viewName.startsWith("redirect:")) {
         res.sendRedirect(viewName.substring(9));
 
@@ -53,6 +68,7 @@ public class DispatcherServlet extends HttpServlet {
       }
 
     } catch (Exception e) {
+      req.setAttribute("exception", e);
       req.getRequestDispatcher("/error.jsp").forward(req, res);
     }
   }
