@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.lang.reflect.Parameter;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -92,7 +93,7 @@ public class DispatcherServlet extends HttpServlet {
           Method requestHandler,
           HttpServletRequest req,
           HttpServletResponse res,
-          Map<String, Object> requestAttributesMap) {
+          Map<String, Object> requestAttributesMap) throws Exception {
 
     Parameter[] params = requestHandler.getParameters();
     ArrayList<Object> args = new ArrayList<>();
@@ -105,11 +106,15 @@ public class DispatcherServlet extends HttpServlet {
         args.add(res);
       } else if (paramType == Map.class) {
         args.add(requestAttributesMap);
-      } else if (paramType == int.class) {
+      } else if (paramType.isPrimitive() || paramType == String.class) {
         RequestParam paramAnno = param.getAnnotation(RequestParam.class);
-        args.add(Integer.parseInt(req.getParameter(paramAnno.value())));
+        args.add(getPrimitiveValueOrStringFromRequestParameter(
+                req, // 클라이언트가 보낸 값이 저장된 ServletRequest 보관소
+                param.getType(), // ServletRequest 보관소에서 꺼낸 값을 형변환할 때 타입
+                paramAnno.value() // ServletRequet 보관소에서 꺼낼 값의 파라미터명
+        ));
       } else {
-        args.add(null);
+        args.add(createDomainObject(req, param.getType()));
       }
     }
 
@@ -120,6 +125,66 @@ public class DispatcherServlet extends HttpServlet {
     for (Map.Entry<String, Object> entry : map.entrySet()) {
       req.setAttribute(entry.getKey(), entry.getValue());
     }
+  }
+
+  private Object getPrimitiveValueOrStringFromRequestParameter(
+          HttpServletRequest req,
+          Class<?> paramType,
+          String paramName) {
+
+    // 클라이언트가 보낸 값들 중에서 paramName에 해당하는 값을 꺼낸다.
+    String paramValue = req.getParameter(paramName);
+    if (paramValue == null) { // 값이 없다면 primitive 타입으로 변환할 수 없기 때문에 그냥 null을 리턴한다.
+      return null;
+    }
+
+    if (paramType == byte.class) {
+      return Byte.parseByte(paramValue);
+    } else if (paramType == short.class) {
+      return Short.parseShort(paramValue);
+    } else if (paramType == int.class) {
+      return Integer.parseInt(paramValue);
+    } else if (paramType == long.class) {
+      return Long.parseLong(paramValue);
+    } else if (paramType == float.class) {
+      return Float.parseFloat(paramValue);
+    } else if (paramType == double.class) {
+      return Double.parseDouble(paramValue);
+    } else if (paramType == char.class) {
+      return paramValue.charAt(0);
+    } else if (paramType == boolean.class) {
+      return Boolean.parseBoolean(paramValue);
+    } else {
+      return paramValue;
+    }
+  }
+
+  private Object createDomainObject(HttpServletRequest req, Class<?> paramType) throws Exception {
+    // 요청핸들러가 원하는 도메인 객체를 생성한다.
+    Object domainObject = paramType.getConstructor().newInstance();
+
+    // 도메인 객체의 셋터 메서드를 호출하여 클라이언트가 보낸 값을 보관한다.
+    Method[] methods = paramType.getDeclaredMethods();
+    for (Method m : methods) {
+      if (!Modifier.isPublic(m.getModifiers()) || !m.getName().startsWith("set")) {
+        continue;
+      }
+
+      Class<?> propertyType = m.getParameterTypes()[0]; // setter 메서드에 파라미터가 무조건 한 개 있다고 가정한다.
+      String propertyName = Character.toLowerCase(m.getName().charAt(3)) + m.getName().substring(4);
+
+      // 셋터 메서드의 이름(프로퍼티명)과 일치하는 값을 클라이언트가 보낸 파라미터에서 꺼낸다.
+      Object value = getPrimitiveValueOrStringFromRequestParameter(req, propertyType, propertyName);
+      if (value == null) { // 셋터 메서드에 넣을 값이 없으면
+        continue;
+      }
+
+      // 셋터 메서드에 넣을 값이 클라이언트가 보낸 파라미터에 있으면 객체에 보관한다.
+      m.invoke(domainObject, value);
+    }
+
+    // 클라이언트가 보낸 값을 보관한 도메인 객체를 리턴한다.
+    return domainObject;
   }
 
 }
