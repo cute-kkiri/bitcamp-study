@@ -10,7 +10,6 @@ import bitcamp.myapp.vo.User;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -66,37 +65,31 @@ public class ProjectController {
   }
 
   @RequestMapping("/project/list")
-  public String list(HttpServletRequest req, HttpServletResponse res) throws Exception {
+  public String list(Map<String, Object> map) throws Exception {
     List<Project> list = projectService.list();
-    req.setAttribute("list", list);
+    map.put("list", list);
     return "/project/list.jsp";
   }
 
   @RequestMapping("/project/view")
-  public String view(HttpServletRequest req, HttpServletResponse res) throws Exception {
-    int projectNo = Integer.parseInt(req.getParameter("no"));
+  public String view(@RequestParam("no") int projectNo, Map<String, Object> map) throws Exception {
     Project project = projectService.get(projectNo);
-    req.setAttribute("project", project);
+    map.put("project", project);
 
     List<User> users = userService.list();
-    req.setAttribute("users", users);
+    map.put("users", users);
     return "/project/view.jsp";
   }
 
   @RequestMapping("/project/update")
-  public String update(HttpServletRequest req, HttpServletResponse res) throws Exception {
-    Project project = new Project();
-    project.setNo(Integer.parseInt(req.getParameter("no")));
-    project.setTitle(req.getParameter("title"));
-    project.setDescription(req.getParameter("description"));
-    project.setStartDate(Date.valueOf(req.getParameter("startDate")));
-    project.setEndDate(Date.valueOf(req.getParameter("endDate")));
+  public String update(
+          Project project,
+          @RequestParam("member") int[] memberNos) throws Exception {
 
-    String[] memberNos = req.getParameterValues("member");
-    if (memberNos != null) {
+    if (memberNos.length > 0) {
       ArrayList<User> members = new ArrayList<>();
-      for (String memberNo : memberNos) {
-        members.add(new User(Integer.parseInt(memberNo)));
+      for (int memberNo : memberNos) {
+        members.add(new User(memberNo));
       }
       project.setMembers(members);
     }
@@ -108,10 +101,8 @@ public class ProjectController {
   }
 
   @RequestMapping("/project/delete")
-  public String delete(HttpServletRequest req, HttpServletResponse res) throws Exception {
-    int projectNo = Integer.parseInt(req.getParameter("no"));
-
-    if (projectService.delete(projectNo)) {
+  public String delete(@RequestParam("no") int no) throws Exception {
+    if (projectService.delete(no)) {
       return "redirect:list";
     } else {
       throw new Exception("없는 프로젝트입니다.");
