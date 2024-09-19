@@ -1,6 +1,7 @@
 package bitcamp.myapp.controller;
 
 import bitcamp.myapp.annotation.RequestMapping;
+import bitcamp.myapp.annotation.RequestParam;
 import bitcamp.myapp.service.ProjectService;
 import bitcamp.myapp.service.UserService;
 import bitcamp.myapp.vo.Project;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class ProjectController {
 
@@ -29,30 +31,24 @@ public class ProjectController {
   }
 
   @RequestMapping("/project/form2")
-  public String form2(HttpServletRequest req, HttpServletResponse res) throws Exception {
-    Project project = new Project();
-    project.setTitle(req.getParameter("title"));
-    project.setDescription(req.getParameter("description"));
-    project.setStartDate(Date.valueOf(req.getParameter("startDate")));
-    project.setEndDate(Date.valueOf(req.getParameter("endDate")));
-
-    HttpSession session = req.getSession();
+  public String form2(Project project, Map<String, Object> map, HttpSession session) throws Exception {
     session.setAttribute("project", project);
-
     List<User> users = userService.list();
-    req.setAttribute("users", users);
+    map.put("users", users);
     return "/project/form2.jsp";
   }
 
   @RequestMapping("/project/form3")
-  public String form3(HttpServletRequest req, HttpServletResponse res) throws Exception {
-    Project project = (Project) req.getSession().getAttribute("project");
+  public String form3(
+          @RequestParam("member") int[] memberNos,
+          HttpSession session) throws Exception {
 
-    String[] memberNos = req.getParameterValues("member");
-    if (memberNos != null) {
+    Project project = (Project) session.getAttribute("project");
+
+    if (memberNos.length > 0) {
       ArrayList<User> members = new ArrayList<>();
-      for (String memberNo : memberNos) {
-        User user = userService.get(Integer.parseInt(memberNo));
+      for (int memberNo : memberNos) {
+        User user = userService.get(memberNo);
         members.add(user);
       }
       project.setMembers(members);
@@ -62,10 +58,10 @@ public class ProjectController {
   }
 
   @RequestMapping("/project/add")
-  public String add(HttpServletRequest req, HttpServletResponse res) throws Exception {
-    Project project = (Project) req.getSession().getAttribute("project");
+  public String add(HttpSession session) throws Exception {
+    Project project = (Project) session.getAttribute("project");
     projectService.add(project);
-    req.getSession().removeAttribute("project");
+    session.removeAttribute("project");
     return "redirect:list";
   }
 

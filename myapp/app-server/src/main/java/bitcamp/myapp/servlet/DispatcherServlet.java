@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -104,11 +105,17 @@ public class DispatcherServlet extends HttpServlet {
         args.add(req);
       } else if (paramType == ServletResponse.class || paramType == HttpServletResponse.class) {
         args.add(res);
+      } else if (paramType == HttpSession.class) {
+        args.add(req.getSession());
       } else if (paramType == Map.class) {
         args.add(requestAttributesMap);
-      } else if (paramType.isPrimitive() || paramType == String.class) {
+      } else if (paramType.isPrimitive() ||
+              paramType == String.class ||
+              paramType == java.util.Date.class ||
+              paramType == java.sql.Date.class ||
+              paramType == int[].class) {
         RequestParam paramAnno = param.getAnnotation(RequestParam.class);
-        args.add(getPrimitiveValueOrStringFromRequestParameter(
+        args.add(getDefaultTypeValueFromRequestParameter(
                 req, // 클라이언트가 보낸 값이 저장된 ServletRequest 보관소
                 param.getType(), // ServletRequest 보관소에서 꺼낸 값을 형변환할 때 타입
                 paramAnno.value() // ServletRequet 보관소에서 꺼낼 값의 파라미터명
@@ -127,14 +134,14 @@ public class DispatcherServlet extends HttpServlet {
     }
   }
 
-  private Object getPrimitiveValueOrStringFromRequestParameter(
+  private Object getDefaultTypeValueFromRequestParameter(
           HttpServletRequest req,
           Class<?> paramType,
           String paramName) {
 
     // 클라이언트가 보낸 값들 중에서 paramName에 해당하는 값을 꺼낸다.
     String paramValue = req.getParameter(paramName);
-    if (paramValue == null) { // 값이 없다면 primitive 타입으로 변환할 수 없기 때문에 그냥 null을 리턴한다.
+    if (paramType != boolean.class && paramType != int[].class && paramValue == null) {
       return null;
     }
 
@@ -144,6 +151,17 @@ public class DispatcherServlet extends HttpServlet {
       return Short.parseShort(paramValue);
     } else if (paramType == int.class) {
       return Integer.parseInt(paramValue);
+    } else if (paramType == int[].class) {
+      String[] paramValues = req.getParameterValues(paramName);
+      if (paramValues == null) {
+        return new int[0];
+      }
+
+      int[] values = new int[paramValues.length];
+      for (int i = 0; i < paramValues.length; i++) {
+        values[i] = Integer.parseInt(paramValues[i]);
+      }
+      return values;
     } else if (paramType == long.class) {
       return Long.parseLong(paramValue);
     } else if (paramType == float.class) {
@@ -153,7 +171,16 @@ public class DispatcherServlet extends HttpServlet {
     } else if (paramType == char.class) {
       return paramValue.charAt(0);
     } else if (paramType == boolean.class) {
-      return Boolean.parseBoolean(paramValue);
+      if (paramValue == null ||
+              paramValue.equals("0") ||
+              paramValue.equals("false") ||
+              paramValue.equals("off") ||
+              paramValue.equals("no")) {
+        return false;
+      }
+      return true;
+    } else if (paramType == java.util.Date.class || paramType == java.sql.Date.class) {
+      return java.sql.Date.valueOf(paramValue);
     } else {
       return paramValue;
     }
@@ -174,7 +201,7 @@ public class DispatcherServlet extends HttpServlet {
       String propertyName = Character.toLowerCase(m.getName().charAt(3)) + m.getName().substring(4);
 
       // 셋터 메서드의 이름(프로퍼티명)과 일치하는 값을 클라이언트가 보낸 파라미터에서 꺼낸다.
-      Object value = getPrimitiveValueOrStringFromRequestParameter(req, propertyType, propertyName);
+      Object value = getDefaultTypeValueFromRequestParameter(req, propertyType, propertyName);
       if (value == null) { // 셋터 메서드에 넣을 값이 없으면
         continue;
       }
