@@ -1,8 +1,11 @@
 package bitcamp.myapp.servlet;
 
 import bitcamp.myapp.annotation.RequestMapping;
+import bitcamp.myapp.annotation.RequestParam;
 
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,7 +13,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @MultipartConfig(
         maxFileSize = 1024 * 1024 * 60,
@@ -57,7 +64,15 @@ public class DispatcherServlet extends HttpServlet {
         return;
       }
 
-      String viewName = (String) requestHandler.invoke(pageController, req, res);
+      Map<String, Object> map = new HashMap<>();
+
+      Object[] arguments = prepareRequestHandlerArguments(requestHandler, req, res, map);
+
+      String viewName = (String) requestHandler.invoke(pageController, arguments);
+
+      if (map.size() > 0) {
+        copyMapToServletRequest(map, req);
+      }
 
       // 페이지 컨트롤러가 정상적으로 실행했으면, viewName을 가져와서 포워딩 한다.
       if (viewName.startsWith("redirect:")) {
@@ -70,6 +85,40 @@ public class DispatcherServlet extends HttpServlet {
     } catch (Exception e) {
       req.setAttribute("exception", e);
       req.getRequestDispatcher("/error.jsp").forward(req, res);
+    }
+  }
+
+  private Object[] prepareRequestHandlerArguments(
+          Method requestHandler,
+          HttpServletRequest req,
+          HttpServletResponse res,
+          Map<String, Object> requestAttributesMap) {
+
+    Parameter[] params = requestHandler.getParameters();
+    ArrayList<Object> args = new ArrayList<>();
+
+    for (Parameter param : params) {
+      Class<?> paramType = param.getType();
+      if (paramType == ServletRequest.class || paramType == HttpServletRequest.class) {
+        args.add(req);
+      } else if (paramType == ServletResponse.class || paramType == HttpServletResponse.class) {
+        args.add(res);
+      } else if (paramType == Map.class) {
+        args.add(requestAttributesMap);
+      } else if (paramType == int.class) {
+        RequestParam paramAnno = param.getAnnotation(RequestParam.class);
+        args.add(Integer.parseInt(req.getParameter(paramAnno.value())));
+      } else {
+        args.add(null);
+      }
+    }
+
+    return args.toArray();
+  }
+
+  private void copyMapToServletRequest(Map<String, Object> map, ServletRequest req) {
+    for (Map.Entry<String, Object> entry : map.entrySet()) {
+      req.setAttribute(entry.getKey(), entry.getValue());
     }
   }
 
