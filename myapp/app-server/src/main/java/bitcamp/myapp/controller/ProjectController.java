@@ -1,5 +1,6 @@
 package bitcamp.myapp.controller;
 
+import bitcamp.myapp.annotation.Controller;
 import bitcamp.myapp.annotation.RequestMapping;
 import bitcamp.myapp.annotation.RequestParam;
 import bitcamp.myapp.service.ProjectService;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+@Controller
 public class ProjectController {
 
   private ProjectService projectService;

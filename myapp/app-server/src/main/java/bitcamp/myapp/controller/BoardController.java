@@ -1,5 +1,6 @@
 package bitcamp.myapp.controller;
 
+import bitcamp.myapp.annotation.Controller;
 import bitcamp.myapp.annotation.RequestMapping;
 import bitcamp.myapp.annotation.RequestParam;
 import bitcamp.myapp.service.BoardService;
@@ -16,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-
+@Controller
 public class BoardController {
 
   private BoardService boardService;
