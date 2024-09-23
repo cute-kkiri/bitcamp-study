@@ -17,12 +17,16 @@ import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 import java.io.File;
 import java.io.InputStream;
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @WebListener // 서블릿 컨테이너에 이 클래스를 배치하는 태그다.
 public class ContextLoaderListener implements ServletContextListener {
 
+  private Map<Class<?>, Object> dependencyMap = new HashMap<>();
   private List<Object> controllers = new ArrayList<>();
 
   @Override
@@ -50,6 +54,11 @@ public class ContextLoaderListener implements ServletContextListener {
       ServletContext ctx = sce.getServletContext();
       ctx.setAttribute("sqlSessionFactory", sqlSessionFactoryProxy);
       ctx.setAttribute("controllers", controllers);
+
+      dependencyMap.put(ServletContext.class, ctx);
+      dependencyMap.put(UserService.class, userService);
+      dependencyMap.put(BoardService.class, boardService);
+      dependencyMap.put(ProjectService.class, projectService);
 
       createControllers();
 
@@ -88,9 +97,26 @@ public class ContextLoaderListener implements ServletContextListener {
           continue;
         }
 
-        System.out.println(className);
+        createObject(clazz);
       }
     }
+  }
+
+  private void createObject(Class<?> clazz) throws Exception {
+    Constructor<?> constructor = clazz.getConstructors()[0];
+
+    Class<?>[] paramTypes = constructor.getParameterTypes();
+    Object[] args = prepareConstructorArguments(paramTypes);
+
+    controllers.add(constructor.newInstance(args));
+  }
+
+  private Object[] prepareConstructorArguments(Class<?>[] paramTypes) throws Exception {
+    Object[] args = new Object[paramTypes.length];
+    for (int i = 0; i < paramTypes.length; i++) {
+      args[i] = dependencyMap.get(paramTypes[i]);
+    }
+    return args;
   }
 
 }
