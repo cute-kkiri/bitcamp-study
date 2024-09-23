@@ -2,12 +2,11 @@ package bitcamp.myapp.servlet;
 
 import bitcamp.myapp.annotation.RequestMapping;
 import bitcamp.myapp.annotation.RequestParam;
+import bitcamp.myapp.context.ApplicationContext;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.annotation.MultipartConfig;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
 import java.lang.reflect.Method;
@@ -15,17 +14,14 @@ import java.lang.reflect.Modifier;
 import java.lang.reflect.Parameter;
 import java.util.*;
 
-@MultipartConfig(
-        maxFileSize = 1024 * 1024 * 60,
-        maxRequestSize = 1024 * 1024 * 100)
-@WebServlet("/app/*")
 public class DispatcherServlet extends HttpServlet {
 
+  ApplicationContext appCtx;
   private List<Object> controllers;
 
-  @Override
-  public void init() throws ServletException {
-    controllers = (List<Object>) this.getServletContext().getAttribute("controllers");
+  public DispatcherServlet(ApplicationContext appCtx) {
+    this.appCtx = appCtx;
+    this.controllers = appCtx.getControllers();
   }
 
   @Override

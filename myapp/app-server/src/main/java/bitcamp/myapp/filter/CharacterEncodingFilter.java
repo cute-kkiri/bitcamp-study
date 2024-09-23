@@ -1,33 +1,16 @@
 package bitcamp.myapp.filter;
 
 import javax.servlet.*;
-import javax.servlet.annotation.WebFilter;
-import javax.servlet.annotation.WebInitParam;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
-// web.xml
-//   <filter>
-//        <filter-name>CharacterEncodingFilter</filter-name>
-//        <filter-class>bitcamp.myapp.filter.CharacterEncodingFilter</filter-class>
-//        <init-param>
-//            <param-name>encoding</param-name>
-//            <param-value>UTF-8</param-value>
-//        </init-param>
-//    </filter>
-//    <filter-mapping>
-//        <filter-name>CharacterEncodingFilter</filter-name>
-//        <url-pattern>/*</url-pattern>
-//    </filter-mapping>
-
-
-@WebFilter(
-        urlPatterns = "/*",
-        initParams = @WebInitParam(name = "encoding", value = "UTF-8")
-)
 public class CharacterEncodingFilter implements Filter {
 
-  private String encoding = "UTF-8";
+  private String encoding;
+
+  public CharacterEncodingFilter(String encoding) {
+    this.encoding = encoding;
+  }
 
   @Override
   public void init(FilterConfig filterConfig) throws ServletException {

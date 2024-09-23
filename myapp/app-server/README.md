@@ -33,6 +33,27 @@
 
 - 팩토리 메서드 표시할 때 사용할 애노테이션 정의
   - Bean 애노테이션 생성
+- Bean 애노테이션이 붙은 팩토리 메서드 자동 호출하기
+  - ApplicationContext 클래스 변경
+
+### 4단계: 팩토리 메서드 정의를 별도의 클래스로 분리하기
+
+- 프로젝트에 종속되는 팩토리를 메서드를 분리하기 
+  - AppConfig 클래스 생성
+  - ApplicationContext 클래스 변경
+  - ContextLoaderListener 클래스 변경
+
+### 5단계: 프론트 컨트롤러 서블릿을 코드로 직접 객체를 생성하여 서블릿 컨테이너에 등록하기
+
+- 서블릿을 직접 서블릿 컨테이너에 등록하기
+  - DispatcherServlet 클래스 변경
+    - IoC 컨테이너를 의존 객체로 주입
+  - CharacterEncodingFilter 클래스 변경
+    - encoding 설정을 생성자에서 수행
+  - ContextLoaderListener 클래스 변경
+    - DispatcherServlet 객체를 직접 생성하여 서블릿 컨테이너에 등록
+    - CharacterEncodingFilter 객체를 직접 생성하여 서블릿 컨테이너에 등록
+  
 
 ## 소스 파일
 
