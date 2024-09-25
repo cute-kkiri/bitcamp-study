@@ -23,6 +23,9 @@ dependencies {
     // Spring Framework 라이브러리
     implementation 'org.springframework:spring-webmvc:5.3.39'
 
+    // Mybatis 스프링 연동 라이브러리
+    implementation 'org.mybatis:mybatis-spring:2.1.2'
+
     testImplementation libs.junit.jupiter
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     implementation libs.guava
