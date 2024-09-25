@@ -1,6 +1,5 @@
 package bitcamp.myapp.config;
 
-import bitcamp.myapp.annotation.Bean;
 import bitcamp.myapp.dao.BoardDao;
 import bitcamp.myapp.dao.DaoFactory;
 import bitcamp.myapp.dao.ProjectDao;
@@ -9,9 +8,14 @@ import bitcamp.mybatis.SqlSessionFactoryProxy;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import java.io.InputStream;
 
+@ComponentScan("bitcamp.myapp")
+@EnableWebMvc
 public class AppConfig {
   @Bean
   public SqlSessionFactory createSqlSessionFactory() throws Exception {

@@ -1,10 +1,10 @@
 package bitcamp.myapp.service;
 
-import bitcamp.myapp.annotation.Component;
 import bitcamp.myapp.dao.BoardDao;
 import bitcamp.myapp.vo.AttachedFile;
 import bitcamp.myapp.vo.Board;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
