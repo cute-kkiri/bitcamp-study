@@ -23,6 +23,7 @@ public class ContextLoaderListener implements ServletContextListener {
 
       AnnotationConfigWebApplicationContext iocContainer = new AnnotationConfigWebApplicationContext();
       iocContainer.register(AppConfig.class);
+      iocContainer.setServletContext(ctx);
       iocContainer.refresh();
 
       ctx.setAttribute("sqlSessionFactory", iocContainer.getBean(SqlSessionFactory.class));
