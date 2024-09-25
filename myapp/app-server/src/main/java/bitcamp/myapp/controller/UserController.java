@@ -33,7 +33,7 @@ public class UserController {
   public String list(Model model) throws Exception {
     List<User> list = userService.list();
     model.addAttribute("list", list);
-    return "/user/list.jsp";
+    return "user/list";
   }
 
   @GetMapping("/user/view")

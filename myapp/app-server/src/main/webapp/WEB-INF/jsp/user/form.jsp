@@ -4,7 +4,7 @@
     pageEncoding="UTF-8"
     trimDirectiveWhitespaces="true"%>
 
-<jsp:include page="/header.jsp"/>
+<jsp:include page="../header.jsp"/>
 
 <h1>회원 등록</h1>
 <form action='add' method="post">
