@@ -7,6 +7,7 @@ import bitcamp.myapp.vo.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.ServletContext;
@@ -36,7 +37,7 @@ public class BoardController {
   @PostMapping("/board/add")
   public String add(
           Board board,
-          Part[] files,
+          MultipartFile[] files,
           HttpSession session) throws Exception {
 
     User loginUser = (User) session.getAttribute("loginUser");
@@ -47,16 +48,16 @@ public class BoardController {
     board.setWriter(loginUser);
 
     ArrayList<AttachedFile> attachedFiles = new ArrayList<>();
-    for (Part part : files) {
-      if (part.getSize() == 0) {
+    for (MultipartFile file : files) {
+      if (file.getSize() == 0) {
         continue;
       }
 
       AttachedFile attachedFile = new AttachedFile();
       attachedFile.setFilename(UUID.randomUUID().toString());
-      attachedFile.setOriginFilename(part.getSubmittedFileName());
+      attachedFile.setOriginFilename(file.getOriginalFilename());
 
-      part.write(this.uploadDir + "/" + attachedFile.getFilename());
+      file.transferTo(new File(this.uploadDir + "/" + attachedFile.getFilename()));
 
       attachedFiles.add(attachedFile);
     }
