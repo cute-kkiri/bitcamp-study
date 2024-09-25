@@ -5,15 +5,14 @@ import bitcamp.myapp.service.UserService;
 import bitcamp.myapp.vo.Project;
 import bitcamp.myapp.vo.User;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 public class ProjectController {
@@ -26,22 +25,25 @@ public class ProjectController {
     this.userService = userService;
   }
 
-  @RequestMapping("/project/form1")
-  public String form1(HttpServletRequest req, HttpServletResponse res) throws Exception {
+  @GetMapping("/project/form1")
+  public String form1() {
     return "/project/form1.jsp";
   }
 
-  @RequestMapping("/project/form2")
-  public String form2(Project project, Map<String, Object> map, HttpSession session) throws Exception {
+  @PostMapping("/project/form2")
+  public ModelAndView form2(Project project, HttpSession session) throws Exception {
     session.setAttribute("project", project);
     List<User> users = userService.list();
-    map.put("users", users);
-    return "/project/form2.jsp";
+
+    ModelAndView mv = new ModelAndView();
+    mv.addObject("users", users);
+    mv.setViewName("/project/form2.jsp");
+    return mv;
   }
 
-  @RequestMapping("/project/form3")
+  @PostMapping("/project/form3")
   public String form3(
-          @RequestParam("member") int[] memberNos,
+          int[] memberNos,
           HttpSession session) throws Exception {
 
     Project project = (Project) session.getAttribute("project");
@@ -58,7 +60,7 @@ public class ProjectController {
     return "/project/form3.jsp";
   }
 
-  @RequestMapping("/project/add")
+  @PostMapping("/project/add")
   public String add(HttpSession session) throws Exception {
     Project project = (Project) session.getAttribute("project");
     projectService.add(project);
@@ -66,27 +68,27 @@ public class ProjectController {
     return "redirect:list";
   }
 
-  @RequestMapping("/project/list")
-  public String list(Map<String, Object> map) throws Exception {
+  @GetMapping("/project/list")
+  public String list(Model model) throws Exception {
     List<Project> list = projectService.list();
-    map.put("list", list);
+    model.addAttribute("list", list);
     return "/project/list.jsp";
   }
 
-  @RequestMapping("/project/view")
-  public String view(@RequestParam("no") int projectNo, Map<String, Object> map) throws Exception {
-    Project project = projectService.get(projectNo);
-    map.put("project", project);
+  @GetMapping("/project/view")
+  public String view(int no, Model model) throws Exception {
+    Project project = projectService.get(no);
+    model.addAttribute("project", project);
 
     List<User> users = userService.list();
-    map.put("users", users);
+    model.addAttribute("users", users);
     return "/project/view.jsp";
   }
 
-  @RequestMapping("/project/update")
+  @PostMapping("/project/update")
   public String update(
           Project project,
-          @RequestParam("member") int[] memberNos) throws Exception {
+          int[] memberNos) throws Exception {
 
     if (memberNos.length > 0) {
       ArrayList<User> members = new ArrayList<>();
@@ -102,8 +104,8 @@ public class ProjectController {
     return "redirect:list";
   }
 
-  @RequestMapping("/project/delete")
-  public String delete(@RequestParam("no") int no) throws Exception {
+  @GetMapping("/project/delete")
+  public String delete(int no) throws Exception {
     if (projectService.delete(no)) {
       return "redirect:list";
     } else {

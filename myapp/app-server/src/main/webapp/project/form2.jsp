@@ -13,7 +13,7 @@
     <ul>
 
 <c:forEach items="${users}" var="user">
-      <li><input name='member' value='${user.no}' type='checkbox'> ${user.name}</li>
+      <li><input name='memberNos' value='${user.no}' type='checkbox'> ${user.name}</li>
 </c:forEach>
 
     </ul>

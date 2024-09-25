@@ -3,11 +3,11 @@ package bitcamp.myapp.controller;
 import bitcamp.myapp.service.UserService;
 import bitcamp.myapp.vo.User;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
-import java.util.Map;
 
 @Controller
 public class UserController {
@@ -18,32 +18,32 @@ public class UserController {
     this.userService = userService;
   }
 
-  @RequestMapping("/user/form")
-  public String form() throws Exception {
+  @GetMapping("/user/form")
+  public String form() {
     return "/user/form.jsp";
   }
 
-  @RequestMapping("/user/add")
+  @PostMapping("/user/add")
   public String add(User user) throws Exception {
     userService.add(user);
     return "redirect:list";
   }
 
-  @RequestMapping("/user/list")
-  public String list(Map<String, Object> map) throws Exception {
+  @GetMapping("/user/list")
+  public String list(Model model) throws Exception {
     List<User> list = userService.list();
-    map.put("list", list);
+    model.addAttribute("list", list);
     return "/user/list.jsp";
   }
 
-  @RequestMapping("/user/view")
-  public String view(@RequestParam("no") int no, Map<String, Object> map) throws Exception {
+  @GetMapping("/user/view")
+  public String view(int no, Model model) throws Exception {
     User user = userService.get(no);
-    map.put("user", user);
+    model.addAttribute("user", user);
     return "/user/view.jsp";
   }
 
-  @RequestMapping("/user/update")
+  @PostMapping("/user/update")
   public String update(User user) throws Exception {
     if (userService.update(user)) {
       return "redirect:list";
@@ -52,8 +52,8 @@ public class UserController {
     }
   }
 
-  @RequestMapping("/user/delete")
-  public String delete(@RequestParam("no") int no) throws Exception {
+  @GetMapping("/user/delete")
+  public String delete(int no) throws Exception {
     if (userService.delete(no)) {
       return "redirect:list";
     } else {

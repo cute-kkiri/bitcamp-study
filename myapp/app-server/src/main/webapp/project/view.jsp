@@ -24,7 +24,7 @@
         <ul>
         <c:forEach items="${users}" var="user">
           <li><input ${project.members.contains(user) ? "checked" : ""}
-                name='member'
+                name='memberNos'
                 value='${user.no}'
                 type='checkbox'> ${user.name}</li>
         </c:forEach>
