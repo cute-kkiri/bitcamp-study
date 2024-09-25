@@ -9,7 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
@@ -75,7 +74,7 @@ public class BoardController {
   }
 
   @GetMapping("/board/view")
-  public ModelAndView view(int no) throws Exception {
+  public void view(int no, Model model) throws Exception {
     Board board = boardService.get(no);
     if (board == null) {
       throw new Exception("게시글이 존재하지 않습니다.");
@@ -83,10 +82,7 @@ public class BoardController {
 
     boardService.increaseViewCount(board.getNo());
 
-    ModelAndView mv = new ModelAndView();
-    mv.addObject("board", board);
-    mv.setViewName("/board/view.jsp");
-    return mv;
+    model.addAttribute("board", board);
   }
 
   @PostMapping("/board/update")

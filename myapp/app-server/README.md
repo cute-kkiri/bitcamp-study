@@ -31,6 +31,9 @@
     - 외부에서 직접 접근 차단
   - InternalResourceViewResolver 설정
     - AppConfig 클래스 변경
+  - 페이지 컨트롤러 클래스 변경
+  - JSP 파일 변경
+
 
 
 

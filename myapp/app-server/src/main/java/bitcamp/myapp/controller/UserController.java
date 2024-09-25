@@ -20,7 +20,7 @@ public class UserController {
 
   @GetMapping("/user/form")
   public String form() {
-    return "/user/form.jsp";
+    return "user/form";
   }
 
   @PostMapping("/user/add")
@@ -40,7 +40,7 @@ public class UserController {
   public String view(int no, Model model) throws Exception {
     User user = userService.get(no);
     model.addAttribute("user", user);
-    return "/user/view.jsp";
+    return "user/view";
   }
 
   @PostMapping("/user/update")
