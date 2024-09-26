@@ -61,54 +61,8 @@
 ## 59. 요청 핸들러의 파라미터를 자동으로 인식하기
 ## 60. 페이지 컨트롤러 및 컴포넌트 자동 생성하기 - IoC 컨테이너 만들기
 ## 61. Spring Framework 도입하기
+## 62. NCP의 서비스 적용하기
 
-- Spring IoC 컨테이너를 이용하여 객체를 자동 생성하는 방법
-- 의존 객체를 자동으로 주입하는 방법
-- Spring IoC 컨테이너에 들어 있는 객체를 꺼내 사용하는 방법
-
-## 62. Spring WebMVC 프레임워크 도입하기
-
-- Spring WebMVC 프레임워크 사용법
-  - CharacterEncodingFilter 사용법
-  - ContextLoaderListener 사용법
-  - DispatcherServlet 사용법
-
-## 76. Spring WebMVC를 Java Config로 설정하기
-
-- Java Config를 이용하여 Spring WebMVC를 설정하는 방법
-- Log4j2 적용하는 방법
-- @GetMapping, @PostMapping, Model, MultipartFile 적용하는 방법
-- @ControllerAdvice, @InitBinder 사용하여 파라미터의 PropertyEditor를 등록하는 방법
-- 예외가 발생했을 때 출력될 오류 페이지를 설정하는 방법 : @ExceptionHandler
-
-## 77. Spring WebMVC의 기본 ViewResolver를 InternalResourceViewResolver로 교체하기
-
-- InternalResourceViewResolver를 설정하고 다루는 방법
-
-
-
-
-## 79. Mybatis 설정을 XML에서 Java Config로 바꾸기
-
-- Java Config로 Mybatis를 설정하는 방법
-  - 'mybatis-spring' 라이브러리 추가
-  - 'spring-jdbc' 라이브러리 추가
-
-## 80. @Transactional을 사용하여 트랜잭션 다루기
-
-- @Transactional 사용법
-  - @EnableTransactionManagement 용도 이해 
-- @Transactional이 붙은 메서드의 구동 원리 이해
-  - - 프록시 패턴 기술을 사용하여 트랜잭션 코드를 삽입
-
-## 81. DAO 구현체 자동 생성하기
-
-- Mybatis의 Spring 연동 플러그인을 사용하여 DAO를 자동 생성하는 방법
-
-## 82. Controller에서 비즈니스 로직 분리하기: 서비스 컴포넌트 도입
-
-- Controller에서 비즈니스 로직을 분리하는 이유
-- 서비스 컴포넌트의 역할 이해
 
 ## 83. Lombok 적용하기
 
