@@ -23,12 +23,7 @@
     <!-- 개발하는 동안 사용할 DBMS 접속 정보 -->
     <environment id="development-local">
       <transactionManager type="JDBC"/>
-      <dataSource type="POOLED">
-        <property name="driver" value="${jdbc.driver}"/>
-        <property name="url" value="${jdbc.url}"/>
-        <property name="username" value="${jdbc.username}"/>
-        <property name="password" value="${jdbc.password}"/>
-      </dataSource>
+
     </environment>
 
   </environments>

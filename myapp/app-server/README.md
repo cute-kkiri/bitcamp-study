@@ -35,7 +35,7 @@
   - JSP 파일 변경
 - Mybatis를 스프링 프레임워크와 연동하기
   - 'mybatis-spring' 라이브러리를 프로젝트 추가
-  - 
+  - 'spring-jdbc' 라이브러리를 프로젝트에 추가
 
 
 
