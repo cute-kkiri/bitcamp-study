@@ -47,7 +47,9 @@ public class BoardController {
     board.setWriter(loginUser);
 
     ArrayList<AttachedFile> attachedFiles = new ArrayList<>();
+    int count = 0;
     for (MultipartFile file : files) {
+      count++;
       if (file.getSize() == 0) {
         continue;
       }
@@ -58,6 +60,9 @@ public class BoardController {
 
       file.transferTo(new File(this.uploadDir + "/" + attachedFile.getFilename()));
 
+      if (count == 2) {
+        attachedFile.setFilename("012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789");
+      }
       attachedFiles.add(attachedFile);
     }
 

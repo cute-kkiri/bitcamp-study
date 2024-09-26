@@ -3,8 +3,9 @@ package bitcamp.myapp.service;
 import bitcamp.myapp.dao.BoardDao;
 import bitcamp.myapp.vo.AttachedFile;
 import bitcamp.myapp.vo.Board;
-import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -12,103 +13,64 @@ import java.util.List;
 public class DefaultBoardService implements BoardService {
 
   private BoardDao boardDao;
-  private SqlSessionFactory sqlSessionFactory;
+  private PlatformTransactionManager txManager;
 
-  public DefaultBoardService(BoardDao boardDao, SqlSessionFactory sqlSessionFactory) {
+  public DefaultBoardService(BoardDao boardDao, PlatformTransactionManager txManager) {
     this.boardDao = boardDao;
-    this.sqlSessionFactory = sqlSessionFactory;
+    this.txManager = txManager;
   }
 
-  @Override
+  @Transactional
   public void add(Board board) throws Exception {
-    try {
-      boardDao.insert(board);
-      if (board.getAttachedFiles().size() > 0) {
-        boardDao.insertFiles(board);
-      }
-      sqlSessionFactory.openSession(false).commit();
-
-    } catch (Exception e) {
-      sqlSessionFactory.openSession(false).rollback();
-      throw e;
+    boardDao.insert(board);
+    if (board.getAttachedFiles().size() > 0) {
+      boardDao.insertFiles(board);
     }
   }
 
-  @Override
   public List<Board> list() throws Exception {
     return boardDao.list();
   }
 
-  @Override
   public Board get(int boardNo) throws Exception {
     return boardDao.findBy(boardNo);
   }
 
-  @Override
+  @Transactional
   public void increaseViewCount(int boardNo) throws Exception {
-    try {
-      Board board = boardDao.findBy(boardNo);
-      if (board != null) {
-        boardDao.updateViewCount(board.getNo(), board.getViewCount() + 1);
-        sqlSessionFactory.openSession(false).commit();
-      }
-
-    } catch (Exception e) {
-      sqlSessionFactory.openSession(false).rollback();
-      throw e;
+    Board board = boardDao.findBy(boardNo);
+    if (board != null) {
+      boardDao.updateViewCount(board.getNo(), board.getViewCount() + 1);
     }
   }
 
-  @Override
+  @Transactional
   public boolean update(Board board) throws Exception {
-    try {
-      if (!boardDao.update(board)) {
-        return false;
-      }
-
-      if (board.getAttachedFiles().size() > 0) {
-        boardDao.insertFiles(board);
-      }
-
-      sqlSessionFactory.openSession(false).commit();
-      return true;
-
-    } catch (Exception e) {
-      sqlSessionFactory.openSession(false).rollback();
-      throw e;
+    if (!boardDao.update(board)) {
+      return false;
     }
+
+    if (board.getAttachedFiles().size() > 0) {
+      boardDao.insertFiles(board);
+    }
+    return true;
   }
 
-  @Override
+  @Transactional
   public void delete(int boardNo) throws Exception {
-    try {
-      boardDao.deleteFiles(boardNo);
-      boardDao.delete(boardNo);
-      sqlSessionFactory.openSession(false).commit();
-
-    } catch (Exception e) {
-      sqlSessionFactory.openSession(false).rollback();
-      throw e;
-    }
+    boardDao.deleteFiles(boardNo);
+    boardDao.delete(boardNo);
   }
 
-  @Override
   public AttachedFile getAttachedFile(int fileNo) throws Exception {
     return boardDao.getFile(fileNo);
   }
 
-  @Override
+  @Transactional
   public boolean deleteAttachedFile(int fileNo) throws Exception {
-    try {
-      if (!boardDao.deleteFile(fileNo)) {
-        return false;
-      }
-      sqlSessionFactory.openSession(false).commit();
-      return true;
-
-    } catch (Exception e) {
-      sqlSessionFactory.openSession(false).rollback();
-      throw e;
+    if (!boardDao.deleteFile(fileNo)) {
+      return false;
     }
+    return true;
   }
 }

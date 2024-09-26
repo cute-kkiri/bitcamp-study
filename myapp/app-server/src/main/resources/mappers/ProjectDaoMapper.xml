@@ -68,7 +68,7 @@
         where project_id=#{no}
     </delete>
 
-    <insert id="insertMembers" parameterType="map">
+    <insert id="insertMembers">
         insert into myapp_project_members(project_id, user_id)
         values
         <foreach collection="members" item="member" separator=",">

@@ -48,6 +48,13 @@ public class ContextLoaderListener implements ServletContextListener {
               "app" // 필터를 적용할 서블릿의 별명
       );
 
+      // 현재 IoC 컨테이너에 들어 있는 빈(자바 객체)을 조회
+      System.out.println("빈 개수: " + iocContainer.getBeanDefinitionCount());
+      String[] beanNames = iocContainer.getBeanDefinitionNames();
+      for (String beanName : beanNames) {
+        Object bean = iocContainer.getBean(beanName);
+        System.out.println(beanName + " ==> " + bean.getClass().getCanonicalName());
+      }
 
     } catch (Exception e) {
       System.out.println("서비스 준비 중 오류 발생!");

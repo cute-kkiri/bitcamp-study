@@ -2,6 +2,7 @@ package bitcamp.myapp.dao;
 
 import bitcamp.myapp.vo.AttachedFile;
 import bitcamp.myapp.vo.Board;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
