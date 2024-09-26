@@ -1,16 +1,19 @@
 package bitcamp.myapp.config;
 
 import bitcamp.myapp.dao.BoardDao;
-import bitcamp.myapp.dao.DaoFactory;
 import bitcamp.myapp.dao.ProjectDao;
 import bitcamp.myapp.dao.UserDao;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.ViewResolver;
@@ -24,6 +27,8 @@ import javax.sql.DataSource;
 @PropertySource("classpath:config/jdbc.properties")
 public class AppConfig {
 
+  ApplicationContext appCtx;
+
   @Value("${jdbc.driver}")
   String jdbcDriver;
 
@@ -35,6 +40,10 @@ public class AppConfig {
 
   @Value("${jdbc.password}")
   String jdbcPassword;
+
+  public AppConfig(ApplicationContext appCtx) {
+    this.appCtx = appCtx;
+  }
 
   @Bean
   public ViewResolver viewResolver() {
@@ -60,33 +69,36 @@ public class AppConfig {
   }
 
   @Bean
+  public PlatformTransactionManager transactionManager(DataSource ds) {
+    return new DataSourceTransactionManager(ds);
+  }
+
+  @Bean
   public SqlSessionFactory sqlSessionFactory(DataSource ds) throws Exception {
-//    InputStream inputStream = Resources.getResourceAsStream("config/mybatis-config.xml");
-//    SqlSessionFactoryBuilder sqlSessionFactoryBuilder = new SqlSessionFactoryBuilder();
-//    SqlSessionFactory sqlSessionFactory = sqlSessionFactoryBuilder.build(inputStream);
-//
-//    return new SqlSessionFactoryProxy(sqlSessionFactory);
     SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
     factoryBean.setDataSource(ds);
+    factoryBean.setTypeAliasesPackage("bitcamp.myapp.vo");
+    factoryBean.setMapperLocations(appCtx.getResources("classpath:mappers/*Mapper.xml"));
+    return factoryBean.getObject();
   }
 
   @Bean
-  public DaoFactory daoFactory(SqlSessionFactory sqlSessionFactory) throws Exception {
-    return new DaoFactory(sqlSessionFactory);
+  public SqlSessionTemplate sqlSessionTemplate(SqlSessionFactory sqlSessionFactory) {
+    return new SqlSessionTemplate(sqlSessionFactory);
   }
 
   @Bean
-  public UserDao userDao(DaoFactory daoFactory) throws Exception {
-    return daoFactory.createObject(UserDao.class);
+  public UserDao userDao(SqlSessionTemplate sqlSessionTemplate) throws Exception {
+    return sqlSessionTemplate.getMapper(UserDao.class);
   }
 
   @Bean
-  public BoardDao boardDao(DaoFactory daoFactory) throws Exception {
-    return daoFactory.createObject(BoardDao.class);
+  public BoardDao boardDao(SqlSessionTemplate sqlSessionTemplate) throws Exception {
+    return sqlSessionTemplate.getMapper(BoardDao.class);
   }
 
   @Bean
-  public ProjectDao projectDao(DaoFactory daoFactory) throws Exception {
-    return daoFactory.createObject(ProjectDao.class);
+  public ProjectDao projectDao(SqlSessionTemplate sqlSessionTemplate) throws Exception {
+    return sqlSessionTemplate.getMapper(ProjectDao.class);
   }
 }
