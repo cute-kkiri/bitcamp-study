@@ -22,7 +22,9 @@ import javax.sql.DataSource;
 
 @ComponentScan("bitcamp.myapp")
 @EnableWebMvc
-@PropertySource("classpath:config/jdbc.properties")
+@PropertySource({
+        "classpath:config/jdbc.properties",
+        "file:${user.home}/config/ncp.properties"})
 @EnableTransactionManagement // 스프링 프렘워크야, @Transactional 메서드가 붙은 클래스를 만나면 Proxy 클래스를 자동 생성하라!
 @MapperScan("bitcamp.myapp.dao")
 public class AppConfig {
