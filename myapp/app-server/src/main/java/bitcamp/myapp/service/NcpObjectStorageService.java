@@ -5,13 +5,12 @@ import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.client.builder.AwsClientBuilder;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-import com.amazonaws.services.s3.model.CannedAccessControlList;
-import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.model.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Map;
 
 @Service
@@ -53,5 +52,19 @@ public class NcpObjectStorageService implements StorageService {
   @Override
   public void delete(String filePath) throws Exception {
     s3.deleteObject(bucketName, filePath);
+  }
+
+  @Override
+  public void download(String filePath, OutputStream out) throws Exception {
+    S3Object s3Object = s3.getObject(bucketName, filePath);
+    S3ObjectInputStream s3ObjectInputStream = s3Object.getObjectContent();
+
+    byte[] buf = new byte[4096]; // Ncp ObjectStorage에서 값을 읽을 때 사용할 버퍼
+    int len = -1;
+    while ((len = s3ObjectInputStream.read(buf)) != -1) {
+      out.write(buf, 0, len);
+    }
+
+    s3ObjectInputStream.close();
   }
 }

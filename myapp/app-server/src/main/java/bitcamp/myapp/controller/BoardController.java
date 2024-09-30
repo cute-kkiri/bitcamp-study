@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import java.util.ArrayList;
@@ -23,17 +22,14 @@ import java.util.UUID;
 public class BoardController {
 
   private BoardService boardService;
-  private String uploadDir;
   private StorageService storageService;
 
   private String folderName = "board/";
 
   public BoardController(
           BoardService boardService,
-          ServletContext ctx,
           StorageService storageService) {
     this.boardService = boardService;
-    this.uploadDir = ctx.getRealPath("/upload/board");
     this.storageService = storageService;
   }
 
@@ -130,7 +126,12 @@ public class BoardController {
       attachedFile.setFilename(UUID.randomUUID().toString());
       attachedFile.setOriginFilename(part.getSubmittedFileName());
 
-      part.write(this.uploadDir + "/" + attachedFile.getFilename());
+      // 첨부 파일을 Object Storage에 올린다.
+      HashMap<String, Object> options = new HashMap<>();
+      options.put(StorageService.CONTENT_TYPE, part.getContentType());
+      storageService.upload(folderName + attachedFile.getFilename(),
+              part.getInputStream(),
+              options);
 
       attachedFiles.add(attachedFile);
     }
