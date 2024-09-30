@@ -59,7 +59,8 @@
             name=#{name},
             email=#{email},
             pwd=sha1(#{password}),
-            tel=#{tel}
+            tel=#{tel},
+            photo=#{photo}
         where
             user_id=#{no}
     </update>

@@ -51,6 +51,9 @@ public class NcpObjectStorageService implements StorageService {
 
   @Override
   public void delete(String filePath) throws Exception {
+    if (filePath != null) {
+      throw new Exception("test...");
+    }
     s3.deleteObject(bucketName, filePath);
   }
 

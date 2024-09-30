@@ -64,7 +64,26 @@ public class UserController {
   }
 
   @PostMapping("/user/update")
-  public String update(User user) throws Exception {
+  public String update(User user, MultipartFile file) throws Exception {
+
+    User old = userService.get(user.getNo());
+
+    if (file != null && file.getSize() > 0) {
+      storageService.delete(folderName + old.getPhoto());
+
+      String filename = UUID.randomUUID().toString();
+      HashMap<String, Object> options = new HashMap<>();
+      options.put(StorageService.CONTENT_TYPE, file.getContentType());
+      storageService.upload(folderName + filename,
+              file.getInputStream(),
+              options);
+
+      user.setPhoto(filename);
+
+    } else {
+      user.setPhoto(old.getPhoto());
+    }
+
     if (userService.update(user)) {
       return "redirect:list";
     } else {
@@ -74,7 +93,10 @@ public class UserController {
 
   @GetMapping("/user/delete")
   public String delete(int no) throws Exception {
+
     if (userService.delete(no)) {
+      User old = userService.get(no);
+      storageService.delete(folderName + old.getPhoto());
       return "redirect:list";
     } else {
       throw new Exception("없는 회원입니다.");

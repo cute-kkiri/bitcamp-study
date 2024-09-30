@@ -36,15 +36,19 @@
     - DDL 변경
     - User 클래스 변경
     - /user/form.jsp 변경
-    - UserController 클래스 변경
+    - UserController의 add() 변경
     - UserDaoMapper 파일 변경: insert SQL 변경
     - NCP StorageService의 버킷에 user 폴더 생성
   - 회원의 사진 보기
     - /user/view.jsp 변경
     - UserDaoMapper 파일 변경: select SQL 변경
     - NCP ImageOptimizer 서비스에 회원 사진을 crop 하는 서비스 추가
-    
-
+  - 회원 사진 변경
+    - /user/view.jsp 변경
+    - UserController의 update() 변경
+    - UserDaoMapper 파일 변경: update SQL 변경
+  - 회원 삭제
+    - UserController의 delete() 변경
 
 ## 소스 파일
 
