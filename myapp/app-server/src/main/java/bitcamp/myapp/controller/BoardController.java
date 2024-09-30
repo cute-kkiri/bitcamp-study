@@ -14,7 +14,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -157,9 +156,10 @@ public class BoardController {
     }
 
     for (AttachedFile attachedFile : board.getAttachedFiles()) {
-      File file = new File(uploadDir + "/" + attachedFile.getFilename());
-      if (file.exists()) {
-        file.delete();
+      try {
+        storageService.delete(folderName + attachedFile.getFilename());
+      } catch (Exception e) {
+        System.out.printf("%s 파일 삭제 실패!\n", folderName + attachedFile.getFilename());
       }
     }
 
@@ -188,9 +188,10 @@ public class BoardController {
       throw new Exception("삭제 권한이 없습니다.");
     }
 
-    File file = new File(uploadDir + "/" + attachedFile.getFilename());
-    if (file.exists()) {
-      file.delete();
+    try {
+      storageService.delete(folderName + attachedFile.getFilename());
+    } catch (Exception e) {
+      System.out.printf("%s 파일 삭제 실패!\n", folderName + attachedFile.getFilename());
     }
 
     boardService.deleteAttachedFile(fileNo);

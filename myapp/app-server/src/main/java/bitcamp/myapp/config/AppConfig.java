@@ -33,6 +33,9 @@ public class AppConfig {
 
   public AppConfig(ApplicationContext appCtx) {
     this.appCtx = appCtx;
+
+    // AWS 경고 메시지 로깅 비활성화
+    System.getProperties().setProperty("aws.java.v1.disableDeprecationAnnouncement", "true");
   }
 
   @Bean

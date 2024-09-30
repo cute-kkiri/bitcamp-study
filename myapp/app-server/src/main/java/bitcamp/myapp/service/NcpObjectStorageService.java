@@ -49,4 +49,9 @@ public class NcpObjectStorageService implements StorageService {
 
     s3.putObject(putObjectRequest);
   }
+
+  @Override
+  public void delete(String filePath) throws Exception {
+    s3.deleteObject(bucketName, filePath);
+  }
 }
