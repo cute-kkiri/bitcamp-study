@@ -28,7 +28,21 @@
 - NCP ObjectStorage 서비스 도입
   - ObjectStorage의 bucket 생성: bitcamp-bucketxxx
   - 'aws-java-sdk-s3' 라이브러리를 프로젝트에 적용
-  - 
+  - StorageService 인터페이스 정의
+  - NcpObjectStorageService 구현체 생성
+  - BoardController, DownloadController 변경
+- NCP ImageOptimizer 서비스 도입
+  - 회원의 사진 등록 추가
+    - DDL 변경
+    - User 클래스 변경
+    - /user/form.jsp 변경
+    - UserController 클래스 변경
+    - UserDaoMapper 파일 변경: insert SQL 변경
+    - NCP StorageService의 버킷에 user 폴더 생성
+  - 회원의 사진 보기
+    - /user/view.jsp 변경
+    - UserDaoMapper 파일 변경: select SQL 변경
+    - NCP ImageOptimizer 서비스에 회원 사진을 crop 하는 서비스 추가
     
 
 
