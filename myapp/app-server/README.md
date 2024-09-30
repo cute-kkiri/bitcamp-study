@@ -49,6 +49,7 @@
     - UserDaoMapper 파일 변경: update SQL 변경
   - 회원 삭제
     - UserController의 delete() 변경
+      - @Transactional 적용
 
 ## 소스 파일
 

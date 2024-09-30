@@ -8,6 +8,7 @@ import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -49,11 +50,9 @@ public class NcpObjectStorageService implements StorageService {
     s3.putObject(putObjectRequest);
   }
 
+  @Transactional
   @Override
   public void delete(String filePath) throws Exception {
-    if (filePath != null) {
-      throw new Exception("test...");
-    }
     s3.deleteObject(bucketName, filePath);
   }
 

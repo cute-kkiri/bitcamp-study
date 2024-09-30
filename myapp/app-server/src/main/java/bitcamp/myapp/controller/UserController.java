@@ -4,6 +4,7 @@ import bitcamp.myapp.service.StorageService;
 import bitcamp.myapp.service.UserService;
 import bitcamp.myapp.vo.User;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -91,11 +92,13 @@ public class UserController {
     }
   }
 
+  @Transactional
   @GetMapping("/user/delete")
   public String delete(int no) throws Exception {
 
+    User old = userService.get(no);
+
     if (userService.delete(no)) {
-      User old = userService.get(no);
       storageService.delete(folderName + old.getPhoto());
       return "redirect:list";
     } else {
