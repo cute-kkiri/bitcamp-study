@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 
 @Controller
 public class AuthController {
-
+  
   private UserService userService;
 
   public AuthController(UserService userService) {
