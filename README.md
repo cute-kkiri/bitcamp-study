@@ -990,8 +990,17 @@
 
 - 이론
   - Spring WebMVC 사용법
+    - Spring WebMVC의 구동 원리
+    - DispatcherServlet의 IoC 컨테이너 설정 방법
+    - ContextLoaderListener의 IoC 컨테이너 설정 방법
+    - DispatcherServlet과 ContextLoaderListener의 관계
+    - DispatcherServlet을 등록하는 다양한 방법
+    - 서블릿 컨테이너의 service-provider 로딩 절차
+    - service-provider 구현하기
 - 실습 프로젝트 
 - 최종 프로젝트
+  - DB 모델링에서 DDL 만들기
+  - 예제 데이터 입력하기
 
 ## 웨일온 접속 정보
 

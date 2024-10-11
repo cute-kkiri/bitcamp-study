@@ -1,0 +1,47 @@
+plugins {
+    id 'java-library'
+    id 'eclipse'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation libs.junit.jupiter
+
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    api libs.commons.math3
+
+    implementation libs.guava
+    
+    // Servlet API 
+    implementation 'javax.servlet:javax.servlet-api:4.0.1'
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+// eclipse 프로젝트 이름을 설정하기
+eclipse {
+    project {
+        name = "my-library" 
+    }
+    jdt {
+      sourceCompatibility = 21
+      targetCompatibility = 21
+      javaRuntimeName = "JavaSE-21"
+    }
+}
+
+jar {
+    archiveFileName = 'my-library.jar'
+}
