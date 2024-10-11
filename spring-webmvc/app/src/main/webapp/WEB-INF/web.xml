@@ -11,32 +11,36 @@
 
   <display-name>java-spring-webmvc</display-name>
 
-  <!-- ContextLoaderListener의 IoC 컨테이너가 사용할 설정 파일은 
-       컨텍스트 초기화 파라미터로 설정해야 한다. -->
-  <context-param>
-    <param-name>contextConfigLocation</param-name>
-    <param-value>/WEB-INF/app-context.xml</param-value>
-  </context-param>
-
+  <!-- 글로벌 Spring IoC 컨테이너 준비 -->
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-  </listener>
-
+  </listener>  
+  
+  <!-- ContextLoaderListener가 사용할 IoC 컨테이너 설정 파일 정보 -->
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>/WEB-INF/config/app-context.xml</param-value>
+  </context-param>
+  
+  <!-- Spring WebMVC의 프론트 컨트롤러 역할을 수행할 서블릿 지정 -->
   <servlet>
-    <servlet-name>app2</servlet-name>
+    <servlet-name>app</servlet-name>
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-    <!-- DispatcherServlet의 IoC 컨테이너를 사용하지 않으려면
-         XML 파일을 빈채로 설정해야 한다. 
-         생략하면 기본 이름으로 된 파일을 찾기 때문에 안된다.-->
-    <init-param>
-        <param-name>contextConfigLocation</param-name>
-        <param-value></param-value>
-    </init-param>
     <load-on-startup>1</load-on-startup>
   </servlet>
   <servlet-mapping>
-    <servlet-name>app2</servlet-name>
+    <servlet-name>app</servlet-name>
     <url-pattern>/app/*</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>admin</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>admin</servlet-name>
+    <url-pattern>/admin/*</url-pattern>
   </servlet-mapping>
   
   <welcome-file-list>
