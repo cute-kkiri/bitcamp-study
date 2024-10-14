@@ -22,7 +22,7 @@ dependencies {
     implementation libs.guava
     
     // 외부 라이브러리 파일을 프로젝트에 추가
-    implementation files('libs/my-library.jar')
+    //implementation files('libs/my-library.jar')
 }
 
 java {

@@ -2,14 +2,27 @@ package bitcamp.config;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import org.springframework.web.WebApplicationInitializer;
+import org.springframework.web.context.AbstractContextLoaderInitializer;
+import org.springframework.web.context.WebApplicationContext;
 
-public class WebInit1 implements WebApplicationInitializer {
+public class WebInit2 extends AbstractContextLoaderInitializer {
+
+  @Override
+  protected WebApplicationContext createRootApplicationContext() {
+    // ContextLoaderListener가 사용할 IoC 컨테이너를 리턴한다.
+    // 만약 IoC 컨테이너를 리턴하지
+    // ContextLoaderListener는 생성하지 않는다.
+
+    return null;
+  }
 
   @Override
   public void onStartup(ServletContext ctx) throws ServletException {
-    System.out.println("WebInit1.onStartup() 호출됨!");
+    System.out.println("WebInit2.onStartup() 호출됨!");
     /*
+    // 기존의 onStartup() 메서드의 기능은 그대로 수행한다.
+    super.onStartup(ctx);
+
     // DispatcherServlet의 IoC 컨테이너 생성
     AnnotationConfigWebApplicationContext iocContainer =
         new AnnotationConfigWebApplicationContext();
