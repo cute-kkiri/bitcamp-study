@@ -14,7 +14,6 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import javax.sql.DataSource;
 
@@ -25,7 +24,6 @@ import javax.sql.DataSource;
                 value = Controller.class
         )
 )
-@EnableWebMvc
 @PropertySource({
         "classpath:config/jdbc.properties",
         "file:${user.home}/config/ncp.properties"})

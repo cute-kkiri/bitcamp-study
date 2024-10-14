@@ -19,6 +19,9 @@
 - RootConfig 클래스 생성 
   - ContextLoaderListner의 IoC 컨테이너 설정 클래스
   - DB 관련 객체, 서비스 객체 등 공통 객체 준비
+- AppConfig 클래스 생성
+  - DispatcherServlet의 IoC 컨테이너 설정 클래스
+  - 페이지 컨트롤러, 웹 관련 객체 준비
 - WebApplicationInitializer 구현체 생성
   - WebApplicationInitializerImpl 클래스 정의
 
