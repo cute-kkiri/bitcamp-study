@@ -1008,9 +1008,9 @@
   - Spring WebMVC 사용법(계속)
 - 실습 프로젝트 
   - 63. WebApplicationInitializer를 통해 Spring WebMVC 설정하기
+  - 64. Spring WebMVC 활용하기
 - 최종 프로젝트
-  - DB 모델링에서 DDL 만들기
-  - 예제 데이터 입력하기
+  - 구현
 
 
 ## 웨일온 접속 정보

@@ -63,6 +63,7 @@
 ## 61. Spring Framework 도입하기
 ## 62. NCP의 서비스 적용하기
 ## 63. WebApplicationInitializer를 통해 Spring WebMVC 설정하기
+## 64. Spring WebMVC 활용하기
 
 ## 83. Lombok 적용하기
 
