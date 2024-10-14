@@ -1,13 +1,11 @@
 package bitcamp.config;
 
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import org.springframework.web.context.AbstractContextLoaderInitializer;
 import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 
-public class WebInit3 extends AbstractContextLoaderInitializer {
+public class WebInit3 /*extends AbstractDispatcherServletInitializer*/ {
 
-  @Override
+  //@Override
   protected WebApplicationContext createRootApplicationContext() {
     // ContextLoaderListener가 사용할 IoC 컨테이너를 리턴한다.
     // 만약 IoC 컨테이너를 리턴하지
@@ -16,27 +14,21 @@ public class WebInit3 extends AbstractContextLoaderInitializer {
     return null;
   }
 
-  @Override
-  public void onStartup(ServletContext ctx) throws ServletException {
-    System.out.println("WebInit2.onStartup() 호출됨!");
-    /*
-    // 기존의 onStartup() 메서드의 기능은 그대로 수행한다.
-    super.onStartup(ctx);
+  //@Override
+  protected WebApplicationContext createServletApplicationContext() {
+    // DispatcherServlet이 사용할 IoC 컨테이너를 리턴한다.
+    System.out.println("WebInit3.createServletApplicationContext() 호출됨!");
 
-    // DispatcherServlet의 IoC 컨테이너 생성
     AnnotationConfigWebApplicationContext iocContainer =
         new AnnotationConfigWebApplicationContext();
-    iocContainer.setServletContext(ctx);
+    //iocContainer.setServletContext(this.get);
     iocContainer.register(bitcamp.AppConfig.class);
 
-    // DispatcherServlet 객체 생성
-    DispatcherServlet frontController = new DispatcherServlet(iocContainer);
+    return iocContainer;
+  }
 
-    // 서블릿 컨테이너에 등록
-    Dynamic options = ctx.addServlet("app", frontController);
-
-    // 서블릿 설정
-    options.addMapping("/app/*");
-     */
+  //@Override
+  protected String[] getServletMappings() {
+    return new String[] {"/app/*"};
   }
 }

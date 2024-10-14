@@ -2,11 +2,10 @@ package bitcamp.config;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import org.springframework.web.WebApplicationInitializer;
 
-public class WebInit1 implements WebApplicationInitializer {
+public class WebInit1 /*implements WebApplicationInitializer*/ {
 
-  @Override
+  //@Override
   public void onStartup(ServletContext ctx) throws ServletException {
     System.out.println("WebInit1.onStartup() 호출됨!");
     /*
