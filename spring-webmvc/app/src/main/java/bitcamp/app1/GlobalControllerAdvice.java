@@ -2,6 +2,7 @@ package bitcamp.app1;
 
 import java.beans.PropertyEditorSupport;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.InitBinder;
 
 // @ControllerAdvice
@@ -10,18 +11,14 @@ import org.springframework.web.bind.annotation.InitBinder;
 //    즉 프론트 컨트롤러가 페이지 컨트롤러의 request handler를 호출하기 전에
 //    이 애노테이션이 붙은 클래스를 참고하여 적절한 메서드를 호출한다.
 //
-//@ControllerAdvice
+@ControllerAdvice
 public class GlobalControllerAdvice {
 
   // 이 클래스에 프로퍼티 에디터를 등록하는 @InitBinder 메서드를 정의한다.
   @InitBinder
   public void initBinder(WebDataBinder binder) {
-
-    DatePropertyEditor propEditor = new DatePropertyEditor();
-    binder.registerCustomEditor(java.util.Date.class, propEditor);
-
+    binder.registerCustomEditor(java.util.Date.class, new DatePropertyEditor());
     binder.registerCustomEditor(Car.class, new CarPropertyEditor());
-
     binder.registerCustomEditor(Engine.class, new EnginePropertyEditor());
   }
 
