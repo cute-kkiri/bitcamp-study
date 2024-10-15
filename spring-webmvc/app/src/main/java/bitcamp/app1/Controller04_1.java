@@ -29,6 +29,7 @@ public class Controller04_1 {
   @Autowired
   ServletContext sc;
 
+
   // 요청 핸들러에서 받을 수 있는 타입의 아규먼트를 선언해 보자!
   @GetMapping("h1")
   @ResponseBody

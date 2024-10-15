@@ -105,7 +105,8 @@ public class Controller04_4 {
         );
 
     // WebDataBinder에 프로퍼티 에디터 등록하기
-    binder.registerCustomEditor(Engine.class, // String을 Engine 타입으로 바꾸는 에디터임을 지정한다.
+    binder.registerCustomEditor(
+        Engine.class, // String을 Engine 타입으로 바꾸는 에디터임을 지정한다.
         new EnginePropertyEditor() // 바꿔주는 일을 하는 프로퍼티 에디터를 등록한다.
         );
   }
@@ -155,7 +156,7 @@ public class Controller04_4 {
   class CarPropertyEditor extends PropertyEditorSupport {
     @Override
     public void setAsText(String text) throws IllegalArgumentException {
-      String[] values = text.split(",");
+      String[] values = text.split(","); // 예) sonata,5,true,2024-1-1
 
       Car car = new Car();
       car.setModel(values[0]);
@@ -170,7 +171,7 @@ public class Controller04_4 {
   class EnginePropertyEditor extends PropertyEditorSupport {
     @Override
     public void setAsText(String text) throws IllegalArgumentException {
-      String[] values = text.split(",");
+      String[] values = text.split(","); // 예) hyundai,1560,16
 
       Engine engine = new Engine();
       engine.setModel(values[0]);

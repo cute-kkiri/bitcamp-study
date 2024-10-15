@@ -1,7 +1,6 @@
 // 요청 핸들러의 아규먼트 - 도메인 객체(값 객체; Value Object)로 요청 파라미터 값 받기
 package bitcamp.app1;
 
-import java.io.PrintWriter;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,11 +20,9 @@ public class Controller04_3 {
   //
   // 테스트:
   // => http://.../c04_3/h1?model=sonata&maker=hyundai&capacity=5&auto=true&engine.model=ok&engine.cc=1980&engine.valve=16
-  @GetMapping("h1")
+  @GetMapping(value="h1",  produces = "text/plain;charset=UTF-8")
   @ResponseBody
-  public void handler1(
-      PrintWriter out,
-
+  public String handler1(
       String model,
 
       String maker,
@@ -47,11 +44,12 @@ public class Controller04_3 {
       // 예) ...&engine.model=ok&engine.cc=1980&engine.valve=16
       ) {
 
-    out.printf("model=%s\n", model);
-    out.printf("maker=%s\n", maker);
-    out.printf("capacity=%s\n", capacity);
-    out.printf("auto=%s\n", auto);
-    out.printf("car=%s\n", car);
+
+    return String.format("model=%s\n", model) +
+        String.format("maker=%s\n", maker) +
+        String.format("capacity=%s\n", capacity) +
+        String.format("auto=%s\n", auto) +
+        String.format("car=%s\n", car);
   }
 
 }
