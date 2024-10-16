@@ -59,7 +59,7 @@ public class Controller01_2 {
     // => 프론트 컨트롤러는 ViewResolver가 준비한 URL을 가지고
     //    View 객체를 통해 해당 URL의 자원을 실행한다.
     //
-    return "c01_2/h1"; // => /WEB-INF/jsp2/c01_1/h1.jsp
+    return "c01_2/h1"; // => /WEB-INF/jsp2/c01_2/h1.jsp
   }
 
   // 테스트:

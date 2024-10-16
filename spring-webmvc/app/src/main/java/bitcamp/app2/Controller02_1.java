@@ -31,10 +31,10 @@ public class Controller02_1 {
   @GetMapping("{name}/{age}")
   @ResponseBody
   public String handler2(
-      /*
-      @PathVariable("name") String name,
-      @PathVariable("age") int age
-       */
+
+      //      @PathVariable("name") String name,
+      //      @PathVariable("age") int age
+
       // URL의 변수 이름을 생략하면 아규먼트 이름을 사용한다.
       @PathVariable String name,
       @PathVariable int age

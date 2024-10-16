@@ -52,8 +52,9 @@ public class Controller05_1 {
   //   http://.../app2/c05_1/h2
   @GetMapping(value="h2", produces="text/plain;charset=UTF-8")
   @ResponseBody
-  public String handler2() {
+  public String handler2() throws Exception {
     return new Gson().toJson(this.list);
+    //return new ObjectMapper().writeValueAsString(this.list);
   }
 
 
