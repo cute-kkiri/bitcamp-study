@@ -1,6 +1,7 @@
 package bitcamp.app2;
 
 import java.sql.Date;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class Board {
   protected int no;
@@ -12,9 +13,9 @@ public class Board {
   // Jackson 라이브러리를 사용한다면
   // Date 필드의 JSON 입출력 형식을 지정할 수 있다.
   // 다음 애노테이션을 setter나 field에 붙이면 된다.
-  //  @JsonFormat(
-  //      shape=JsonFormat.Shape.STRING,
-  //      pattern="yyyy-MM-dd")
+  @JsonFormat(
+      shape=JsonFormat.Shape.STRING,
+      pattern="yyyy-MM-dd")
   protected Date createdDate;
 
   public Board() {

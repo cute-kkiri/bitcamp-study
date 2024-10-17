@@ -1,6 +1,8 @@
 // 예외 다루기
 package bitcamp.app2;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,5 +25,19 @@ public class Controller06_2 {
     // => 해당 페이지를 실행한다.
     // 4) 서블릿 컨테이너의 기본 오류 처리 페이지를 실행한다.
     //
+  }
+
+  // 테스트:
+  // http://.../app2/c06_2/error2
+  @GetMapping("error2")
+  public void error() throws Exception {
+    throw new IOException("request handler에서 IOException 발생!");
+  }
+
+  // 테스트:
+  // http://.../app2/c06_2/error3
+  @GetMapping("error3")
+  public void error3() throws Exception {
+    throw new SQLException("request handler에서 SQLException 발생!");
   }
 }

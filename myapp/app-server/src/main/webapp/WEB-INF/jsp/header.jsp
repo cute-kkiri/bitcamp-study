@@ -19,7 +19,7 @@
   <h1>프로젝트 관리 시스템</h1>
   <nav>
     <ul>
-      <li class='btn btn-default'><a href='/app/user/list'>회원</a></li>
+      <li class='btn btn-default'><a href='/app/users'>회원</a></li>
       <li class='btn btn-default'><a href='/app/project/list'>프로젝트</a></li>
       <li class='btn btn-default'><a href='/app/board/list'>게시글</a></li>
     </ul>
