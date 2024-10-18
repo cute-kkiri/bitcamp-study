@@ -19,10 +19,14 @@ import javax.sql.DataSource;
 
 @ComponentScan(
         value = "bitcamp.myapp",
-        excludeFilters = @ComponentScan.Filter(
-                type = FilterType.ANNOTATION,
-                value = Controller.class
-        )
+        excludeFilters = {
+                @ComponentScan.Filter(
+                        type = FilterType.ANNOTATION,
+                        value = Controller.class),
+                @ComponentScan.Filter(
+                        type = FilterType.ASPECTJ,
+                        pattern = "bitcamp.myapp.interceptor..*")
+        }
 )
 @PropertySource({
         "classpath:config/jdbc.properties",

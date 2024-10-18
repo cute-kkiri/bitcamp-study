@@ -1043,6 +1043,14 @@
   - 이력서 & 포트폴리오 조언
     https://www.linkedin.com/posts/seulki-kang_%EC%86%8C%ED%94%84%ED%8A%B8%EC%8A%A4%ED%82%AC%EC%9D%B4-%EB%93%9C%EB%9F%AC%EB%82%98%EB%8A%94-%EC%9D%B4%EB%A0%A5%EC%84%9C-%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B6%84%EC%84%9D%EA%B0%80-%EB%8F%84%EB%A9%94%EC%9D%B8-%EB%B6%84%EC%95%BC-activity-7252489937357307904-into?utm_source=share&utm_medium=member_desktop
 
+## 97일차(2024-10-18,금)
+
+- 이론
+  - 
+- 실습 프로젝트 
+  - 64. Spring WebMVC 활용하기(계속)
+- 최종 프로젝트
+  - 구현
 
 ## 웨일온 접속 정보
 

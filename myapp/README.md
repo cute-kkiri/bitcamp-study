@@ -64,6 +64,8 @@
 ## 62. NCP의 서비스 적용하기
 ## 63. WebApplicationInitializer를 통해 Spring WebMVC 설정하기
 ## 64. Spring WebMVC 활용하기
+## 65. SpringBoot(2.7.x) 적용하기
+
 
 ## 83. Lombok 적용하기
 
@@ -82,9 +84,7 @@
 
 - 네이버 클라우드의 Image Optimizer 사용법
 
-## 87. SpringBoot(2.7.x) 적용하기
 
-- SpringBoot 사용법
 
 ## 88. 페이징 처리 적용하기
 
