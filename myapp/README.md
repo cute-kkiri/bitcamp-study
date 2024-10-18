@@ -65,30 +65,15 @@
 ## 63. WebApplicationInitializer를 통해 Spring WebMVC 설정하기
 ## 64. Spring WebMVC 활용하기
 ## 65. SpringBoot(2.7.x) 적용하기
+## 66. 페이징 처리 적용하기
+## 67. 뷰 템플릿 기술을 Thymeleaf 로 교체하기
 
+- Thymeleaf 사용법
 
 ## 83. Lombok 적용하기
 
 - Lombok 사용법
 
-## 84. 뷰 템플릿 기술을 Thymeleaf 로 교체하기
-
-- Thymeleaf 사용법
-
-## 85. 첨부파일을 네이버 클라우드의 스토리지 서비스에 저장하기
-
-- 네이버 스토리지 서비스 사용법
-- 첨부파일을 스토리지 서비스에 업로드하는 방법
-
-## 86. 네이버 클라우드의 Image Optimizer를 이용하여 썸네일 이미지 다루기
-
-- 네이버 클라우드의 Image Optimizer 사용법
-
-
-
-## 88. 페이징 처리 적용하기
-
-- 목록에 페이징 적용하기
 
 ## 89. WYSIWYG 자바스클립트 편집기 사용하기 - summernote 활용
 
