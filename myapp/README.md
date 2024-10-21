@@ -66,13 +66,14 @@
 ## 64. Spring WebMVC 활용하기
 ## 65. SpringBoot(2.7.x) 적용하기
 ## 66. 페이징 처리 적용하기
+## 67. Lombok 적용하기
+
+
 ## 67. 뷰 템플릿 기술을 Thymeleaf 로 교체하기
 
 - Thymeleaf 사용법
 
-## 83. Lombok 적용하기
 
-- Lombok 사용법
 
 
 ## 89. WYSIWYG 자바스클립트 편집기 사용하기 - summernote 활용
