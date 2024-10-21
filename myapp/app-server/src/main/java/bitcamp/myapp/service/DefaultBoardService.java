@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -28,8 +29,26 @@ public class DefaultBoardService implements BoardService {
     }
   }
 
-  public List<Board> list() throws Exception {
-    return boardDao.list();
+  public List<Board> list(int pageNo, int pageSize) throws Exception {
+    if (pageNo < 1) {
+      pageNo = 1;
+    }
+
+    int length = boardDao.countAll();
+    int pageCount = length / pageSize;
+    if (length % pageSize > 0) {
+      pageCount++;
+    }
+
+    if (pageNo > pageCount) {
+      pageNo = pageCount;
+    }
+
+    HashMap<String, Object> options = new HashMap<>();
+    options.put("rowNo", (pageNo - 1) * pageSize);
+    options.put("length", pageSize);
+
+    return boardDao.list(options);
   }
 
   public Board get(int boardNo) throws Exception {

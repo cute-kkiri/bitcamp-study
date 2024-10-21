@@ -6,13 +6,14 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface BoardDao {
 
   boolean insert(Board board) throws Exception;
 
-  List<Board> list() throws Exception;
+  List<Board> list(Map<String, Object> options) throws Exception;
 
   Board findBy(int no) throws Exception;
 
@@ -21,6 +22,8 @@ public interface BoardDao {
   boolean delete(int no) throws Exception;
 
   void updateViewCount(@Param("no") int boardNo, @Param("count") int count) throws Exception;
+
+  int countAll() throws Exception;
 
   void insertFiles(Board board) throws Exception;
 
