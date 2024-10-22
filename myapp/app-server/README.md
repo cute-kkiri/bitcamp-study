@@ -1,12 +1,12 @@
-# 67. Lombok 적용하기
+# 68. 뷰 템플릿 기술을 Thymeleaf 로 교체하기
 
 ## 학습목표
 
-- lombok 라이브러리를 사용할 수 있다.
+- Thymeleaf 뷰 템플릿 기술을 웹 프로젝트에 적용할 수 있다.
 
 ## 요구사항
 
-- 프로젝트에 lombok 라이브러리를 적용하라.
+- JSP를 Thymeleaf로 교체하라.
 
 ## 실행 결과
 
@@ -14,12 +14,16 @@
 
 ## 작업
 
+- JSP 제거
+  - application.properties 변경
+  - build.gradle 변경
 - build.gradle 변경
-  - lombok 의존 라이브러리 추가
-- 도메인 클래스 변경
-  - Board, Project, User, AttachedFile
-- 페이지 컨트롤러 클래스 변경
-- 서비스 클래스 변경
+  - Thymeleaf 의존 라이브러리 추가
+- Thymeleaf 폴더 생성
+  - src/main/resources/templates
+- Thymeleaf 설정
+  - application.properties 변경
+
   
 ## 소스 파일
 
