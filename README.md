@@ -1090,12 +1090,12 @@
 - https://github.com/ClazzBridge/BackEnd
 - https://github.com/ClazzBridge/FrontEnd
 
-### 2팀: 강윤상, 김재우, 권기윤, 김민수, 이우성, 양지윤
+### 2팀: 강윤상, 김재우, 권기윤, 이우성, 양지윤
 
 - https://github.com/j1yunn/final-project
 
 
-### 3팀: 신승민, 백현기, 김재정, 이민석, 이재욱,  이건학
+### 3팀: 신승민, 백현기, 김재정, 이재욱,  이건학
 
 - https://github.com/devopsmin/bitcamp-final-team3
 

@@ -1,12 +1,12 @@
-# 68. 뷰 템플릿 기술을 Thymeleaf 로 교체하기
+# 69. HandlerMethodArgumentResolver 사용하기
 
 ## 학습목표
 
-- Thymeleaf 뷰 템플릿 기술을 웹 프로젝트에 적용할 수 있다.
+- HandlerMethodArgumentResolver를 사용할 수 있다. 
 
 ## 요구사항
 
-- JSP를 Thymeleaf로 교체하라.
+- request handler에서 로그인 정보를 파라미터로 받아라.
 
 ## 실행 결과
 
@@ -14,16 +14,10 @@
 
 ## 작업
 
-- JSP 제거
-  - application.properties 변경
-  - build.gradle 변경
-- build.gradle 변경
-  - Thymeleaf 의존 라이브러리 추가
-- Thymeleaf 폴더 생성
-  - src/main/resources/templates
-- Thymeleaf 설정
-  - application.properties 변경
-- JSP 파일을 Thymeleaf 파일로 변경 
+- 파라미터에 붙일 애노테이션 정의
+  - @LoginUser 정의 
+- LoginUser 애노테이션 파라미터 값을 리턴할 해결사 정의 
+  - LoginUserArgumentResolver 정의 
   
 ## 소스 파일
 
