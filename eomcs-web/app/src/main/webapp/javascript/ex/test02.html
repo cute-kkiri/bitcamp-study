@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+
+<body>
+    <h1 id="header1">리터럴</h1>
+
+    <script>
+        console.log("문자열", typeof "문자열");
+        console.log('문자열', typeof '문자열');
+        console.log(10, typeof 10);
+        console.log(3.14, typeof 3.14);
+        console.log(NaN, typeof NaN);
+        console.log(Infinity, typeof Infinity);
+        console.log(-Infinity, typeof -Infinity);
+        console.log(true, typeof true);
+        console.log(false, typeof false);
+        console.log(null, typeof null);
+
+        var obj = new Object();
+        obj.name = '홍길동';
+        obj.age = 20;
+        console.log(obj, typeof obj);
+
+        console.log({ name: '홍길동', age: 20 }, typeof { name: '홍길동', age: 20 })
+
+        function plus(a, b) {
+            return a + b;
+        }
+        console.log(plus, typeof plus);
+
+        console.log(undefined, typeof undefined);
+
+        var tag = document.getElementById("header1");
+        console.log(tag, typeof tag);
+
+    </script>
+
+</body>
+
+
+</html>
