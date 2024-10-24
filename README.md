@@ -1080,6 +1080,7 @@
 ## 101일차(2024-10-24,목)
 
 - 이론
+  - JavaScript 기본 문법
 - 실습 프로젝트 
   - 69. HandlerMethodArgumentResolver 사용하기
 - 최종 프로젝트
