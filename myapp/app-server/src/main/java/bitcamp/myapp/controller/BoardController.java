@@ -1,5 +1,6 @@
 package bitcamp.myapp.controller;
 
+import bitcamp.myapp.annotation.LoginUser;
 import bitcamp.myapp.service.BoardService;
 import bitcamp.myapp.service.StorageService;
 import bitcamp.myapp.vo.AttachedFile;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,9 +39,8 @@ public class BoardController {
   public String add(
           Board board,
           MultipartFile[] files,
-          HttpSession session) throws Exception {
+          @LoginUser User loginUser) throws Exception {
 
-    User loginUser = (User) session.getAttribute("loginUser");
     if (loginUser == null) {
       throw new Exception("로그인 하지 않았습니다.");
     }
@@ -121,9 +120,7 @@ public class BoardController {
           String title,
           String content,
           Part[] files,
-          HttpSession session) throws Exception {
-
-    User loginUser = (User) session.getAttribute("loginUser");
+          @LoginUser User loginUser) throws Exception {
 
     Board board = boardService.get(no);
     if (board == null) {
@@ -165,11 +162,9 @@ public class BoardController {
   @GetMapping("delete")
   public String delete(
           int no,
-          HttpSession session) throws Exception {
+          @LoginUser User loginUser) throws Exception {
 
-    User loginUser = (User) session.getAttribute("loginUser");
     Board board = boardService.get(no);
-
     if (board == null) {
       throw new Exception("없는 게시글입니다.");
     } else if (loginUser == null || loginUser.getNo() > 10 && board.getWriter().getNo() != loginUser.getNo()) {
@@ -190,11 +185,10 @@ public class BoardController {
 
   @GetMapping("file/delete")
   public String fileDelete(
-          HttpSession session,
+          @LoginUser User loginUser,
           int fileNo,
           int boardNo) throws Exception {
 
-    User loginUser = (User) session.getAttribute("loginUser");
     if (loginUser == null) {
       throw new Exception("로그인 하지 않았습니다.");
     }
