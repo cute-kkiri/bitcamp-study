@@ -70,7 +70,10 @@
 ## 68. 뷰 템플릿 기술을 Thymeleaf 로 교체하기
 ## 69. HandlerMethodArgumentResolver 사용하기
 ## 70. Jenkins와 Docker를 이용한 배포 자동화하기
- 
+## 71. SpringSecurity 적용하기
+
+- SpringSecurity 사용법
+  - login, logout 처리하는 방법
 
 
 
@@ -94,11 +97,7 @@
     - "file:${user.home}/config/ncp.properties"
     - "file:${user.home}/config/ncp-secret.properties"
  
-## 91. SpringSecurity 적용하기
 
-- SpringSecurity 사용법
-  - login, logout 처리하는 방법
-- HandlerMethodArgumentResolver 사용법
 
 ## 92. AJAX 기술을 이용하여 Backend와 Frontend 분리하기 - XMLHttpRequest 활용
 

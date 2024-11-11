@@ -64,6 +64,7 @@
   - ~/git/bitcamp-myapp$ java -Dspring.profiles.active=prod -jar ./app/build/libs/myapp.jar
 - MySQL ACL에 접속 서버의 IP 등록
   - NCP 콘솔에서 편집
+- Docker 엔진 설치
 
 
 
