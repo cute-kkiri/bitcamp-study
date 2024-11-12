@@ -43,12 +43,26 @@
             user_id=#{no}
     </select>
 
+    <select id="findByEmail" resultMap="UserMap" parameterType="string">
+        select
+            user_id,
+            name,
+            email,
+            tel,
+            photo
+        from
+            myapp_users
+        where
+            email=#{email}
+    </select>
+
     <select id="findByEmailAndPassword" resultMap="UserMap">
         select
             user_id,
             name,
             email,
-            tel
+            tel,
+            photo
         from
             myapp_users
         where
