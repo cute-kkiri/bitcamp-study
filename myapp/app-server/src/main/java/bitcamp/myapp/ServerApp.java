@@ -1,7 +1,6 @@
 package bitcamp.myapp;
 
 import bitcamp.myapp.annotation.LoginUserArgumentResolver;
-import bitcamp.myapp.interceptor.AdminInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -33,8 +32,8 @@ public class ServerApp implements WebMvcConfigurer {
 
   @Override
   public void addInterceptors(InterceptorRegistry registry) {
-    registry.addInterceptor(new AdminInterceptor())
-        .addPathPatterns("/users*");
+//    registry.addInterceptor(new AdminInterceptor())
+//        .addPathPatterns("/users*");
   }
 
   @Override

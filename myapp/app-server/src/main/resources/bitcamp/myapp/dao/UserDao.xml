@@ -27,12 +27,13 @@
 
     <insert id="insert" parameterType="user">
         insert into myapp_users(name, email, pwd, tel, photo)
-        values (#{name}, #{email}, sha1(#{password}), #{tel}, #{photo})
+        values (#{name}, #{email}, #{password}, #{tel}, #{photo})
     </insert>
 
     <select id="findBy" resultMap="UserMap" parameterType="int">
         select
             user_id,
+            pwd,
             name,
             email,
             tel,
@@ -46,6 +47,7 @@
     <select id="findByEmail" resultMap="UserMap" parameterType="string">
         select
             user_id,
+            pwd,
             name,
             email,
             tel,
@@ -59,6 +61,7 @@
     <select id="findByEmailAndPassword" resultMap="UserMap">
         select
             user_id,
+            pwd,
             name,
             email,
             tel,
@@ -73,7 +76,7 @@
         update myapp_users set
             name=#{name},
             email=#{email},
-            pwd=sha1(#{password}),
+            pwd=#{password},
             tel=#{tel},
             photo=#{photo}
         where

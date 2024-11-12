@@ -25,7 +25,9 @@ public class SecurityConfig {
   // Spring Security를 처리할 필터 체인을 준비한다.
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    log.debug("=> SecurityFilterChain 구성함!");
     return http
+            .csrf().disable()
             .authorizeHttpRequests((authorize) -> authorize
                     .anyRequest().authenticated()
             )
@@ -46,14 +48,14 @@ public class SecurityConfig {
   // 사용자 정보를 리턴해주는 객체
   @Bean
   public UserDetailsService userDetailsService() {
+    log.debug("InMemoryUserDetailsService 객체 등록!");
 
     // 로그인 사용자 정보
-    UserDetails userDetails = User.withDefaultPasswordEncoder()
-            .username("hong@test.com")
-            .password("1111")
-            .roles("USER")
-            .build();
-
+    UserDetails[] userDetails = {
+            User.withDefaultPasswordEncoder().username("hong@test.com").password("1111").roles("USER").build(),
+            User.withDefaultPasswordEncoder().username("leem@test.com").password("1111").roles("USER").build(),
+            User.withDefaultPasswordEncoder().username("yoo@test.com").password("1111").roles("USER").build()
+    };
     // 메모리에 사용자 정보(UserDetails 객체)를 보관한다.
     return new InMemoryUserDetailsManager(userDetails);
   }

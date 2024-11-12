@@ -1209,6 +1209,7 @@
 - 이론
 - 실습 프로젝트 
   - 71. SpringSecurity 적용하기
+    - Spring Security 사용법
 - 최종 프로젝트
   - 구현
 
