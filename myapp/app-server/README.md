@@ -34,10 +34,17 @@
   - 회원 정보 등록과 변경에 암호 인코더 적용하기
 - 7단계: 로그인 정보를 세션에 보관하기
   - 스프링 시큐리티의 로그인 정보를 페이지 컨트롤러가 받아 처리
-- 8단계: 커스텀 UserDetails 사용하기 
+- 8단계: 커스텀 UserDetails 사용하기 I 
   - 도메인 객체를 상속 받아 UserDetails 구현하기
-  - 도메인 객체를 포함하는 방법으로 UserDetails 구현하기 
   - 페이지 컨트롤러에서 커스텀 UserDetails를 받는 방법
+- 9단계: 커스텀 UserDetails 사용하기 II
+  - 도메인 객체를 포함하는 방법으로 UserDetails 구현하기
+- '/users' URL은 관리자만 접근할 수 있도록 설정
+  - 기존 방식: AdminInterceptor를 이용하여 접근 제어
+  - 개선 방식: Spring Security 설정을 이용하여 접근 제어
+    - SecurityConfig 에 '/users' 의 접근 제어 추가
+    - CustomUserDetails 에 권한 설정 추가
+
 
 ## 소스 파일
 

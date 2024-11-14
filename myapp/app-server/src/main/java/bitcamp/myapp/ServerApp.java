@@ -33,7 +33,7 @@ public class ServerApp implements WebMvcConfigurer {
   @Override
   public void addInterceptors(InterceptorRegistry registry) {
 //    registry.addInterceptor(new AdminInterceptor())
-//        .addPathPatterns("/users*");
+//            .addPathPatterns("/users*");
   }
 
   @Override
