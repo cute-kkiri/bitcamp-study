@@ -58,5 +58,12 @@ public class AuthController {
     session.setAttribute("loginUser", user);
     return "redirect:/";
   }
-  
+
+  @RequestMapping("failure")
+  public void failure() {
+  }
+
+  @RequestMapping("access-denied")
+  public void accessDenied() {
+  }
 }

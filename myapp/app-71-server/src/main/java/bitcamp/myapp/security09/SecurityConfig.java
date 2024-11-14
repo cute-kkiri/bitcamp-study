@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.AccessDeniedHandlerImpl;
 
 @Configuration
 @EnableWebSecurity
@@ -28,7 +29,7 @@ public class SecurityConfig {
     return http
             .csrf().disable()
             .authorizeHttpRequests((authorize) -> authorize
-                    .mvcMatchers("/css/**", "/images/**", "/home", "/", "*/list", "*/view").permitAll()
+                    .mvcMatchers("/auth/**", "/css/**", "/images/**", "/home", "/", "*/list", "*/view").permitAll()
                     .mvcMatchers("/users/**").hasRole("ADMIN")
                     .anyRequest().authenticated()
             )
@@ -39,13 +40,22 @@ public class SecurityConfig {
                       .usernameParameter("email") // 로그인 수행할 때 사용할 사용자 아이디 또는 이메일(principal) 파라미터 명
                       .passwordParameter("password") // 로그인 수행할 때 사용할 사용자 암호(credential) 파라미터 명
                       .successForwardUrl("/auth/success") // 로그인 성공 후 포워딩 할 URL
+                      .failureForwardUrl("/auth/failure") // 로그인 실패 후 포워딩 할 URL
                       .permitAll(); // 모든 권한 부여
             })
-            .logout(Customizer.withDefaults())
+
             // 로그아웃 기본 URL: /logout
             // CSRF가 활성화된 경우:
             // - POST 요청을 해야 한다.
-            // - 서버에서 받은 CSRF 토큰을 요청 헤더에 넣어야 한다.;
+            // - 서버에서 받은 CSRF 토큰을 요청 헤더에 넣어야 한다.
+            .logout(Customizer.withDefaults())
+
+            // 권한 오류를 다룰 핸들러 설정
+            .exceptionHandling(exceptionHandling -> {
+              AccessDeniedHandlerImpl accessDeniedHandler = new AccessDeniedHandlerImpl();
+              accessDeniedHandler.setErrorPage("/auth/access-denied");
+              exceptionHandling.accessDeniedHandler(accessDeniedHandler);
+            })
             .build();
   }
 

@@ -39,15 +39,19 @@
   - 페이지 컨트롤러에서 커스텀 UserDetails를 받는 방법
 - 9단계: 커스텀 UserDetails 사용하기 II
   - 도메인 객체를 포함하는 방법으로 UserDetails 구현하기
-- '/users' URL은 관리자만 접근할 수 있도록 설정
-  - 기존 방식: AdminInterceptor를 이용하여 접근 제어
-  - 개선 방식: Spring Security 설정을 이용하여 접근 제어
-    - SecurityConfig 에 '/users' 의 접근 제어 추가
-    - CustomUserDetails 에 권한 설정 추가
-- 로그인 검사는 Spring Security에서 처리하도록 변경
-  - 로그인 여부를 검사하는 코드를 페이지 컨트롤러에서 제거
-- Spring Security의 기본 로그아웃 사용하기
-  - SecurityConfig 에 기본 로그아웃 설정 추가
+  - '/users' URL은 관리자만 접근할 수 있도록 설정
+    - 기존 방식: AdminInterceptor를 이용하여 접근 제어
+    - 개선 방식: Spring Security 설정을 이용하여 접근 제어
+      - SecurityConfig 에 '/users' 의 접근 제어 추가
+      - CustomUserDetails 에 권한 설정 추가
+  - 로그인 검사는 Spring Security에서 처리하도록 변경
+    - 로그인 여부를 검사하는 코드를 페이지 컨트롤러에서 제거
+  - Spring Security의 기본 로그아웃 사용하기
+    - SecurityConfig 에 기본 로그아웃 설정 추가
+  - 로그인 실패 URL 설정
+    - SecurityConfig 에 실패할 때 포워딩 할 URL 설정
+  - 권한 오류 처리 설정
+    - SecurityConfig 에 권한 오류가 발생했을 때 포워딩 할 URL 설정
 
 ## 소스 파일
 
