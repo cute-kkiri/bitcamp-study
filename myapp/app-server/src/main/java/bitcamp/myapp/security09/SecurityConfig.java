@@ -5,6 +5,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -24,7 +25,7 @@ public class SecurityConfig {
 
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    http
+    return http
             .csrf().disable()
             .authorizeHttpRequests((authorize) -> authorize
                     .mvcMatchers("/css/**", "/images/**", "/home", "/", "*/list", "*/view").permitAll()
@@ -39,8 +40,13 @@ public class SecurityConfig {
                       .passwordParameter("password") // 로그인 수행할 때 사용할 사용자 암호(credential) 파라미터 명
                       .successForwardUrl("/auth/success") // 로그인 성공 후 포워딩 할 URL
                       .permitAll(); // 모든 권한 부여
-            });
-    return http.build();
+            })
+            .logout(Customizer.withDefaults())
+            // 로그아웃 기본 URL: /logout
+            // CSRF가 활성화된 경우:
+            // - POST 요청을 해야 한다.
+            // - 서버에서 받은 CSRF 토큰을 요청 헤더에 넣어야 한다.;
+            .build();
   }
 
   @Bean

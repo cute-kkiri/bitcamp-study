@@ -44,7 +44,10 @@
   - 개선 방식: Spring Security 설정을 이용하여 접근 제어
     - SecurityConfig 에 '/users' 의 접근 제어 추가
     - CustomUserDetails 에 권한 설정 추가
-
+- 로그인 검사는 Spring Security에서 처리하도록 변경
+  - 로그인 여부를 검사하는 코드를 페이지 컨트롤러에서 제거
+- Spring Security의 기본 로그아웃 사용하기
+  - SecurityConfig 에 기본 로그아웃 설정 추가
 
 ## 소스 파일
 
