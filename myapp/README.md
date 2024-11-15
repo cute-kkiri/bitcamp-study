@@ -71,18 +71,12 @@
 ## 69. HandlerMethodArgumentResolver 사용하기
 ## 70. Jenkins와 Docker를 이용한 배포 자동화하기
 ## 71. SpringSecurity 적용하기
-
-- SpringSecurity 사용법
-  - login, logout 처리하는 방법
-
-
-
-## 89. WYSIWYG 자바스클립트 편집기 사용하기 - summernote 활용
+## 72. WYSIWYG 자바스클립트 편집기 사용하기 - summernote 활용
 
 - summernote 활용법
 - 게시판에 적용하기
 
-## 90. summernote 응용 - 콘텐트에 포함된 이미지 파일 별도 저장
+## 73. summernote 응용 - 콘텐트에 포함된 이미지 파일 별도 저장
 
 - 콘텐트에 포함된 이미지 파일을 object storage에 별도 저장하기
 - application.properties 파일을 운영모드와 개발모드로 분리하기
@@ -97,7 +91,6 @@
     - "file:${user.home}/config/ncp.properties"
     - "file:${user.home}/config/ncp-secret.properties"
  
-
 
 ## 92. AJAX 기술을 이용하여 Backend와 Frontend 분리하기 - XMLHttpRequest 활용
 
